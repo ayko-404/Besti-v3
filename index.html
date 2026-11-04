@@ -99,7 +99,7 @@
   </div>
 </div></section>
 
-<!-- в гостях у бэсти (04.11): «просто галерея с фото и видео, креативно, главное крупно» — мозаика разного размера, кадры проявляются при прокрутке.
+<!-- в гостях у бэсти (04.11): сверху три крупных видео в ряд («видео показывать крупнее»), ниже капучино и гостья; кадры проявляются при прокрутке.
      Видео обложки сюда не берём, чтобы не повторяться. Прежний вариант (подпись, широкий кадр и три вертикальных) — коммит 44701a8 -->
 <section id="studio" class="sec sec--paper"><div class="wrap">
   <h2 class="h2 gl__h">В&nbsp;гостях <em>у&nbsp;бэсти</em></h2>
@@ -107,17 +107,18 @@
     <figure class="gl__i gl__i--g1"><img width="1600" height="1141" src="assets/img/gosti/kapuchino-za-stolikom.webp" alt="Две чашки капучино и руки с маникюром за столиком" loading="lazy"></figure>
     <figure class="gl__i gl__i--g2"><video src="assets/video/video-den-v-studii.mp4" poster="assets/video/video-den-v-studii-poster.webp" muted loop playsinline preload="none" aria-label="Видео: утро в студии"></video></figure>
     <figure class="gl__i gl__i--g3"><img width="1050" height="1400" src="assets/img/gosti/gostya-raznocvetnyj.webp" alt="Гостья бэсти с разноцветным маникюром" loading="lazy"></figure>
-    <figure class="gl__i gl__i--g4"><img width="900" height="900" src="assets/img/gosti/ruka-kreslo-pedikyura.webp" alt="Рука с нюдовым маникюром в кресле студии" loading="lazy"></figure>
     <figure class="gl__i gl__i--g5"><video src="assets/video/video-polki-luxio.mp4" poster="assets/video/video-polki-luxio-poster.webp" muted loop playsinline preload="none" aria-label="Видео: полки с лаками Luxio"></video></figure>
-    <figure class="gl__i gl__i--g6"><img width="900" height="1600" src="assets/img/gosti/gostya-krasnyj-kolca.webp" alt="Гостья показывает красный маникюр и золотые кольца" loading="lazy"></figure>
-    <figure class="gl__i gl__i--g7"><img width="1200" height="900" src="assets/img/gosti/gosti-zelyonye-kresla-4x3.webp" alt="Маникюр на фоне зелёных кресел и ковра" loading="lazy"></figure>
+    <figure class="gl__i gl__i--g6"><video src="assets/video/video-gostya-kolca.mp4" poster="assets/video/video-gostya-kolca-poster.webp" muted loop playsinline preload="none" aria-label="Видео: гостья показывает красный маникюр и золотые кольца"></video></figure>
   </div>
 </div></section>
 
 <!-- как дойти (04.11: «карту больше и стильнее»): карта во всю ширину, тёплая чёрно-белая, адрес, часы и кнопки — светлой карточкой поверх карты (на телефоне — под картой) -->
 <section id="contacts" class="sec"><div class="wrap ct">
-  <!-- карта (04.11: «слишком сложная, много подписей»): своя схема по данным OpenStreetMap (tools/v3/karta_svg.py) — только улицы, метро и метка; нажатие открывает Яндекс Карты -->
-  <a class="ct__map" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener" aria-label="Открыть на Яндекс Картах: Печатников пер., 6"><picture><source media="(max-width: 900px)" srcset="assets/ui/karta-shema-m.svg"><img width="1600" height="900" src="assets/ui/karta-shema.svg" alt="Схема: Печатников пер., 6 — три минуты от метро «Трубная»" loading="lazy"></picture></a>
+  <!-- карта (04.11: «нужна не картинка, а реальная карта с ч/б фильтром»): Яндекс Карты JS API 2.1 (js/karta.js), вся карта чёрно-белая,
+       своя метка; пока API не загрузился или без JS — своя схема по OSM (tools/v3/karta_svg.py) -->
+  <div class="ct__map"><div id="ymap" data-lat="55.767309" data-lon="37.62539">
+    <a class="ct__static" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener" aria-label="Открыть на Яндекс Картах: Печатников пер., 6"><picture><source media="(max-width: 900px)" srcset="assets/ui/karta-shema-m.svg"><img width="1600" height="900" src="assets/ui/karta-shema.svg" alt="Схема: Печатников пер., 6 — три минуты от метро «Трубная»" loading="lazy"></picture></a>
+  </div></div>
   <div class="ct__info">
     <h2 class="h2">Печатников <em>пер.,&nbsp;6</em></h2>
     <p class="ct__sub">1&nbsp;этаж · 3&nbsp;минуты от&nbsp;метро «Трубная», рядом «Золотое Яблоко» и&nbsp;рестораны</p>
@@ -172,5 +173,6 @@
 
 <script src="js/prices.js" defer></script>
 <script src="js/main.js" defer></script>
+<script src="js/karta.js" defer></script>
 </body>
 </html>

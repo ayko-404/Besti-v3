@@ -223,13 +223,7 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .ws__n b { color: var(--ink); font-weight: 500; }
 
 /* преимущества (04.11, третья редакция — как у soyka.beauty): заголовок и рейтинг сверху, ниже колонки с крупными жирными цифрами */
-.pr__top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 48px; flex-wrap: wrap; margin-bottom: clamp(48px, 6vw, 96px); }
-.pr__rt { display: grid; grid-template-columns: auto auto; align-items: center; gap: 4px 14px; color: var(--ink); text-decoration: none; }
-.pr__rt b { grid-row: span 2; font-family: var(--disp); font-weight: 300; font-size: clamp(56px, 5vw, 76px); line-height: .8; }
-.pr__stars { display: flex; gap: 4px; }
-.pr__stars svg { width: 15px; height: 15px; fill: var(--ink); }
-.pr__rt span:last-child { max-width: 15em; color: var(--muted); font-size: 14px; line-height: 1.35; transition: color .2s; }
-.pr__rt:hover span:last-child { color: var(--bordo); }
+.pr__top { margin-bottom: clamp(48px, 6vw, 96px); }
 .pr { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px clamp(28px, 3.4vw, 56px); margin: 0; padding: 0; list-style: none; }
 .pr__n { display: block; color: var(--ink); font-family: 'Cormorant Cifry', var(--disp); font-weight: 700; font-size: clamp(104px, 9vw, 140px); line-height: .78; }
 .pr__i h3 { margin-top: clamp(28px, 3vw, 40px); color: var(--ink); font-family: var(--disp); font-weight: 300; font-size: var(--t-h3); line-height: .95; }

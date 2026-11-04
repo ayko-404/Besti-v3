@@ -116,24 +116,22 @@
 
 <!-- как дойти (04.11: «карту больше и стильнее»): карта во всю ширину, тёплая чёрно-белая, адрес, часы и кнопки — светлой карточкой поверх карты (на телефоне — под картой) -->
 <section id="contacts" class="sec"><div class="wrap ct">
-  <!-- карта: Яндекс Карты JS API 2.1 (js/karta.js), своя метка; пока API не загрузился или без JS — статичная картинка -->
-  <div class="ct__map"><div id="ymap" data-lat="55.767309" data-lon="37.62539">
-    <a class="ct__static" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener"><img width="650" height="450" src="assets/ui/karta-trubnaya-bez-metki.webp" alt="Карта: Печатников пер., 6 — рядом с метро «Трубная»" loading="lazy"><img class="ct__pin" width="64" height="84" src="assets/ui/metka-karta.svg" alt="" loading="lazy"></a>
-  </div></div>
+  <!-- карта (04.11: «слишком сложная, много подписей»): своя схема по данным OpenStreetMap (tools/v3/karta_svg.py) — только улицы, метро и метка; нажатие открывает Яндекс Карты -->
+  <a class="ct__map" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener" aria-label="Открыть на Яндекс Картах: Печатников пер., 6"><picture><source media="(max-width: 900px)" srcset="assets/ui/karta-shema-m.svg"><img width="1600" height="900" src="assets/ui/karta-shema.svg" alt="Схема: Печатников пер., 6 — три минуты от метро «Трубная»" loading="lazy"></picture></a>
   <div class="ct__info">
-    <h2 class="h2">Печатников пер.,&nbsp;6 <em>в&nbsp;трёх минутах от&nbsp;«Трубной»</em></h2>
-    <ul class="ct__list">
-      <li><span>Этаж</span>1 этаж</li>
-      <li><span>Часы</span>Каждый день 10:00–22:00</li>
-      <li><span>Телефон</span><a href="tel:+79652300425">+7 (965) 230-04-25</a></li>
-      <li><span>Рядом</span>«Золотое Яблоко» и рестораны</li>
-    </ul>
+    <h2 class="h2">Печатников <em>пер.,&nbsp;6</em></h2>
+    <p class="ct__sub">1&nbsp;этаж · 3&nbsp;минуты от&nbsp;метро «Трубная», рядом «Золотое Яблоко» и&nbsp;рестораны</p>
+    <div class="ct__rows">
+      <div><span>Каждый день</span><b>10:00–22:00</b></div>
+      <div><span>Телефон</span><a href="tel:+79652300425">+7 (965) 230-04-25</a></div>
+    </div>
     <div class="btns"><a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener"><span>Записаться</span><i aria-hidden="true"></i></a><a class="btn btn--line" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener"><span>Маршрут</span><i aria-hidden="true"></i></a></div>
   </div>
 </div></section>
 </main>
 
-<!-- подвал (04.11: «упростить по максимуму, по типу soyka»): заголовок, строка, три кнопки-пилюли; внизу логотип и обязательные юридические строки -->
+<!-- подвал (04.11: «упростить по максимуму, по типу soyka»): заголовок, строка, три кнопки-пилюли; внизу логотип и юридические строки.
+     Метки «ждём ИНН и ОГРНИП» и «ждём политику» сняты со страницы по просьбе Дмитрия 04.11 — ДОБАВИТЬ ИНН, ОГРНИП и ссылку на политику, когда клиентка пришлёт (до запуска) -->
 <footer class="ft"><div class="wrap">
   <div class="ft__main">
     <div class="ft__txt">
@@ -148,7 +146,7 @@
   </div>
   <div class="ft__bot">
     <img class="ft__logo" width="1766" height="580" src="assets/ui/logo-znak-rozovyj.svg" alt="бэсти" loading="lazy">
-    <p>© 2026 бэсти · ИП Абдулагаева Зухра Загитдиновна · <span class="wait">[ждём: ИНН и ОГРНИП]</span> · <span class="wait">[ждём: политика обработки персональных данных]</span><br>*Instagram принадлежит компании Meta, признанной экстремистской и&nbsp;запрещённой на&nbsp;территории РФ</p>
+    <p>© 2026 бэсти · ИП Абдулагаева Зухра Загитдиновна<br>*Instagram принадлежит компании Meta, признанной экстремистской и&nbsp;запрещённой на&nbsp;территории РФ</p>
   </div>
 </div></footer>
 
@@ -174,6 +172,5 @@
 
 <script src="js/prices.js" defer></script>
 <script src="js/main.js" defer></script>
-<script src="js/karta.js" defer></script>
 </body>
 </html>

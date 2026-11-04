@@ -315,19 +315,17 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .rv__who small { color: var(--muted); font-size: 14px; }
 
 /* как дойти */
-/* как дойти (04.11): карта во всю ширину и высокая, адрес и кнопки — карточкой поверх карты */
+/* как дойти (04.11): своя схема по OSM во всю ширину, поверх — светлая карточка с размытием фона */
 .ct { position: relative; }
-.ct__map { position: relative; height: clamp(620px, 80vh, 840px); overflow: hidden; background: #E6E3DE; }
-.ct__map #ymap { position: absolute; inset: 0; }
-.ct__static { position: absolute; inset: 0; display: block; }
-.ct__static img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) sepia(.16) contrast(1.05) brightness(1.03); }
-.ct__pin { position: absolute; left: 89.1%; top: 56.7%; width: 46px; height: 60px; transform: translate(-50%, -100%); }
-#ymap.is-live .ct__static { display: none; }
-#ymap [class*="ground-pane"] { filter: grayscale(1) sepia(.16) contrast(1.05) brightness(1.03); } /* тёплый чёрно-белый, в тон сайта */
-.ct__info { position: absolute; left: calc(var(--pad) + clamp(16px, 2vw, 30px)); top: clamp(16px, 2vw, 30px); z-index: 2; width: min(420px, calc(100% - 32px)); padding: 30px 32px 32px; border-radius: var(--r-card); background: #FFFDFB; } /* компактная белая карточка в углу — карта видна вокруг */
-.ct__info .h2 { margin: 0 0 20px; font-size: clamp(30px, 2.6vw, 40px); }
-.ct__info .ct__list { margin-bottom: 24px; }
-.ct__info .ct__list li { grid-template-columns: 96px 1fr; padding: 9px 0; font-size: 16px; }
+.ct__map { position: relative; display: block; height: clamp(560px, 72vh, 760px); overflow: hidden; background: #ECE6DF; }
+.ct__map img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2, .8, .2, 1); }
+.ct__map:hover img { transform: scale(1.02); }
+.ct__info { position: absolute; left: calc(var(--pad) + clamp(16px, 2vw, 30px)); top: clamp(16px, 2vw, 30px); z-index: 2; width: min(400px, calc(100% - 32px)); padding: 32px 32px 30px; border-radius: var(--r-card); background: rgba(255, 253, 251, .9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.ct__info .h2 { margin: 0; font-size: clamp(40px, 3.6vw, 56px); }
+.ct__sub { margin-top: 12px; color: var(--muted); font-size: 16px; line-height: 1.5; }
+.ct__rows { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 24px 0 26px; padding-top: 20px; border-top: var(--line); }
+.ct__rows span { display: block; color: var(--muted); font-size: 13px; }
+.ct__rows b, .ct__rows a { display: block; margin-top: 4px; color: var(--ink); font-weight: 500; font-size: 17px; text-decoration: none; white-space: nowrap; }
 .ct__info .btns { gap: 10px; flex-wrap: nowrap; }
 .ct__info .btn { height: 48px; }
 .ct__info .btn > span { padding: 0 18px 0 20px; letter-spacing: .08em; }
@@ -412,6 +410,7 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .hd { --lg-max: 42px; --lg-min: 32px; }
   .hd__r { gap: 6px; } /* телефон: логотип, иконки Instagram и Telegram в рамках, как «Меню» (04.11); запись — круглой кнопкой */
   .hd__soc { width: 44px; height: 44px; }
+  .menu-open .hd__r { display: none; } /* при открытом меню — без иконок: «Закрыть» шире «Меню» и обрезался справа (04.11) */
   .hd__soc svg { width: 20px; height: 20px; }
   .hd { gap: 6px; }
   .hd .btn > i { display: none; }
@@ -425,8 +424,10 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .ha .btn { height: 56px; }
   .acc__row { gap: 2px 18px; }
   .wks { grid-template-columns: 1fr; gap: 32px; }
-  .ct__map { height: 380px; }
-  .ct__info { position: static; width: auto; margin-top: 12px; padding: 28px 24px; background: var(--paper); }
+  .ct__map { height: 420px; }
+  .ct__info { position: static; width: auto; margin-top: 12px; padding: 28px 24px; background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .ct__rows { gap: 12px; }
+  .ct__rows b, .ct__rows a { font-size: 16px; }
   .ct__info .btns { flex-wrap: wrap; }
   .ct__info .btn { height: 52px; }
   .ct__info .btns .btn { flex: 1 1 auto; }

@@ -222,27 +222,19 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .ws__n { min-width: 64px; color: var(--muted); font-size: 15px; text-align: center; font-variant-numeric: tabular-nums; }
 .ws__n b { color: var(--ink); font-weight: 500; }
 
-/* преимущества (04.11, вторая редакция): слева крупная карточка рейтинга, справа четыре карточки с фото студии */
-.pr__h { margin-bottom: clamp(40px, 5vw, 72px); }
-.pr { display: grid; grid-template-columns: minmax(0, 1.1fr) repeat(2, minmax(0, 1fr)); gap: clamp(28px, 3vw, 44px) clamp(20px, 2.4vw, 36px); }
-.pr__cs { display: contents; }
-.pr__rate { grid-row: span 2; display: flex; flex-direction: column; padding: clamp(28px, 3vw, 48px); border-radius: var(--r-card); background: var(--bordo); color: var(--cream); text-decoration: none; transition: background .2s; }
-.pr__rate:hover { background: var(--bordo-d); }
-.pr__big { font-family: var(--disp); font-weight: 300; font-size: clamp(150px, 15vw, 240px); line-height: .8; letter-spacing: -.02em; }
-.pr__stars { display: flex; gap: 6px; margin-top: 22px; }
-.pr__stars svg { width: 22px; height: 22px; fill: var(--cream); }
-.pr__rt { margin-top: 18px; font-family: var(--disp); font-weight: 300; font-style: italic; font-size: var(--t-h3); line-height: 1; }
-.pr__rs { max-width: 22em; margin-top: 14px; color: rgba(255, 250, 246, .75); }
-.pr__q { display: block; margin-top: auto; padding-top: 28px; border-top: 1px solid rgba(255, 250, 246, .25); font-family: var(--disp); font-weight: 300; font-style: italic; font-size: clamp(22px, 1.9vw, 28px); line-height: 1.15; } /* дословная цитата из отзыва с Яндекс Карт */
-.pr__q small { display: block; margin-top: 12px; color: rgba(255, 250, 246, .6); font-family: var(--ui); font-style: normal; font-size: 13px; }
-.pr__more { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; font-family: var(--ui); font-weight: 500; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; }
-.pr__more i { width: 11px; height: 11px; background: currentColor; -webkit-mask: var(--i-out) center / contain no-repeat; mask: var(--i-out) center / contain no-repeat; transition: transform .25s; }
-.pr__rate:hover .pr__more i { transform: translate(2px, -2px); }
-.pr__c figure { aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--r-card); background: #DDD6CE; }
-.pr__c img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
-.pr__c:hover img { transform: scale(1.03); }
-.pr__c h3 { margin-top: 20px; color: var(--bordo); font-family: var(--disp); font-weight: 300; font-size: var(--t-h3); line-height: .95; }
-.pr__c p { max-width: 26em; margin-top: 10px; color: var(--muted); }
+/* преимущества (04.11, третья редакция — как у soyka.beauty): заголовок и рейтинг сверху, ниже колонки с крупными жирными цифрами */
+.pr__top { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px 48px; flex-wrap: wrap; margin-bottom: clamp(48px, 6vw, 96px); }
+.pr__rt { display: grid; grid-template-columns: auto auto; align-items: center; gap: 4px 14px; color: var(--ink); text-decoration: none; }
+.pr__rt b { grid-row: span 2; font-family: var(--disp); font-weight: 300; font-size: clamp(56px, 5vw, 76px); line-height: .8; }
+.pr__stars { display: flex; gap: 4px; }
+.pr__stars svg { width: 15px; height: 15px; fill: var(--ink); }
+.pr__rt span:last-child { max-width: 15em; color: var(--muted); font-size: 14px; line-height: 1.35; transition: color .2s; }
+.pr__rt:hover span:last-child { color: var(--bordo); }
+.pr { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px clamp(28px, 3.4vw, 56px); margin: 0; padding: 0; list-style: none; }
+.pr__n { display: block; color: var(--ink); font-family: 'Cormorant Cifry', var(--disp); font-weight: 700; font-size: clamp(104px, 9vw, 140px); line-height: .78; }
+.pr__i h3 { margin-top: clamp(28px, 3vw, 40px); color: var(--ink); font-family: var(--disp); font-weight: 300; font-size: var(--t-h3); line-height: .95; }
+.pr__i p { max-width: 24em; margin-top: 14px; color: var(--muted); }
+@media (max-width: 1100px) { .pr { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* отзывы */
 .rv { display: flex; flex-direction: column; width: clamp(300px, 32vw, 440px); padding: 28px; background: var(--paper); }
@@ -368,14 +360,10 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .st__media::-webkit-scrollbar { display: none; }
   .st__media figure { flex: 0 0 72%; scroll-snap-align: start; }
   .wks { grid-template-columns: 1fr; gap: 32px; }
-  .pr { grid-template-columns: 1fr; gap: 28px; }
-  .pr__rate { grid-row: auto; padding: 28px 24px; }
-  .pr__big { font-size: 128px; }
-  .pr__stars svg { width: 18px; height: 18px; }
-  .pr__q { margin-top: 26px; padding-top: 22px; font-size: 21px; }
-  .pr__cs { display: flex; gap: 12px; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 var(--pad); scrollbar-width: none; } /* карточки лентой со свайпом, чтобы не растягивать страницу */
-  .pr__cs::-webkit-scrollbar { display: none; }
-  .pr__c { flex: 0 0 78%; scroll-snap-align: start; }
+  .pr { grid-template-columns: 1fr; gap: 44px; }
+  .pr__n { font-size: 96px; }
+  .pr__i h3 { margin-top: 22px; }
+  .pr__top { margin-bottom: 44px; }
   .ws__track { margin-right: calc(-1 * var(--pad)); }
   .ws__sl { flex-basis: calc(100% - var(--pad) - 12px); } /* справа выглядывает край следующего фото */
   .rv { width: 84vw; padding: 22px; }

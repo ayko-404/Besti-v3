@@ -44,6 +44,7 @@ button { font: inherit; color: inherit; }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
 .sec { padding: clamp(84px, 9vw, 140px) 0; }
 .sec--paper { background: var(--paper); }
+.sec--blush { background: #F5E3E2; } /* «Мастера» (04.11): пастельный розовый, светлее кнопки записи — «не белый, пастельный» */
 /* тёмный блок (04.11, «Работы», как у soyka): фон почти чёрный тёплый, заголовок молочный с розовым курсивом — как логотип на тёмном */
 .sec--dark { background: #1C1614; color: var(--cream); }
 .sec--dark .label { color: rgba(255, 250, 246, .55); }
@@ -222,6 +223,17 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .ws__n { min-width: 64px; color: var(--muted); font-size: 15px; text-align: center; font-variant-numeric: tabular-nums; }
 .ws__n b { color: var(--ink); font-weight: 500; }
 
+/* преимущества (04.11): три колонки, крупные рукописные цифры (Gogol, как логотип) «пишутся» слева направо при появлении */
+.pr__head { margin-bottom: clamp(44px, 5.5vw, 84px); }
+.pr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(32px, 4.5vw, 72px); margin: 0; padding: 0; list-style: none; }
+.pr__n { display: block; height: .66em; padding: 0 .08em; margin-left: -.06em; color: var(--bordo); font-family: 'Gogol', var(--disp); font-size: clamp(170px, 14.5vw, 220px); line-height: 1; } /* у Gogol цифра занимает 0,07–0,64 em от верха строки — высота .66em без пустоты снизу */
+.pr__i h3 { margin-top: 22px; padding-top: 26px; border-top: 1px solid rgba(31, 21, 19, .18); color: var(--bordo); font-family: var(--disp); font-weight: 300; font-size: var(--t-h3); line-height: .95; }
+.pr__i p { max-width: 24em; margin-top: 16px; color: var(--muted); }
+.pr.is-wait .pr__n { clip-path: inset(-20% 100% -20% -20%); transition: clip-path 1.1s cubic-bezier(.45, .05, .25, 1); }
+.pr.is-wait .pr__i:nth-child(2) .pr__n { transition-delay: .25s; }
+.pr.is-wait .pr__i:nth-child(3) .pr__n { transition-delay: .5s; }
+.pr.is-wait.is-on .pr__n { clip-path: inset(-20% -20% -20% -20%); }
+
 /* отзывы */
 .rv { display: flex; flex-direction: column; width: clamp(300px, 32vw, 440px); padding: 28px; background: var(--paper); }
 .rv__ph { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 22px; }
@@ -348,6 +360,9 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .st__media figure { flex: 0 0 72%; scroll-snap-align: start; }
   .tm { width: 76vw; }
   .wks { grid-template-columns: 1fr; gap: 32px; }
+  .pr { grid-template-columns: 1fr; gap: 44px; }
+  .pr__n { font-size: 150px; }
+  .pr__i h3 { margin-top: 18px; padding-top: 20px; }
   .ws__track { margin-right: calc(-1 * var(--pad)); }
   .ws__sl { flex-basis: calc(100% - var(--pad) - 12px); } /* справа выглядывает край следующего фото */
   .rv { width: 84vw; padding: 22px; }

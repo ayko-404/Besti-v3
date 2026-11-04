@@ -19,29 +19,37 @@
   mb.addEventListener('click', () => setMenu(menu.hidden));
   menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
 
-  // ВРЕМЕННО: варианты заголовка обложки (?zag=a…f, служебная панель). Две строки, перенос задан вручную.
-  // Описание под заголовком убрано (правка 04.11): на обложке только заголовок и кнопки. Убрать после выбора варианта.
+  // ВРЕМЕННО: варианты заголовка обложки (?zag=a…f, &caps=1 — заглавными; служебная панель).
+  // Три строки примерно равной длины, как у devichnik; перенос задан вручную; последняя строка — курсивный акцент.
+  // Описание под заголовком убрано (правка 04.11). Убрать после выбора варианта.
   const ZAG = {
-    a: { l1: 'Маникюр,', l2: 'похожий на&nbsp;тебя', ty: true },
-    b: { l1: 'Маникюр', l2: 'с&nbsp;характером', ty: false },
-    c: { l1: 'Маникюр', l2: 'у&nbsp;твоей бэсти', ty: true },
-    d: { l1: 'Маникюр', l2: 'под настроение', ty: false },
-    e: { l1: 'Твой маникюр,', l2: 'твои правила', ty: true },
-    f: { l1: 'Маникюр', l2: 'в&nbsp;гостях у&nbsp;бэсти', ty: false }
+    a: ['Бэсти —', 'маникюр', 'и&nbsp;педикюр'],
+    b: ['Маникюр', 'и&nbsp;педикюр', 'у&nbsp;бэсти'],
+    c: ['Маникюр,', 'похожий', 'на&nbsp;тебя'],
+    d: ['Студия', 'маникюра', 'бэсти'],
+    e: ['Маникюр', 'с&nbsp;любовью', 'от&nbsp;бэсти'],
+    f: ['Маникюр', 'в&nbsp;гостях', 'у&nbsp;бэсти']
   };
-  const zp = document.querySelector('.vpanel[aria-label="Варианты заголовка"]');
-  const setZag = (k) => {
-    const z = ZAG[k] || ZAG.c;
-    document.getElementById('zag').innerHTML = '<span>' + z.l1 + '</span><em><span>' + z.l2 + '</span></em>';
-    if (zp) zp.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.z === (ZAG[k] ? k : 'c'))));
+  const zh = document.getElementById('zag'), zp = document.querySelector('.vpanel[aria-label="Варианты заголовка"]');
+  const st = { z: 'f', caps: false };
+  try { const q = new URLSearchParams(location.search); st.z = ZAG[(q.get('zag') || '').toLowerCase()] ? q.get('zag').toLowerCase() : 'f'; st.caps = q.get('caps') === '1'; } catch (e) {}
+  const drawZag = () => {
+    const l = ZAG[st.z];
+    zh.innerHTML = '<span>' + l[0] + '</span><span>' + l[1] + '</span><em><span>' + l[2] + '</span></em>';
+    zh.classList.toggle('is-caps', st.caps);
+    if (zp) {
+      zp.querySelectorAll('[data-z]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.z === st.z)));
+      zp.querySelector('[data-caps]').setAttribute('aria-pressed', String(st.caps));
+    }
   };
-  let zk = 'c';
-  try { zk = (new URLSearchParams(location.search).get('zag') || 'c').toLowerCase(); } catch (e) {}
-  setZag(zk);
+  drawZag();
   if (zp) zp.addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
-    setZag(b.dataset.z);
-    const u = new URL(location.href); u.searchParams.set('zag', b.dataset.z); history.replaceState(null, '', u);
+    if (b.dataset.z) st.z = b.dataset.z; else st.caps = !st.caps;
+    drawZag();
+    const u = new URL(location.href); u.searchParams.set('zag', st.z);
+    if (st.caps) u.searchParams.set('caps', '1'); else u.searchParams.delete('caps');
+    history.replaceState(null, '', u);
   });
 
 

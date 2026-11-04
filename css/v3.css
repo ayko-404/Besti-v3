@@ -323,13 +323,14 @@ button { font: inherit; color: inherit; }
   .ha { top: calc(var(--ct) + 24px); left: calc(var(--cm) + 18px); right: calc(var(--cm) + 18px); bottom: calc(var(--cm) + 24px); flex-direction: column-reverse; justify-content: flex-start; }
   /* как у MECCA (правка 04.11): заголовок внизу карточки, над ним по центру карточки компактные кнопки */
   .ha > * { flex-shrink: 0; } /* иначе заголовок сжимался по высоте */
-  .ha .btns { align-self: center; width: 256px; gap: 10px; margin: auto 0; }
+  .ha .btns { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 256px; gap: 10px; } /* кнопки ровно по центру карточки («чуть пониже, к центру», 04.11) */
   .ha .btns .btn { height: 46px; font-size: 12px; }
   .ha .btns .btn > span { padding: 0 14px; letter-spacing: .1em; }
   .ha .btns .btn > i { width: 46px; }
   .hero__card::after { background: linear-gradient(to top, rgba(22, 9, 7, .78) 0%, rgba(22, 9, 7, .3) 45%, rgba(22, 9, 7, .25) 100%); }
-  .hd { background: var(--bg); color: var(--ink); }
-  .hd .lg { color: var(--bordo); }
+  /* шапка на телефоне — на чёрной подложке (проба 04.11, «посмотрим как с ней»); прежний вид — светлый фон и бордовый логотип */
+  .hd, .hd.is-solid, .menu-open .hd { background: #121010; color: var(--cream); box-shadow: none; }
+  .hd .hd__logo .lg, .hd.is-solid .hd__logo .lg, .menu-open .hd .hd__logo .lg { color: var(--pink); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

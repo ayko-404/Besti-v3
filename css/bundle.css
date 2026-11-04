@@ -285,13 +285,13 @@ button { font: inherit; color: inherit; }
 .hero__card { inset: var(--ct) var(--cm) var(--cm); border-radius: 16px; isolation: isolate; transform: translateZ(0); -webkit-mask-image: -webkit-radial-gradient(white, black); }
 .ha { top: calc(var(--ct) + 24px); left: calc(var(--cm) + 18px); right: calc(var(--cm) + 18px); bottom: calc(var(--cm) + 24px); flex-direction: column-reverse; justify-content: flex-start; }
 .ha > * { flex-shrink: 0; }
-.ha .btns { align-self: center; width: 256px; gap: 10px; margin: auto 0; }
+.ha .btns { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 256px; gap: 10px; }
 .ha .btns .btn { height: 46px; font-size: 12px; }
 .ha .btns .btn > span { padding: 0 14px; letter-spacing: .1em; }
 .ha .btns .btn > i { width: 46px; }
 .hero__card::after { background: linear-gradient(to top, rgba(22, 9, 7, .78) 0%, rgba(22, 9, 7, .3) 45%, rgba(22, 9, 7, .25) 100%); }
-.hd { background: var(--bg); color: var(--ink); }
-.hd .lg { color: var(--bordo); }
+.hd, .hd.is-solid, .menu-open .hd { background: #121010; color: var(--cream); box-shadow: none; }
+.hd .hd__logo .lg, .hd.is-solid .hd__logo .lg, .menu-open .hd .hd__logo .lg { color: var(--pink); }
 }
 @media (prefers-reduced-motion: reduce) {
 html { scroll-behavior: auto; }

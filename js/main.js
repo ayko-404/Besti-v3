@@ -37,6 +37,13 @@
     const link = lgSvg.closest('.hd__logo');
     if (scrollY > 0) scrollTo(0, 0); // заставка — с верха страницы
     lockScroll(true);
+    // пока идёт заставка, сайт не листается: ни колёсиком, ни пальцем, ни клавишами (CSS тоже держит overflow: hidden)
+    const stopScroll = (e) => e.preventDefault();
+    const stopKeys = (e) => { if ([' ', 'Spacebar', 'ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End'].includes(e.key)) e.preventDefault(); };
+    addEventListener('wheel', stopScroll, { passive: false });
+    addEventListener('touchmove', stopScroll, { passive: false });
+    addEventListener('keydown', stopKeys);
+    const freeScroll = () => { removeEventListener('wheel', stopScroll); removeEventListener('touchmove', stopScroll); removeEventListener('keydown', stopKeys); };
     link.classList.add('is-writing'); // подпись «студия маникюра» появится после приземления
     const r = lgSvg.getBoundingClientRect(), lr = link.getBoundingClientRect();
     const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
@@ -51,7 +58,7 @@
         root.classList.remove('is-intro');
         link.classList.remove('is-writing');
         link.style.transition = ''; link.style.transformOrigin = '';
-        lockScroll(false);
+        lockScroll(false); freeScroll();
       }, 1000);
     }, 250));
   } else {

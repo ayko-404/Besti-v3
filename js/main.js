@@ -167,30 +167,55 @@
     addEventListener('resize', upd); upd();
   });
 
-  // работы: открытие на весь экран, листание стрелками, клавишами и свайпом
-  const works = [...document.querySelectorAll('.wk')], lb = document.querySelector('.lb');
-  if (lb && works.length) {
-    const img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
-    let cur = 0, from = null;
-    const show = (i) => {
-      cur = (i + works.length) % works.length;
-      const s = works[cur].querySelector('img');
-      img.src = s.src; img.alt = s.alt; cap.textContent = works[cur].querySelector('.wk__cap').textContent;
+  // работы: веер карточек (как в прошлой версии) — стрелки, свайп, счётчик; средняя карточка открывается на весь экран
+  const pile = document.querySelector('.pile'), lb = document.querySelector('.lb');
+  const works = pile ? [...pile.querySelectorAll('.pc')] : [];
+  if (pile && works.length) {
+    const total = works.length, jit = [-7, 5, -4, 8, -6, 4, -8, 6], num = document.querySelector('.pile__n b');
+    let cur = 0;
+    const step = () => (innerWidth <= 900 ? 112 : 210);
+    const draw = () => {
+      works.forEach((c, i) => {
+        let d = ((i - cur) % total + total) % total; if (d > total / 2) d -= total;
+        const a = Math.abs(d);
+        c.style.transform = `translateX(${d * step()}px) translateY(${a * 18}px) rotate(${d === 0 ? 0 : jit[i % 8]}deg) scale(${1 - Math.min(a, 3) * 0.08})`;
+        c.style.zIndex = 20 - a; c.style.opacity = a > 2 ? 0 : 1;
+        c.style.pointerEvents = a > 2 ? 'none' : ''; c.tabIndex = d === 0 ? 0 : -1;
+        c.classList.toggle('is-cur', d === 0);
+      });
+      if (num) num.textContent = cur + 1;
     };
-    const open = (i, btn) => { from = btn; show(i); lb.hidden = false; lockScroll(true); requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add('is-on'))); lb.querySelector('.lb__x').focus({ preventScroll: true }); };
-    const close = () => { lb.classList.remove('is-on'); setTimeout(() => { lb.hidden = true; lockScroll(false); if (from) from.focus({ preventScroll: true }); }, 250); };
-    works.forEach((w, i) => w.addEventListener('click', () => open(i, w)));
-    lb.querySelector('.lb__prev').addEventListener('click', () => show(cur - 1));
-    lb.querySelector('.lb__next').addEventListener('click', () => show(cur + 1));
-    lb.addEventListener('click', (e) => { if (e.target === lb || e.target.closest('.lb__x')) close(); });
-    let sx = null;
-    lb.addEventListener('pointerdown', (e) => { sx = e.clientX; });
-    lb.addEventListener('pointerup', (e) => { if (sx === null) return; const d = e.clientX - sx; sx = null; if (Math.abs(d) > 50) show(cur + (d < 0 ? 1 : -1)); });
-    document.addEventListener('keydown', (e) => {
-      if (lb.hidden) return;
-      if (e.key === 'ArrowRight') show(cur + 1);
-      if (e.key === 'ArrowLeft') show(cur - 1);
-    });
+    const go = (n) => { cur = (n + total) % total; draw(); };
+    document.querySelectorAll('.pile__nav .arrow').forEach((b) => b.addEventListener('click', () => go(cur + +b.dataset.d)));
+    let px = null, moved = false;
+    pile.addEventListener('pointerdown', (e) => { px = e.clientX; moved = false; });
+    pile.addEventListener('pointerup', (e) => { if (px === null) return; const d = e.clientX - px; px = null; if (Math.abs(d) >= 40) { moved = true; go(cur + (d < 0 ? 1 : -1)); } });
+    addEventListener('resize', draw); draw();
+
+    if (lb) {
+      const img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
+      let from = null;
+      const show = (i) => {
+        go(i);
+        const s = works[cur].querySelector('img');
+        img.src = s.src; img.alt = s.alt; cap.textContent = works[cur].querySelector('.pc__cap').textContent;
+      };
+      const open = (btn) => { from = btn; show(cur); lb.hidden = false; lockScroll(true); requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add('is-on'))); lb.querySelector('.lb__x').focus({ preventScroll: true }); };
+      const close = () => { lb.classList.remove('is-on'); setTimeout(() => { lb.hidden = true; lockScroll(false); if (from) works[cur].focus({ preventScroll: true }); }, 250); };
+      // клик по боковой карточке подвигает веер к ней, по средней — открывает
+      works.forEach((w, i) => w.addEventListener('click', () => { if (moved) { moved = false; return; } if (i === cur) open(w); else go(i); }));
+      lb.querySelector('.lb__prev').addEventListener('click', () => show(cur - 1));
+      lb.querySelector('.lb__next').addEventListener('click', () => show(cur + 1));
+      lb.addEventListener('click', (e) => { if (e.target === lb || e.target.closest('.lb__x')) close(); });
+      let sx = null;
+      lb.addEventListener('pointerdown', (e) => { sx = e.clientX; });
+      lb.addEventListener('pointerup', (e) => { if (sx === null) return; const d = e.clientX - sx; sx = null; if (Math.abs(d) > 50) show(cur + (d < 0 ? 1 : -1)); });
+      document.addEventListener('keydown', (e) => {
+        if (lb.hidden) return;
+        if (e.key === 'ArrowRight') show(cur + 1);
+        if (e.key === 'ArrowLeft') show(cur - 1);
+      });
+    }
   }
 
   // Escape закрывает открытое окно

@@ -93,7 +93,7 @@ button { font: inherit; color: inherit; }
 .hd__menu[aria-expanded="true"] i::after { content: ""; position: absolute; left: 0; top: -1px; width: 22px; border-top: 1px solid currentColor; transform: rotate(-90deg); }
 .hd__r { display: flex; gap: 8px; }
 .hd__soc { display: grid; place-items: center; width: 52px; height: 52px; border: 1px solid currentColor; border-radius: var(--r); color: inherit; transition: background .2s, color .2s; } /* иконки Instagram и Telegram (04.11) */
-.hd__soc svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+.hd__soc svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linejoin: round; stroke-linecap: round; }
 .hd__soc svg .dot { fill: currentColor; stroke: none; }
 .hd__soc:hover { background: var(--cream); color: var(--ink); }
 .hd.is-solid .hd__soc:hover { background: var(--ink); color: var(--cream); }
@@ -200,19 +200,17 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .st__media figure { aspect-ratio: 3 / 4; overflow: hidden; background: #E8DDD3; }
 .st__media img, .st__media video { width: 100%; height: 100%; object-fit: cover; }
 
-/* работы (04.11, как у soyka.beauty): слева текст, справа лента до края экрана */
-.wks { display: grid; grid-template-columns: minmax(300px, 460px) minmax(0, 1fr); gap: clamp(32px, 4.5vw, 72px); align-items: start; }
-.wks__intro .h2 { margin-top: 16px; }
-.wks__text { margin-top: 24px; font-size: 18px; line-height: 1.6; }
-.wks__intro .arrows { justify-content: flex-start; margin-top: 32px; }
-.wks__intro .tlink { margin-top: 28px; }
-.wks__row { margin-right: calc(-1 * (var(--pad) + max(0px, (100vw - var(--max)) / 2))); padding: 0 calc(var(--pad) + max(0px, (100vw - var(--max)) / 2)) 0 0; scroll-padding: 0; }
-/* работы */
-.wk { width: clamp(250px, 26vw, 370px); padding: 0; border: 0; background: none; text-align: left; cursor: zoom-in; }
-.wk__ph { display: block; aspect-ratio: 3 / 4; overflow: hidden; background: #E8DDD3; }
-.wk__ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
-.wk:hover .wk__ph img { transform: scale(1.03); }
-.wk__cap { display: block; margin-top: 10px; color: var(--muted); font-size: var(--t-small); }
+/* работы (04.11): веер карточек, как в прошлой версии, в новом оформлении — белые карточки-полароиды с мягкой тенью */
+#works { overflow-x: clip; } /* дальние карточки веера уезжают за край — без этого страница прокручивается вбок */
+.pile { position: relative; height: 540px; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.pc { position: absolute; left: 50%; top: 10px; width: 340px; margin-left: -170px; padding: 10px 10px 14px; border: 1px solid var(--ink); border-radius: var(--r-card); background: #FFF; color: var(--ink); text-align: left; cursor: pointer; transition: transform .6s cubic-bezier(.2, .8, .2, 1), opacity .45s; will-change: transform; }
+.pc.is-cur { cursor: zoom-in; } /* без теней (04.11: «тень выглядит грязно») — только тонкая обводка, как у кнопок */
+.pc__ph { display: block; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 3px; background: #E2DDD6; }
+.pc__ph img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.pc__cap { display: block; margin-top: 11px; color: var(--muted); font-size: 14px; }
+.pile__nav { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 10px; }
+.pile__n { min-width: 64px; color: var(--muted); font-size: 15px; text-align: center; }
+.pile__n b { color: var(--ink); font-weight: 500; }
 
 /* отзывы */
 .rv { display: flex; flex-direction: column; width: clamp(300px, 32vw, 440px); padding: 28px; background: var(--paper); }
@@ -276,13 +274,13 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .fab { position: fixed; right: 24px; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 45; display: grid; place-items: center; width: 108px; height: 108px; border-radius: 50%; background: var(--bordo); color: var(--cream); text-decoration: none; box-shadow: 0 6px 22px rgba(31, 21, 19, .18); opacity: 0; transform: scale(.7) rotate(-20deg); pointer-events: none; transition: opacity .5s ease, transform .6s cubic-bezier(.2, .9, .3, 1.2), background .25s; }
 .fab.is-on { opacity: 1; transform: none; pointer-events: auto; }
 .fab__ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: fabSpin 18s linear infinite; }
-.fab__ring text { fill: currentColor; font-family: var(--ui); font-weight: 600; font-size: 8.6px; letter-spacing: .12em; }
-.fab__ic { width: 22px; height: 22px; background: var(--pink); -webkit-mask: var(--i-out) center / contain no-repeat; mask: var(--i-out) center / contain no-repeat; transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
+.fab__t { position: relative; display: flex; flex-direction: column; align-items: center; font-family: var(--ui); font-weight: 600; font-size: 11px; line-height: 1.2; letter-spacing: .07em; text-transform: uppercase; text-align: center; } /* «Онлайн-запись» в центре, стрелка под текстом (04.11) */
+.fab__ic { width: 15px; height: 15px; margin-top: 5px; background: var(--pink); -webkit-mask: var(--i-out) center / contain no-repeat; mask: var(--i-out) center / contain no-repeat; transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
 .fab.is-on:hover { background: var(--bordo-d); }
 .fab:hover .fab__ring { animation-play-state: paused; }
-.fab:hover .fab__ic { transform: translate(2px, -2px) scale(1.1); }
+.fab:hover .fab__ic { transform: translate(2px, -2px); }
 @keyframes fabSpin { to { transform: rotate(360deg); } }
-@media (max-width: 900px) { .fab { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); width: 92px; height: 92px; } .fab__ic { width: 19px; height: 19px; } }
+@media (max-width: 900px) { .fab { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); width: 96px; height: 96px; } .fab__t { font-size: 9.8px; } .fab__ic { width: 13px; height: 13px; margin-top: 4px; } }
 @media (prefers-reduced-motion: reduce) { .fab__ring { animation: none; } }
 
 /* ── просмотр работы на весь экран ── */
@@ -315,10 +313,11 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .hd__logo span { display: none; }
   .hd .btn { height: 44px; }
   .hd .btn > span { padding: 0 12px; letter-spacing: .04em; font-size: 12px; }
-  .hd { --lg-max: 46px; --lg-min: 34px; }
-  .hd__r { gap: 4px; } /* телефон: логотип, иконки Instagram и Telegram без рамок, «Меню»; запись — круглой кнопкой */
-  .hd__soc { width: 40px; height: 44px; border: 0; }
-  .hd__soc svg { width: 22px; height: 22px; }
+  .hd { --lg-max: 42px; --lg-min: 32px; }
+  .hd__r { gap: 6px; } /* телефон: логотип, иконки Instagram и Telegram в рамках, как «Меню» (04.11); запись — круглой кнопкой */
+  .hd__soc { width: 44px; height: 44px; }
+  .hd__soc svg { width: 20px; height: 20px; }
+  .hd { gap: 6px; }
   .hd .btn > i { display: none; }
   .ha { bottom: calc(var(--edge) + 22px); }
   .hero__card::after { background: linear-gradient(to top, rgba(22, 9, 7, .82) 0%, rgba(22, 9, 7, .45) 55%, rgba(22, 9, 7, .3) 100%); }
@@ -340,10 +339,8 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .st__media::-webkit-scrollbar { display: none; }
   .st__media figure { flex: 0 0 72%; scroll-snap-align: start; }
   .tm { width: 76vw; }
-  .wk { width: 72vw; }
-  .wks { grid-template-columns: 1fr; gap: 32px; }
-  .wks__row { margin: 0 calc(-1 * var(--pad)); padding: 0 var(--pad); scroll-padding: 0 var(--pad); }
-  .wks__intro .arrows { display: none; }
+  .pile { height: 420px; }
+  .pc { width: 262px; margin-left: -131px; padding: 8px 8px 12px; }
   .rv { width: 84vw; padding: 22px; }
   .ct { grid-template-columns: 1fr; }
   .ct__info { order: -1; }
@@ -352,11 +349,11 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .promo__box { padding: 52px 24px 28px; }
   .lb .arrow { top: auto; bottom: 16px; margin: 0; }
 }
-@media (min-width: 410px) and (max-width: 900px) { .hd { --lg-max: 50px; --lg-min: 36px; } } /* телефон: где есть место — логотип крупнее */
+@media (min-width: 410px) and (max-width: 900px) { .hd { --lg-max: 48px; --lg-min: 34px; } } /* телефон: где есть место — логотип крупнее */
 @media (min-width: 600px) and (max-width: 900px) { .hd { --lg-max: 72px; --lg-min: 44px; } }
 @media (max-width: 380px) { /* узкий телефон: крупный логотип и «Записаться» не должны касаться; заголовок обложки чуть меньше, чтобы строки не переносились */
   .ha h1 { font-size: 50px; }
-  .hd { --lg-max: 38px; --lg-min: 30px; }
+  .hd { --lg-max: 32px; --lg-min: 28px; }
   .hd .btn > span { padding: 0 9px; }
 }
 /* небольшие скругления (решение Дмитрия 04.11): 3 px у кнопок и элементов управления, 6 px у фото, карточек и окон */

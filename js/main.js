@@ -124,32 +124,41 @@
   promo.addEventListener('click', (e) => { if (e.target === promo || e.target.closest('.promo__x, a')) closePromo(); });
 
   // прайс: разделы раскрываются, в строке раздела — цена «от»
-  const acc = document.getElementById('acc');
   const num = (p) => { const m = String(p).replace(/\s/g, '').match(/\d+/); return m ? +m[0] : Infinity; };
   const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  acc.innerHTML = (window.BESTI_PRICES || []).map((c) => {
-    const from = Math.min(...c.rows.map((r) => num(r.p)));
-    return '<details class="acc__it" name="prajs"><summary class="acc__sum">' +
-      (c.img ? '<span class="acc__ph"><img src="' + c.img + '" width="176" height="220" alt="" loading="lazy"></span>' : '') +
-      '<span class="acc__t">' + esc(c.title) + '</span>' +
-      '<span class="acc__from">от ' + fmt(from) + ' ₽</span><span class="acc__pl" aria-hidden="true"></span></summary>' +
-      '<ul class="acc__list">' + c.rows.map((r) =>
-        '<li class="acc__row"><span class="acc__n">' + esc(r.n) + '</span>' +
-        (r.c ? '<span class="acc__c">' + esc(r.c.split(' · ').join(', ')) + '</span>' : '') +
-        '<span class="acc__p">' + esc(r.p) + '</span><span class="acc__time">' + esc(r.t) + '</span></li>').join('') +
-      '</ul></details>';
-  }).join('');
-  // открыт только один раздел прайса (04.11: «чтобы не растягивать страницу»). name="prajs" делает это в новых браузерах,
-  // код ниже — для остальных. Если раздел выше схлопнулся и заголовок открытого уехал за верх экрана — подкручиваем к нему
-  acc.addEventListener('toggle', (e) => {
-    const d = e.target;
-    if (!d.open) return;
-    acc.querySelectorAll('details[open]').forEach((x) => { if (x !== d) x.open = false; });
-    requestAnimationFrame(() => {
-      const top = d.getBoundingClientRect().top, hdH = document.querySelector('.hd').offsetHeight;
-      if (top < hdH + 8) scrollBy({ top: top - hdH - 16, behavior: 'smooth' });
+  // услуги и цены (04.11, как у soyka): крупные карточки категорий сверху, под ними — список услуг выбранной категории
+  const pc = document.getElementById('pc');
+  const cats = window.BESTI_PRICES || [];
+  if (pc && cats.length) {
+    const rowsHtml = (c) => '<ul class="acc__list">' + c.rows.map((r) =>
+      '<li class="acc__row"><span class="acc__n">' + esc(r.n) + '</span>' +
+      (r.c ? '<span class="acc__c">' + esc(r.c.split(' · ').join(', ')) + '</span>' : '') +
+      '<span class="acc__p">' + esc(r.p) + '</span><span class="acc__time">' + esc(r.t) + '</span></li>').join('') + '</ul>';
+    pc.innerHTML = '<div class="pc__cats" role="tablist" aria-label="Категории услуг">' + cats.map((c, i) => {
+      const from = Math.min(...c.rows.map((r) => num(r.p)));
+      return '<button class="pc__cat" type="button" role="tab" id="pc-t-' + c.id + '" aria-controls="pc-panel" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '">' +
+        '<span class="pc__ph"><img src="' + (c.kv || c.img) + '" width="720" height="720" alt="" loading="lazy"></span>' +
+        '<span class="pc__t">' + esc(c.title) + '</span><span class="pc__from">от ' + fmt(from) + ' ₽</span></button>';
+    }).join('') + '</div><div class="pc__panel" id="pc-panel" role="tabpanel"></div>';
+    const tabs = [...pc.querySelectorAll('.pc__cat')], panel = pc.querySelector('.pc__panel');
+    const pick = (i, focus) => {
+      tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === i); t.tabIndex = k === i ? 0 : -1; });
+      panel.setAttribute('aria-labelledby', tabs[i].id);
+      panel.classList.remove('is-in'); panel.innerHTML = rowsHtml(cats[i]);
+      requestAnimationFrame(() => panel.classList.add('is-in'));
+      if (focus) tabs[i].focus();
+      // на телефоне выбранная карточка подъезжает в ленте
+      const row = tabs[i].parentElement;
+      if (row.scrollWidth > row.clientWidth + 4) row.scrollTo({ left: tabs[i].offsetLeft - row.offsetLeft - parseFloat(getComputedStyle(row).paddingLeft), behavior: 'smooth' });
+    };
+    tabs.forEach((t, i) => t.addEventListener('click', () => pick(i)));
+    pc.querySelector('.pc__cats').addEventListener('keydown', (e) => {
+      const i = tabs.indexOf(document.activeElement); if (i < 0) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); pick((i + 1) % tabs.length, true); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); pick((i - 1 + tabs.length) % tabs.length, true); }
     });
-  }, true);
+    pick(0);
+  }
 
   // ленты: стрелки листают на одну карточку, на краях гаснут
   document.querySelectorAll('.arrows[data-for]').forEach((nav) => {

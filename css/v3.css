@@ -106,17 +106,17 @@ button { font: inherit; color: inherit; }
 .menu__foot .btn { margin-top: 18px; }
 .menu-open .hd { background: var(--bg); color: var(--ink); }
 
-/* ── заставка при загрузке (04.11): на бордовом экране по центру от руки пишется «бэсти», затем логотип улетает
-   на своё место в шапке, фон растворяется. Один раз за посещение (или ?intro=1); без неё — при «уменьшить движение» и без JS ── */
-.intro-ov { display: none; }
-html.is-intro .intro-ov { display: block; position: fixed; inset: 0; z-index: 49; background: var(--bordo); transition: opacity .9s ease; }
-html.is-intro .intro-ov.is-out { opacity: 0; }
+/* ── заставка при загрузке (04.11): без подложки — при заходе на сайт поверх видео по центру крупно от руки пишется «бэсти»,
+   затем логотип уходит на своё место в шапке; заголовок, кнопки обложки и шапки проявляются после. При каждом заходе;
+   нет при «уменьшить движение» и без JS. Класс страницы — is-intro ── */
 html.is-intro .hd { background: transparent; box-shadow: none; }
 html.is-intro .hd__l, html.is-intro .hd__r { opacity: 0; pointer-events: none; }
 .hd__l, .hd__r { transition: opacity .6s .1s; }
 html.is-intro .hd__logo { opacity: 0; }
 html.is-intro .hd__logo.is-placed { opacity: 1; }
 html.is-intro .hd .hd__logo .lg { color: var(--pink); }
+html.is-intro .ha { opacity: 0; transform: translateY(16px); }
+.ha { transition: opacity .8s .2s, transform .8s .2s; }
 
 /* ── обложка (общая часть) ── */
 .hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; background: var(--bg); color: var(--cream); }

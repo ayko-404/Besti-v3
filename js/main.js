@@ -30,12 +30,12 @@
     }, fillAt + 520);
   });
 
-  // заставка при загрузке (04.11): на бордовом экране по центру крупно пишется «бэсти», затем логотип плавно уменьшается
-  // и улетает на своё место в шапке, фон растворяется, проявляются кнопки шапки и подпись. Один раз за посещение (или ?intro=1)
+  // заставка при загрузке (04.11): без подложки — поверх видео по центру крупно пишется «бэсти», затем логотип плавно
+  // уменьшается и уходит на своё место в шапке; заголовок, кнопки обложки и шапки проявляются после. При каждом заходе
   const introOn = root.classList.contains('is-intro') && lgSvg && lgSvg.animate && !calm;
   if (introOn) {
-    const ov = document.querySelector('.intro-ov'), link = lgSvg.closest('.hd__logo');
-    try { sessionStorage.setItem('besti-intro', '1'); } catch (e) {}
+    const link = lgSvg.closest('.hd__logo');
+    if (scrollY > 0) scrollTo(0, 0); // заставка — с верха страницы
     lockScroll(true);
     link.classList.add('is-writing'); // подпись «студия маникюра» появится после приземления
     const r = lgSvg.getBoundingClientRect(), lr = link.getBoundingClientRect();
@@ -44,18 +44,16 @@
     link.style.transformOrigin = (cx - lr.left) + 'px ' + (cy - lr.top) + 'px';
     link.style.transform = 'translate(' + (innerWidth / 2 - cx) + 'px, ' + (innerHeight / 2 - cy) + 'px) scale(' + k.toFixed(3) + ')';
     link.classList.add('is-placed');
-    writeLogo(lgSvg, 1800, 250).then(() => setTimeout(() => {
-      link.style.transition = 'transform 1.05s cubic-bezier(.7, 0, .2, 1)';
+    writeLogo(lgSvg, 1700, 300).then(() => setTimeout(() => {
+      link.style.transition = 'transform 1s cubic-bezier(.7, 0, .2, 1)';
       link.style.transform = '';
-      ov.classList.add('is-out');
       setTimeout(() => {
         root.classList.remove('is-intro');
         link.classList.remove('is-writing');
         link.style.transition = ''; link.style.transformOrigin = '';
         lockScroll(false);
-        setTimeout(() => ov.remove(), 900);
-      }, 1050);
-    }, 200));
+      }, 1000);
+    }, 250));
   } else {
     root.classList.remove('is-intro');
     // без заставки (повторный заход в том же посещении) логотип дописывается прямо в шапке

@@ -223,6 +223,19 @@
     }
   }
 
+  // галерея «В гостях у бэсти»: кадры проявляются по очереди, когда доезжают до экрана (без JS и при «меньше движения» — сразу видны)
+  const gl = document.querySelector('.gl');
+  if (gl && 'IntersectionObserver' in window && !calm) {
+    gl.classList.add('is-wait');
+    const gio = new IntersectionObserver((es) => es.forEach((en) => {
+      if (!en.isIntersecting) return;
+      const i = [...gl.children].indexOf(en.target);
+      en.target.style.transitionDelay = (i % 3) * 0.12 + 's';
+      en.target.classList.add('is-on'); gio.unobserve(en.target);
+    }), { rootMargin: '0px 0px -12% 0px' });
+    [...gl.children].forEach((x) => gio.observe(x));
+  }
+
   // Escape закрывает открытое окно
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;

@@ -205,11 +205,21 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .tm .tlink { margin-top: 14px; }
 
 /* студия */
-.st__wide { aspect-ratio: 2 / 1; overflow: hidden; background: #E8DDD3; }
-.st__wide img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
-.st__media { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.6vw, 22px); margin-top: clamp(12px, 1.6vw, 22px); }
-.st__media figure { aspect-ratio: 3 / 4; overflow: hidden; background: #E8DDD3; }
-.st__media img, .st__media video { width: 100%; height: 100%; object-fit: cover; }
+/* в гостях у бэсти (04.11): мозаика фото и видео разного размера по сетке 12 колонок; кадры проявляются при прокрутке */
+.gl__h { margin-bottom: clamp(36px, 4.5vw, 64px); }
+.gl { --u: clamp(40px, 4.45vw, 64px); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: var(--u); gap: clamp(10px, 1vw, 14px); }
+.gl__i { margin: 0; overflow: hidden; border-radius: var(--r-card); background: #DDD6CE; }
+.gl__i img, .gl__i video { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2, .8, .2, 1); }
+.gl__i:hover img, .gl__i:hover video { transform: scale(1.03); }
+.gl__i--g1 { grid-column: 1 / 8; grid-row: 1 / 8; }
+.gl__i--g2 { grid-column: 8 / 13; grid-row: 1 / 11; }
+.gl__i--g3 { grid-column: 1 / 5; grid-row: 8 / 15; }
+.gl__i--g4 { grid-column: 5 / 8; grid-row: 8 / 12; }
+.gl__i--g5 { grid-column: 8 / 13; grid-row: 11 / 19; }
+.gl__i--g6 { grid-column: 5 / 8; grid-row: 12 / 19; }
+.gl__i--g7 { grid-column: 1 / 5; grid-row: 15 / 19; }
+.gl.is-wait .gl__i { opacity: 0; transform: translateY(28px) scale(.985); transition: opacity .8s ease, transform 1s cubic-bezier(.2, .8, .2, 1); }
+.gl.is-wait .gl__i.is-on { opacity: 1; transform: none; }
 
 /* работы (04.11, как у soyka.beauty): слева текст, справа одно крупное фото-слайдер со стрелками и счётчиком */
 .wks { display: grid; grid-template-columns: minmax(0, 1fr) clamp(380px, 40vw, 580px); gap: clamp(40px, 6vw, 110px); align-items: start; }
@@ -327,7 +337,7 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .hd.is-solid { padding-top: 8px; padding-bottom: 8px; }
   .hd__menu { height: 44px; padding: 0 12px; gap: 8px; font-size: 12px; letter-spacing: .08em; }
   .hd__menu i { width: 18px; }
-  .hd__logo span { display: none; }
+  .hd__logo span, .hd.is-solid .hd__logo span { display: block; margin-top: 3px; font-size: 8.5px; letter-spacing: .22em; } /* подпись «студия маникюра» под логотипом и на телефоне (04.11) */
   .hd .btn { height: 44px; }
   .hd .btn > span { padding: 0 12px; letter-spacing: .04em; font-size: 12px; }
   .hd { --lg-max: 42px; --lg-min: 32px; }
@@ -345,11 +355,11 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .ha .btns { width: auto; gap: 12px; }
   .ha .btn { height: 56px; }
   .acc__row { gap: 2px 18px; }
-  .st__wide { aspect-ratio: 4 / 3; }
-  .st__media { display: flex; gap: 12px; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; scroll-padding: 0 var(--pad); }
-  .st__media::-webkit-scrollbar { display: none; }
-  .st__media figure { flex: 0 0 72%; scroll-snap-align: start; }
   .wks { grid-template-columns: 1fr; gap: 32px; }
+  .gl { grid-template-columns: 1fr 1fr; grid-auto-rows: auto; gap: 8px; }
+  .gl__i { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 3 / 4; }
+  .gl__i--g1, .gl__i--g4, .gl__i--g7 { grid-column: 1 / -1 !important; aspect-ratio: 4 / 3; }
+  .gl__i--g2, .gl__i--g5 { aspect-ratio: 9 / 16; }
   .pc__cats { display: flex; gap: 12px; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 var(--pad); scrollbar-width: none; }
   .pc__cats::-webkit-scrollbar { display: none; }
   .pc__cat { flex: 0 0 58%; scroll-snap-align: start; }
@@ -375,11 +385,12 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .hd .btn > span { padding: 0 9px; }
 }
 /* небольшие скругления (решение Дмитрия 04.11): 3 px у кнопок и элементов управления, 6 px у фото, карточек и окон */
-:root { --r: 3px; --r-card: 6px; } /* кнопки и элементы управления — 3 px («на кнопках верни как было»), фото и карточки — 6 px (04.11) */
+:root { --r: 3px; --r-card: 18px; } /* кнопки и элементы управления — 3 px; фото и карточки — крупное скругление 18 px, как у soyka (04.11: «у карточек скругления крупные»), на телефоне 14 px */
+@media (max-width: 900px) { :root { --r-card: 14px; } }
 .btn { border-radius: var(--r); overflow: hidden; }
 .hd__menu, .arrow, .acc__pl, .lb__x, .wait { border-radius: var(--r); }
 .promo__box, .rv { border-radius: var(--r-card); overflow: hidden; }
-.tm__ph, .wk__ph, .st__wide, .st__media figure, .ct__map, .rv__ph img, .lb img { border-radius: var(--r-card); }
+.tm__ph, .wk__ph, .ct__map, .rv__ph img, .lb img { border-radius: var(--r-card); }
 
 /* телефон: обложка карточкой, как у maandmi.ru (правка 04.11) — шапка на светлом фоне сверху, ниже видео в карточке
    со скруглёнными углами и полями по краям; заголовок и кнопки внутри карточки. На компьютере обложка во весь экран */

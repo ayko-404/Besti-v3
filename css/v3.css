@@ -200,17 +200,18 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .st__media figure { aspect-ratio: 3 / 4; overflow: hidden; background: #E8DDD3; }
 .st__media img, .st__media video { width: 100%; height: 100%; object-fit: cover; }
 
-/* работы (04.11): веер карточек, как в прошлой версии, в новом оформлении — белые карточки-полароиды с мягкой тенью */
-#works { overflow-x: clip; } /* дальние карточки веера уезжают за край — без этого страница прокручивается вбок */
-.pile { position: relative; height: 540px; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
-.pc { position: absolute; left: 50%; top: 10px; width: 340px; margin-left: -170px; padding: 10px 10px 14px; border: 1px solid var(--ink); border-radius: var(--r-card); background: #FFF; color: var(--ink); text-align: left; cursor: pointer; transition: transform .6s cubic-bezier(.2, .8, .2, 1), opacity .45s; will-change: transform; }
-.pc.is-cur { cursor: zoom-in; } /* без теней (04.11: «тень выглядит грязно») — только тонкая обводка, как у кнопок */
-.pc__ph { display: block; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 3px; background: #E2DDD6; }
-.pc__ph img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-.pc__cap { display: block; margin-top: 11px; color: var(--muted); font-size: 14px; }
-.pile__nav { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 10px; }
-.pile__n { min-width: 64px; color: var(--muted); font-size: 15px; text-align: center; }
-.pile__n b { color: var(--ink); font-weight: 500; }
+/* работы (04.11, как у soyka.beauty): слева текст, справа одно крупное фото-слайдер с точками */
+.wks { display: grid; grid-template-columns: minmax(0, 1fr) clamp(380px, 40vw, 580px); gap: clamp(40px, 6vw, 110px); align-items: start; }
+.wks__text { max-width: 30em; margin-top: 22px; color: var(--muted); }
+.ws { min-width: 0; }
+.ws__track { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.ws__track::-webkit-scrollbar { display: none; }
+.ws__sl { flex: 0 0 100%; aspect-ratio: 4 / 5; padding: 0; border: 0; border-radius: var(--r-card); overflow: hidden; background: #E2DDD6; scroll-snap-align: start; cursor: zoom-in; }
+.ws__sl img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ws__dots { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.ws__dot { position: relative; width: 9px; height: 9px; padding: 0; border: 1px solid var(--ink); border-radius: 50%; background: transparent; cursor: pointer; transition: background .2s; }
+.ws__dot::before { content: ""; position: absolute; inset: -8px -5px; } /* область нажатия больше самой точки */
+.ws__dot.is-cur { background: var(--ink); }
 
 /* отзывы */
 .rv { display: flex; flex-direction: column; width: clamp(300px, 32vw, 440px); padding: 28px; background: var(--paper); }
@@ -271,12 +272,14 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 
 /* ── круглая кнопка записи (04.11, по образцу soyka.beauty; «сделай покрасивее»): бордовый круг, по кругу медленно
    вращается «ЗАПИСАТЬСЯ ОНЛАЙН ·», в центре стрелка. Появляется, когда обложку с её кнопками прокрутили ── */
-/* плавающая кнопка записи (04.11): прямоугольная, с обводкой, по центру внизу; видна везде, кроме первого экрана */
-.btn.fab { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom)); z-index: 45; background: var(--bg); color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); opacity: 0; transform: translate(-50%, 14px); pointer-events: none; transition: opacity .4s ease, transform .5s cubic-bezier(.2, .8, .2, 1), background .2s; }
-.btn.fab > i { border-left-color: var(--ink); }
-.btn.fab.is-on { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
-.btn.fab:hover { background: #FFF; }
-@media (max-width: 900px) { .btn.fab { bottom: calc(14px + env(safe-area-inset-bottom)); height: 50px; } .btn.fab > span { padding: 0 24px 0 28px; } .btn.fab > i { width: 50px; } }
+/* плавающая кнопка записи (04.11, финал): круглая, справа внизу, «Онлайн-запись» по центру, тонкая обводка; видна везде, кроме первого экрана */
+.fab { position: fixed; right: 24px; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 45; display: grid; place-items: center; width: 104px; height: 104px; border-radius: 50%; background: var(--bg); color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); text-decoration: none; opacity: 0; transform: scale(.85); pointer-events: none; transition: opacity .4s ease, transform .5s cubic-bezier(.2, .8, .2, 1), background .2s; }
+.fab.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.fab:hover { background: #FFF; }
+.fab__t { display: flex; flex-direction: column; align-items: center; font-family: var(--ui); font-weight: 500; font-size: 11px; line-height: 1.25; letter-spacing: .1em; text-transform: uppercase; text-align: center; }
+.fab__ic { width: 12px; height: 12px; margin-top: 7px; background: currentColor; -webkit-mask: var(--i-out) center / contain no-repeat; mask: var(--i-out) center / contain no-repeat; transition: transform .25s; }
+.fab:hover .fab__ic { transform: translate(2px, -2px); }
+@media (max-width: 900px) { .fab { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); width: 92px; height: 92px; } .fab__t { font-size: 10px; letter-spacing: .08em; } .fab__ic { width: 11px; height: 11px; margin-top: 6px; } }
 
 /* ── просмотр работы на весь экран ── */
 .lb { position: fixed; inset: 0; z-index: 110; display: grid; place-items: center; padding: 64px 16px; background: rgba(22, 9, 7, .93); opacity: 0; transition: opacity .25s; }
@@ -334,8 +337,9 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .st__media::-webkit-scrollbar { display: none; }
   .st__media figure { flex: 0 0 72%; scroll-snap-align: start; }
   .tm { width: 76vw; }
-  .pile { height: 420px; }
-  .pc { width: 262px; margin-left: -131px; padding: 8px 8px 12px; }
+  .wks { grid-template-columns: 1fr; gap: 32px; }
+  .ws__track { margin-right: calc(-1 * var(--pad)); }
+  .ws__sl { flex-basis: calc(100% - var(--pad) - 16px); } /* справа выглядывает край следующего фото */
   .rv { width: 84vw; padding: 22px; }
   .ct { grid-template-columns: 1fr; }
   .ct__info { order: -1; }

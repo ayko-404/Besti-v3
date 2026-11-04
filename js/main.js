@@ -19,18 +19,6 @@
   mb.addEventListener('click', () => setMenu(menu.hidden));
   menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
 
-  // служебная панель: переключение обложки A/B, выбор остаётся в адресе (?oblozhka=b) — им можно поделиться
-  const vp = document.querySelector('.vpanel');
-  if (vp) {
-    const mark = () => vp.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.o === document.documentElement.dataset.oblozhka)));
-    vp.addEventListener('click', (e) => {
-      const b = e.target.closest('button'); if (!b) return;
-      document.documentElement.dataset.oblozhka = b.dataset.o;
-      const u = new URL(location.href); u.searchParams.set('oblozhka', b.dataset.o); history.replaceState(null, '', u);
-      mark();
-    });
-    mark();
-  }
 
   // акция первого визита: окно всплывает через 4 секунды, один раз за посещение сайта
   const promo = document.getElementById('promo');

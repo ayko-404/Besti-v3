@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru" data-oblozhka="a">
+<html lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,8 +8,6 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#85231A">
 <link rel="icon" href="assets/ui/logo-edinyj-bordo.svg" type="image/svg+xml">
-<!-- обложка на выбор: ?oblozhka=a (как airfieldlacaminera.com) или ?oblozhka=b (как tengilemalamala.com); ставится до отрисовки, чтобы не мигало -->
-<script>(function(){var o='a';try{o=(new URLSearchParams(location.search).get('oblozhka')||'a').toLowerCase()}catch(e){}document.documentElement.setAttribute('data-oblozhka',o==='b'?'b':'a')})();</script>
 <link rel="preload" href="fonts/cormorant-garamond-300-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/spectral-300-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/video/video-interer-poster.webp" media="(max-width: 900px)" fetchpriority="high">
@@ -34,29 +32,15 @@
   <picture class="hero__media"><source media="(max-width: 900px)" srcset="assets/video/video-interer-poster.webp" width="540" height="960"><img src="assets/video/video-interer-shirokoe-poster.webp" width="1440" height="810" alt="" fetchpriority="high"></picture>
   <video class="hero__media vid-cover" data-src-m="assets/video/video-interer.mp4" data-src-d="assets/video/video-interer-shirokoe.mp4" muted loop playsinline preload="none" aria-label="Видео: студия изнутри"></video>
 
-  <!-- обложка A — как airfieldlacaminera.com: тонкая фраза с курсивом и две кнопки слева внизу, справа полоса кадров -->
+  <!-- обложка — вариант A (выбран 04.11), как airfieldlacaminera.com: крупная тонкая фраза с курсивом и две кнопки слева внизу; главная кнопка сплошная, вторая прозрачная в рамке -->
   <div class="ha">
     <div>
       <h1>Маникюр и&nbsp;педикюр <em>в&nbsp;гостях у&nbsp;бэсти</em></h1>
       <p class="ha__sub">3 минуты от&nbsp;метро «Трубная»<span class="dot"> · </span><span class="t2">каждый день 10:00–22:00</span></p>
-      <div class="btns"><a class="btn btn--light" href="https://n2379744.yclients.com/" target="_blank" rel="noopener"><span>Записаться онлайн</span><i aria-hidden="true"></i></a><a class="btn btn--light" href="#price"><span>Услуги и цены</span><i aria-hidden="true"></i></a></div>
-    </div>
-    <div class="ha__side">
-      <img class="ha__logo" width="1766" height="580" src="assets/ui/logo-znak-rozovyj.svg" alt="">
-      <div class="ha__strip">
-        <a class="ha__first" href="#works"><img width="900" height="1200" src="assets/img/raboty/01-bordo-meh.webp" alt="Винный маникюр на фоне меха"><span>Результат после посещения</span></a>
-        <a href="#studio" aria-label="Студия"><img width="1440" height="810" src="assets/img/gosti-kreslo-shirokoe.webp" alt=""></a>
-        <a href="#works" aria-label="Работы"><img width="900" height="1200" src="assets/img/raboty/10-nyud-kofe.webp" alt=""></a>
-        <a href="#studio" aria-label="Студия"><img width="900" height="1200" src="assets/img/gosti-gostya-lift.webp" alt=""></a>
-      </div>
+      <div class="btns"><a class="btn btn--light" href="https://n2379744.yclients.com/" target="_blank" rel="noopener"><span>Записаться онлайн</span><i aria-hidden="true"></i></a><a class="btn btn--ghost" href="#price"><span>Услуги и цены</span><i aria-hidden="true"></i></a></div>
     </div>
   </div>
 
-  <!-- обложка B — как tengilemalamala.com: крупные тонкие заглавные лесенкой, ниже справа короткий текст и кнопка -->
-  <div class="hb">
-    <h1><span class="hb__l1">Маникюр и&nbsp;педикюр</span><span class="hb__l2">в&nbsp;гостях у&nbsp;бэсти</span></h1>
-    <div class="hb__bot"><p>Студия маникюра и&nbsp;педикюра в&nbsp;3&nbsp;минутах от&nbsp;метро «Трубная». Каждый день 10:00–22:00</p><a class="btn btn--light" href="https://n2379744.yclients.com/" target="_blank" rel="noopener"><span>Записаться онлайн</span><i aria-hidden="true"></i></a></div>
-  </div>
 </section>
 
 <section id="price" class="sec">
@@ -146,8 +130,6 @@
 
 <div class="lb" hidden><figure><img alt=""><figcaption></figcaption></figure><button class="lb__x" type="button" aria-label="Закрыть"></button><button class="arrow lb__prev" type="button" data-d="-1" aria-label="Предыдущая работа"></button><button class="arrow lb__next" type="button" data-d="1" aria-label="Следующая работа"></button></div>
 
-<!-- служебная панель: переключить обложку (убрать после выбора) -->
-<div class="vpanel" role="group" aria-label="Выбор обложки">Обложка: <button type="button" data-o="a">A · airfield</button><button type="button" data-o="b">B · tengile</button></div>
 
 <script src="js/prices.js" defer></script>
 <script src="js/main.js" defer></script>

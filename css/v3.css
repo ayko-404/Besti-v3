@@ -108,12 +108,13 @@ button { font: inherit; color: inherit; }
 .hero video.is-on { opacity: 1; }
 .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(22, 9, 7, .72) 0%, rgba(22, 9, 7, .25) 50%, rgba(22, 9, 7, .25) 100%); pointer-events: none; }
 
-/* обложка (вариант A, выбран 04.11) — как airfield: крупная тонкая фраза с курсивом, строка про метро и часы, две кнопки слева внизу.
+/* обложка (вариант A, выбран 04.11) — как airfield: крупная тонкая фраза с курсивом и строка про метро и часы слева внизу, кнопки справа (правка 04.11).
    Главная кнопка сплошная светлая, вторая прозрачная в рамке — чтобы было видно, какая главная */
-.ha { position: absolute; z-index: 2; left: var(--pad); right: var(--pad); bottom: clamp(36px, 5vw, 64px); }
+.ha { position: absolute; z-index: 2; left: var(--pad); right: var(--pad); bottom: clamp(36px, 5vw, 64px); display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
 .ha h1 { max-width: 980px; font-family: var(--disp); font-weight: 300; font-size: var(--t-h1a); line-height: 1.04; }
 .ha__sub { margin-top: 20px; font-size: clamp(19px, 1.6vw, 23px); line-height: 1.5; opacity: .92; }
-.ha .btns { margin-top: 36px; gap: 20px; }
+.ha .btns { flex: none; flex-direction: column; gap: 14px; width: 330px; } /* кнопки справа столбиком, одной ширины */
+.ha .btn > span { flex: 1; }
 .ha .btn { height: 60px; }
 .ha .btn > i { width: 60px; }
 
@@ -270,7 +271,8 @@ button { font: inherit; color: inherit; }
   .ha .btns { flex-direction: column; }
   .btns .btn { width: 100%; }
   .btns .btn > span { flex: 1; justify-content: center; }
-  .ha .btns { gap: 12px; margin-top: 28px; }
+  .ha { flex-direction: column; align-items: stretch; gap: 28px; }
+  .ha .btns { width: auto; gap: 12px; }
   .ha .btn { height: 56px; }
   .acc__sum { grid-template-columns: 1fr 44px; gap: 4px 16px; padding: 20px 0; }
   .acc__from { grid-row: 2; }

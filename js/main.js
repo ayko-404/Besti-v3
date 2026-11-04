@@ -22,33 +22,48 @@
   // ВРЕМЕННО: варианты заголовка обложки (?zag=a…f, &caps=1 — заглавными; служебная панель).
   // Три строки примерно равной длины, как у devichnik; перенос задан вручную; последняя строка — курсивный акцент.
   // Описание под заголовком убрано (правка 04.11). Убрать после выбора варианта.
-  const ZAG = {
-    a: ['Бэсти —', 'маникюр', 'и&nbsp;педикюр'],
-    b: ['Маникюр', 'и&nbsp;педикюр', 'у&nbsp;бэсти'],
-    c: ['Маникюр,', 'похожий', 'на&nbsp;тебя'],
-    d: ['Студия', 'маникюра', 'бэсти'],
-    e: ['Маникюр', 'с&nbsp;любовью', 'от&nbsp;бэсти'],
-    f: ['Маникюр', 'в&nbsp;гостях', 'у&nbsp;бэсти']
+  // Голос бренда (бриф, research.md §16): «подруга со вкусом зовёт в гости» — на «вы», тепло, с подмигиванием, вещи вместо эпитетов,
+  // 2–6 слов, без «!»; подмигивание — как в названиях комплексов («Дорогая привычка», «Роскошный максимум»)
+  const ZAG = { // со «студией маникюра» (просьба Дмитрия 04.11), как у devichnik, но на «вы»
+    a: ['Бэсти&nbsp;—', 'ваша студия', 'маникюра'],
+    b: ['Студия', 'маникюра', 'вашей бэсти'],
+    c: ['Студия', 'маникюра', 'с&nbsp;кофе и&nbsp;кино'],
+    d: ['Студия', 'маникюра,', 'где вас ждут'],
+    e: ['Студия', 'маникюра', 'по-дружески'],
+    f: ['Ваша', 'студия', 'маникюра']
   };
   const zh = document.getElementById('zag'), zp = document.querySelector('.vpanel[aria-label="Варианты заголовка"]');
-  const st = { z: 'f', caps: false };
-  try { const q = new URLSearchParams(location.search); st.z = ZAG[(q.get('zag') || '').toLowerCase()] ? q.get('zag').toLowerCase() : 'f'; st.caps = q.get('caps') === '1'; } catch (e) {}
+  const st = { z: 'a', caps: false, round: false };
+  try { const q = new URLSearchParams(location.search); st.z = ZAG[(q.get('zag') || '').toLowerCase()] ? q.get('zag').toLowerCase() : 'a'; st.caps = q.get('caps') === '1'; st.round = q.get('round') === '1'; } catch (e) {}
+  const fitZag = () => {
+    zh.style.fontSize = '';
+    const ha = zh.closest('.ha'), btns = ha.querySelector('.btns');
+    const avail = getComputedStyle(ha).flexDirection === 'column' ? ha.clientWidth : ha.clientWidth - btns.offsetWidth - 40;
+    const widest = Math.max(...[...zh.querySelectorAll('span')].map((s) => { const r = document.createRange(); r.selectNodeContents(s); return r.getBoundingClientRect().width; }));
+    if (widest > avail) zh.style.fontSize = Math.floor(parseFloat(getComputedStyle(zh).fontSize) * avail / widest) + 'px';
+  }; // строки заголовка не переносятся: если самая длинная не влезает — шрифт уменьшается ровно настолько, насколько нужно
+  addEventListener('resize', () => fitZag());
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => fitZag());
   const drawZag = () => {
     const l = ZAG[st.z];
     zh.innerHTML = '<span>' + l[0] + '</span><span>' + l[1] + '</span><em><span>' + l[2] + '</span></em>';
     zh.classList.toggle('is-caps', st.caps);
+    document.documentElement.classList.toggle('is-round', st.round); // вариант с небольшими скруглениями у кнопок и элементов
+    fitZag();
     if (zp) {
       zp.querySelectorAll('[data-z]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.z === st.z)));
       zp.querySelector('[data-caps]').setAttribute('aria-pressed', String(st.caps));
+      zp.querySelector('[data-round]').setAttribute('aria-pressed', String(st.round));
     }
   };
   drawZag();
   if (zp) zp.addEventListener('click', (e) => {
     const b = e.target.closest('button'); if (!b) return;
-    if (b.dataset.z) st.z = b.dataset.z; else st.caps = !st.caps;
+    if (b.dataset.z) st.z = b.dataset.z; else if (b.dataset.round) st.round = !st.round; else st.caps = !st.caps;
     drawZag();
     const u = new URL(location.href); u.searchParams.set('zag', st.z);
     if (st.caps) u.searchParams.set('caps', '1'); else u.searchParams.delete('caps');
+    if (st.round) u.searchParams.set('round', '1'); else u.searchParams.delete('round');
     history.replaceState(null, '', u);
   });
 

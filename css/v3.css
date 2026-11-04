@@ -49,7 +49,7 @@ button { font: inherit; color: inherit; }
 .sec--dark { background: #1C1614; color: var(--cream); }
 .sec--dark .label { color: rgba(255, 250, 246, .55); }
 .sec--dark .h2 { color: var(--cream); }
-.sec--dark .h2 em { color: var(--pink); }
+.sec--dark .h2 em { color: inherit; } /* акцент только курсивом, без розового (04.11: «розовый не нравится») */
 .sec--dark .wks__text, .sec--dark .ws__n { color: rgba(255, 250, 246, .68); }
 .sec--dark .ws__n b { color: var(--cream); }
 .sec--dark .arrow { border-color: rgba(255, 250, 246, .35); color: var(--cream); }
@@ -230,7 +230,7 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .pr__rate:hover { background: var(--bordo-d); }
 .pr__big { font-family: var(--disp); font-weight: 300; font-size: clamp(150px, 15vw, 240px); line-height: .8; letter-spacing: -.02em; }
 .pr__stars { display: flex; gap: 6px; margin-top: 22px; }
-.pr__stars svg { width: 22px; height: 22px; fill: var(--pink); }
+.pr__stars svg { width: 22px; height: 22px; fill: var(--cream); }
 .pr__rt { margin-top: 18px; font-family: var(--disp); font-weight: 300; font-style: italic; font-size: var(--t-h3); line-height: 1; }
 .pr__rs { max-width: 22em; margin-top: 14px; color: rgba(255, 250, 246, .75); }
 .pr__q { display: block; margin-top: auto; padding-top: 28px; border-top: 1px solid rgba(255, 250, 246, .25); font-family: var(--disp); font-weight: 300; font-style: italic; font-size: clamp(22px, 1.9vw, 28px); line-height: 1.15; } /* дословная цитата из отзыва с Яндекс Карт */

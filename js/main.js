@@ -238,35 +238,62 @@
     [...gl.children].forEach((x) => gio.observe(x));
   }
 
-  // «Почему бэсти» — плитки (04.11): появление по очереди, параллакс цифр при прокрутке, наклон и блик за курсором (только мышь)
+  // «Почему бэсти» — плитки, четыре варианта (?tiles=1..4, переключатель под заголовком — временный):
+  // 1 шахматка (наклон и блик за курсором), 2 стопка, 3 с фото, 4 раскрывашки. Общее: появление по очереди и параллакс цифр
   const pros = document.querySelector('.pros');
   if (pros) {
     const items = [...pros.querySelectorAll('.pr__i')];
-    items.forEach((it, i) => it.style.setProperty('--d', (i * 0.14) + 's'));
+    const mouse = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    let v = '1', cio = null;
+    items.forEach((it, i) => { it.style.setProperty('--d', (i * 0.14) + 's'); it.style.setProperty('--k', i); });
+    const reset = (it) => { it.classList.remove('is-tilt', 'is-photo', 'is-open'); ['--rx', '--ry'].forEach((k) => it.style.setProperty(k, '0deg')); ['--nx', '--ny'].forEach((k) => it.style.setProperty(k, '0px')); it.style.removeProperty('--sc'); };
+    const apply = (nv) => {
+      v = nv; if (cio) { cio.disconnect(); cio = null; }
+      pros.classList.remove('pros--t1', 'pros--t2', 'pros--t3', 'pros--t4'); pros.classList.add('pros--t' + v);
+      items.forEach(reset);
+      pros.querySelectorAll('.pr__sw button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === v));
+      if (v === '4') items[0].classList.add('is-open');
+      if (v === '3' && !mouse && 'IntersectionObserver' in window) {
+        cio = new IntersectionObserver((es) => es.forEach((en) => en.target.classList.toggle('is-photo', en.isIntersecting)), { rootMargin: '-38% 0px -38% 0px' });
+        items.forEach((it) => cio.observe(it));
+      }
+      try { history.replaceState(null, '', location.pathname + '?tiles=' + v + location.hash); } catch (e) {}
+      drift();
+    };
+    // параллакс цифр; в «стопке» — ещё и уменьшение плитки, на которую наезжает следующая
+    let tick = false;
+    const drift = () => {
+      tick = false; if (calm) return; const vh = innerHeight;
+      items.forEach((it, i) => {
+        const r = it.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return;
+        it.style.setProperty('--py', (((r.top + r.height / 2 - vh / 2) / vh) * 46).toFixed(1) + 'px');
+        if (v === '2') { const nx = items[i + 1]; if (nx) { const gap = nx.getBoundingClientRect().top - r.top; const p = Math.min(1, Math.max(0, 1 - gap / r.height)); it.style.setProperty('--sc', (1 - p * 0.06).toFixed(3)); } }
+      });
+    };
+    addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(drift); } }, { passive: true });
     if ('IntersectionObserver' in window && !calm) {
       const pio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-on'); pio.unobserve(en.target); } }), { rootMargin: '0px 0px -12% 0px' });
       items.forEach((it) => pio.observe(it));
-      // параллакс: цифра чуть плывёт против прокрутки, пока плитка на экране
-      let tick = false;
-      const drift = () => { tick = false; const vh = innerHeight; items.forEach((it) => { const r = it.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const k = (r.top + r.height / 2 - vh / 2) / vh; it.style.setProperty('--py', (k * 46).toFixed(1) + 'px'); }); };
-      addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(drift); } }, { passive: true });
-      drift();
-      // наклон и блик за курсором — только там, где есть мышь
-      if (matchMedia('(hover: hover) and (pointer: fine)').matches) items.forEach((it) => {
+    } else items.forEach((it) => it.classList.add('is-on'));
+    items.forEach((it) => {
+      if (mouse) {
         it.addEventListener('pointermove', (e) => {
           if (!it.classList.contains('is-on')) return;
+          if (v === '3') { it.classList.add('is-photo'); return; }
+          if (v === '4') { items.forEach((x) => x.classList.toggle('is-open', x === it)); return; }
+          if (v !== '1') return;
           const r = it.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
           it.classList.add('is-tilt');
-          it.style.setProperty('--ry', ((x - .5) * 7).toFixed(2) + 'deg');
-          it.style.setProperty('--rx', ((.5 - y) * 7).toFixed(2) + 'deg');
-          it.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
-          it.style.setProperty('--my', (y * 100).toFixed(1) + '%');
-          it.style.setProperty('--nx', ((.5 - x) * 18).toFixed(1) + 'px');
-          it.style.setProperty('--ny', ((.5 - y) * 18).toFixed(1) + 'px');
+          it.style.setProperty('--ry', ((x - .5) * 7).toFixed(2) + 'deg'); it.style.setProperty('--rx', ((.5 - y) * 7).toFixed(2) + 'deg');
+          it.style.setProperty('--mx', (x * 100).toFixed(1) + '%'); it.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+          it.style.setProperty('--nx', ((.5 - x) * 18).toFixed(1) + 'px'); it.style.setProperty('--ny', ((.5 - y) * 18).toFixed(1) + 'px');
         });
-        it.addEventListener('pointerleave', () => { it.classList.remove('is-tilt'); ['--rx', '--ry'].forEach((k) => it.style.setProperty(k, '0deg')); ['--nx', '--ny'].forEach((k) => it.style.setProperty(k, '0px')); });
-      });
-    } else items.forEach((it) => it.classList.add('is-on'));
+        it.addEventListener('pointerleave', () => { if (v === '1' || v === '3') reset(it); });
+      }
+      it.addEventListener('click', () => { if (v === '4') items.forEach((x) => x.classList.toggle('is-open', x === it)); });
+    });
+    pros.querySelectorAll('.pr__sw button').forEach((b) => b.addEventListener('click', () => apply(b.dataset.v)));
+    apply(((new URLSearchParams(location.search).get('tiles') || '1').match(/^[1-4]$/) || ['1'])[0]);
   }
 
   // Escape закрывает открытое окно

@@ -16,7 +16,7 @@
   function init() {
     const wide = innerWidth > 900;
     const map = new ymaps.Map(box, {
-      center: wide ? [lat + 0.0006, lon - 0.0045] : [lat, lon], zoom: 16, controls: ['zoomControl']
+      center: [lat, lon], zoom: 16, controls: ['zoomControl']
     }, { suppressMapOpenBlock: false, yandexMapDisablePoiInteractivity: true });
     map.behaviors.disable('scrollZoom');
     if (!wide) map.behaviors.disable('drag'); // на телефоне карта не перехватывает прокрутку страницы

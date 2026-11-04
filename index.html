@@ -8,275 +8,126 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#85231A">
 <link rel="icon" href="assets/ui/logo-edinyj-bordo.svg" type="image/svg+xml">
-<link rel="preload" href="fonts/pt-mono-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/cormorant-garamond-500-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/cormorant-garamond-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/video/video-interer-poster.webp" media="(max-width: 900px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/video/video-interer-shirokoe-poster.webp" media="(min-width: 901px)" fetchpriority="high">
-<link rel="stylesheet" href="css/bundle.css?v=202611041012"> <!-- все стили одним файлом: собирает tools/css_bundle.py из css/*.css -->
+<link rel="stylesheet" href="css/bundle.css"> <!-- стили одним файлом: собирает tools/css_bundle.py из fonts/fonts.css и css/v3.css -->
 </head>
 <body>
+<!-- Бэсти v3 (04.11.2026): минимализм по отзыву Зухры — крупный фирменный шрифт Cormorant Garamond, крупные фото, без рамок, теней, бегущих строк. Прежняя версия — ветка main -->
 
-<!-- ШАПКА «вывеска» (выбрана 03.11.2026): разделы по сторонам, логотип по центру — знак «бэсти», подпись «студия маникюра» текстом под ним -->
-<div class="top">
-  <header class="hd hdc">
-    <nav class="hdc__side" aria-label="Разделы"><a href="#price">Услуги и цены<sup>01</sup></a><a href="#team">Мастера<sup>02</sup></a><a href="#studio">Студия<sup>03</sup></a></nav>
-    <a class="brand" href="#top" aria-label="Бэсти — студия маникюра, наверх"><img width="1766" height="580" src="assets/ui/logo-znak-bordo.svg" alt="бэсти"><span>студия маникюра</span></a>
-    <div class="hdc__side hdc__side--r"><nav aria-label="Разделы, продолжение"><a href="#works">Работы<sup>04</sup></a><a href="#route">Как дойти<sup>05</sup></a></nav><a class="btn btn--pink hdc__cta" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться<span>&nbsp;онлайн</span></a></div>
-    <button class="nav__burger" type="button" aria-expanded="false" aria-controls="mob-menu" aria-label="Меню"><svg aria-hidden="true" width="18" height="12" viewBox="0 0 18 12" shape-rendering="crispEdges"><rect width="18" height="2" fill="currentColor"/><rect y="5" width="18" height="2" fill="currentColor"/><rect y="10" width="18" height="2" fill="currentColor"/></svg><span>Меню</span></button>
-  </header>
-  <div class="mob" id="mob-menu" hidden>
-    <nav aria-label="Разделы страницы">
-      <a href="#price">Услуги и цены<span>01</span></a>
-      <a href="#team">Мастера<span>02</span></a>
-      <a href="#studio">Студия<span>03</span></a>
-      <a href="#works">Работы<span>04</span></a>
-      <a href="#route">Как дойти<span>05</span></a>
-    </nav>
+<header class="hd">
+  <div class="hd__l">
+    <button class="hd__menu" type="button" aria-expanded="false" aria-controls="menu"><i aria-hidden="true"></i><span>Меню</span></button>
+    <nav class="hd__nav" aria-label="Разделы"><a href="#price">Услуги и цены</a><a href="#team">Мастера</a><a href="#studio">Студия</a></nav>
   </div>
+  <a class="hd__logo" href="#top" aria-label="Бэсти — студия маникюра, наверх"><img width="1766" height="580" src="assets/ui/logo-znak-bordo.svg" alt="бэсти"><span>студия маникюра</span></a>
+  <div class="hd__r">
+    <nav class="hd__nav" aria-label="Разделы, продолжение"><a href="#works">Работы</a><a href="#contacts">Контакты</a></nav>
+    <a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться</a>
+  </div>
+</header>
+<div class="menu" id="menu" hidden>
+  <nav aria-label="Разделы страницы"><a href="#price">Услуги и цены</a><a href="#team">Мастера</a><a href="#studio">Студия</a><a href="#works">Работы</a><a href="#reviews">Отзывы</a><a href="#contacts">Контакты</a></nav>
+  <div class="menu__foot"><a href="tel:+79652300425">+7 (965) 230-04-25</a><span>Печатников пер., 6 · каждый день 10:00–22:00</span><a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться онлайн</a></div>
 </div>
 
 <main>
-<!-- (01) ОБЛОЖКА: видео на весь экран, внизу заголовок и кнопки; над заголовком окно-сертификат первого визита, его можно перетаскивать по обложке -->
-<section id="top" class="vb vf">
-  <!-- постер обложки — сразу картинкой (быстрый первый экран), видео подгружается скриптом под размер экрана и плавно проявляется -->
-  <picture class="vid-fill vid-poster"><source media="(max-width: 900px)" srcset="assets/video/video-interer-poster.webp" width="540" height="960"><img src="assets/video/video-interer-shirokoe-poster.webp" width="1440" height="810" alt="" fetchpriority="high"></picture>
-  <video class="vid-fill vid-cover" data-src-m="assets/video/video-interer.mp4" data-src-d="assets/video/video-interer-shirokoe.mp4" muted loop playsinline preload="none" aria-label="Видео: студия изнутри"></video>
-  <div class="vf__band">
-    <div class="vf__brand">
-      <!-- купон первого визита как в первой версии: розовый билет с отрывным корешком; перетаскивается по обложке -->
-      <aside class="cert" aria-label="Купон для первого визита">
-        <button class="kp__close" type="button" aria-label="Закрыть купон">×</button>
-        <div class="kp">
-          <div class="kp__main">
-            <p class="kp__lbl">Купон на первый визит</p>
-            <p class="kp__set">сэт-комплекс Luxio</p>
-            <p class="kp__price"><span>2 890 ₽</span><span class="sr">вместо</span><s>3 400 ₽</s></p>
-            <ul class="kp__list"><li><span class="kp__chk" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#85231A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>снятие гель-лака</li><li><span class="kp__chk" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#85231A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>маникюр</li><li><span class="kp__chk" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#85231A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>выравнивание</li><li><span class="kp__chk" aria-hidden="true"><svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="#85231A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>покрытие Luxio</li></ul>
-            <p class="kp__for">Для первого визита в бэсти</p>
-            <a class="btn kp__btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Познакомиться</a>
-          </div>
-          <div class="kp__stub cert__grip">
-            <p class="kp__s1">Купон</p>
-            <p class="kp__pct">−15%</p>
-            <p class="kp__s2">экономия 510 ₽</p>
-            <span class="kp__bar" aria-hidden="true"></span>
-            <p class="kp__s3">первый визит</p>
-          </div>
-        </div>
-        <span class="kp__star" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 5 5" shape-rendering="crispEdges"><rect x="2" y="0" width="1" height="1" fill="#2B1A17"/><rect x="1" y="1" width="1" height="1" fill="#2B1A17"/><rect x="2" y="1" width="1" height="1" fill="#FFACE4"/><rect x="3" y="1" width="1" height="1" fill="#2B1A17"/><rect x="0" y="2" width="1" height="1" fill="#2B1A17"/><rect x="1" y="2" width="1" height="1" fill="#FFACE4"/><rect x="2" y="2" width="1" height="1" fill="#FFFFFF"/><rect x="3" y="2" width="1" height="1" fill="#FFACE4"/><rect x="4" y="2" width="1" height="1" fill="#2B1A17"/><rect x="1" y="3" width="1" height="1" fill="#2B1A17"/><rect x="2" y="3" width="1" height="1" fill="#FFACE4"/><rect x="3" y="3" width="1" height="1" fill="#2B1A17"/><rect x="2" y="4" width="1" height="1" fill="#2B1A17"/></svg></span>
-      </aside>
-      <!-- заголовок и текст из первой версии; правка клиентки 02.11: «3 минуты от метро «Трубная»» вместо «340 метров» -->
-      <h1 class="ttl"><span class="ttl__big">Маникюр и&nbsp;педикюр</span><span class="ttl__hand">в гостях у бэсти</span></h1>
-      <p class="vf__lead">Студия маникюра и педикюра в&nbsp;3&nbsp;минутах от&nbsp;метро «Трубная». Выберите услугу и&nbsp;запишитесь онлайн в&nbsp;YCLIENTS</p>
-    </div>
-    <div class="vf__btns">
-      <a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться онлайн</a>
-      <a class="btn btn--ghost" href="#price">Услуги и цены</a>
-    </div>
-  </div>
+<section id="top" class="hero">
+  <picture class="hero__media"><source media="(max-width: 900px)" srcset="assets/video/video-interer-poster.webp" width="540" height="960"><img src="assets/video/video-interer-shirokoe-poster.webp" width="1440" height="810" alt="" fetchpriority="high"></picture>
+  <video class="hero__media vid-cover" data-src-m="assets/video/video-interer.mp4" data-src-d="assets/video/video-interer-shirokoe.mp4" muted loop playsinline preload="none" aria-label="Видео: студия изнутри"></video>
+  <div class="hero__in"><div class="wrap hero__row">
+    <div><h1>Маникюр и&nbsp;педикюр</h1><p class="hero__sub">Студия в&nbsp;3&nbsp;минутах от&nbsp;метро «Трубная».<br>Каждый день 10:00–22:00</p></div>
+    <div class="btns"><a class="btn btn--light" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться онлайн</a><a class="btn btn--glass" href="#price">Услуги и цены</a></div>
+  </div></div>
 </section>
 
+<section id="price" class="sec"><div class="wrap">
+  <div class="sec__head"><h2 class="h2">Услуги и&nbsp;цены</h2></div>
+  <div class="acc" id="acc"></div>
+  <div class="price__cta"><a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться онлайн</a></div>
+</div></section>
 
-<!-- (02) УСЛУГИ И ЦЕНЫ: папки -->
-<section id="price" class="section">
-  <div class="grid head">
-    <h2>Услуги и цены</h2>
-  </div>
-  <div class="folders">
-    <div class="tabs" role="tablist" aria-label="Разделы прайса"></div>
-    <div class="panel grid" id="price-panel" role="tabpanel">
-      <ul class="plist"></ul>
-      <div class="pdetail"></div>
-    </div>
-  </div>
+<section id="team" class="sec">
+  <div class="wrap sec__head"><div><h2 class="h2">Мастера</h2><p class="lead">Ваши будущие бэсти — знакомьтесь заранее</p></div><div class="arrows" data-for="team"><button class="arrow" type="button" data-d="-1" aria-label="Назад"><svg aria-hidden="true" width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M21 7H2M8 1 2 7l6 6" stroke="currentColor" stroke-width="1.5"/></svg></button><button class="arrow" type="button" data-d="1" aria-label="Дальше"><svg aria-hidden="true" width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M1 7h19M14 1l6 6-6 6" stroke="currentColor" stroke-width="1.5"/></svg></button></div></div>
+  <div class="row" id="team-row"><article class="tm"><div class="tm__ph"><img width="800" height="800" src="assets/img/master-anastasiya.webp" alt="Анастасия, мастер маникюра и педикюра" loading="lazy"></div><h3>Анастасия</h3><p>Чистый маникюр и покрытие под кутикулу — тонко и аккуратно.</p><a class="link" href="https://n2379744.yclients.com/company/2062923/personal/select-master/master-info/2062923/6134247" target="_blank" rel="noopener">Записаться к Анастасии</a></article><article class="tm"><div class="tm__ph"><img width="800" height="800" src="assets/img/master-natasha.webp" alt="Наташа, мастер маникюра и педикюра" loading="lazy"></div><h3>Наташа</h3><p>Эстетический и японский маникюр. Работает только с короткой длиной.</p><a class="link" href="https://n2379744.yclients.com/company/2062923/personal/select-master/master-info/2062923/5799996" target="_blank" rel="noopener">Записаться к Наташе</a></article><article class="tm"><div class="tm__ph"><img width="800" height="800" src="assets/img/master-adel.webp" alt="Адель, мастер маникюра и педикюра" loading="lazy"></div><h3>Адель</h3><p>Архитектура ногтя: наращивание и укрепление гелем, подбор длины и формы.</p><a class="link" href="https://n2379744.yclients.com/company/2062923/personal/select-master/master-info/2062923/6290514" target="_blank" rel="noopener">Записаться к Адель</a></article><article class="tm"><div class="tm__ph"><img width="800" height="800" src="assets/img/master-katya.webp" alt="Катя, мастер маникюра и педикюра" loading="lazy"></div><h3>Катя</h3><p>Быстро и аккуратно — когда хочется красивый результат и сэкономить время.</p><a class="link" href="https://n2379744.yclients.com/company/2062923/personal/select-master/master-info/2062923/5895762" target="_blank" rel="noopener">Записаться к Кате</a></article><article class="tm"><div class="tm__ph tm__ph--wait"><span class="wait">[ждём: фото Мари]</span></div><h3>Мари</h3><p>Бережное покрытие гель-лаком и укрепление гелем на каждый день.</p><a class="link" href="https://n2379744.yclients.com/company/2062923/personal/select-master/master-info/2062923/6252479" target="_blank" rel="noopener">Записаться к Мари</a></article></div>
 </section>
 
-<!-- (03) МАСТЕРА: как в первой версии — портреты 4:5 с номером, имя, специализация, кнопка записи. Описания — из онлайн-записи YCLIENTS -->
-<section id="team" class="section team">
-  <div class="grid head">
-    <h2>Мастера и команда бэсти</h2>
-    <p class="aside team__lead">Ваши будущие бэсти — знакомьтесь заранее</p>
+<section id="studio" class="sec"><div class="wrap">
+  <div class="sec__head"><div><h2 class="h2">В гостях у&nbsp;бэсти</h2><p class="lead">Кирпичные стены, красный ковёр и&nbsp;зелёные бархатные кресла. Студия в&nbsp;Печатниковом переулке, в&nbsp;трёх минутах от&nbsp;«Трубной».</p></div></div>
+  <figure class="st__wide"><img width="1440" height="810" src="assets/img/gosti-kreslo-shirokoe.webp" alt="Зелёное бархатное кресло, ковёр и кирпичная стена в студии" loading="lazy"></figure>
+  <div class="st__facts">
+    <div class="st__f"><h3>Угощаем</h3><p>Кофе с&nbsp;обычным или растительным молоком, гречишный чай, клубничный улун, матча, какао на&nbsp;банановом и&nbsp;мороженое.</p></div>
+    <div class="st__f"><h3>Кино в&nbsp;кресле</h3><p>Персональный планшет с&nbsp;наушниками: пока мастер работает, время проходит незаметно.</p></div>
+    <div class="st__f"><h3>Стерильно</h3><p>Инструменты распаковывают из&nbsp;стерильного пакета при&nbsp;вас. Покрытие — палитра Luxio.</p></div>
   </div>
-  <div class="tms">
-    <article class="tm">
-      <div class="tm__photo"><span class="tm__num">(01)</span><img width="800" height="800" class="tm__img" src="assets/img/master-anastasiya.webp" alt="Анастасия, мастер маникюра и педикюра" loading="lazy"></div>
-      <div class="tm__head"><h3>Анастасия</h3><span>(01)</span></div>
-      <p class="tm__t">Чистый маникюр и покрытие под кутикулу — тонко и аккуратно.</p>
-      <a class="tm__btn" href="https://n2379744.yclients.com/company/2062923/personal/select-master/master-info/2062923/6134247" target="_blank" rel="noopener">Записаться к Анастасии</a>
-    </article>
-    <article class="tm">
-      <div class="tm__photo"><span class="tm__num">(02)</span><img width="800" height="800" class="tm__img" src="assets/img/master-natasha.webp" alt="Наташа, мастер маникюра и педикюра" loading="lazy"></div>
-      <div class="tm__head"><h3>Наташа</h3><span>(02)</span></div>
-      <p class="tm__t">Эстетический и японский маникюр. Работает только с короткой длиной.</p>
-      <a class="tm__btn" href="https://n2379744.yclients.com/company/2062923/personal/select-master/master-info/2062923/5799996" target="_blank" rel="noopener">Записаться к Наташе</a>
-    </article>
-    <article class="tm">
-      <div class="tm__photo"><span class="tm__num">(03)</span><div class="tm__img tm__img--wait"><span class="wait">нету фотки</span></div></div>
-      <div class="tm__head"><h3>Адель</h3><span>(03)</span></div>
-      <p class="tm__t">Архитектура ногтя: наращивание и укрепление гелем, подбор длины и формы.</p>
-      <a class="tm__btn" href="https://n2379744.yclients.com/company/2062923/personal/select-master/master-info/2062923/6290514" target="_blank" rel="noopener">Записаться к Адель</a>
-    </article>
-    <article class="tm">
-      <div class="tm__photo"><span class="tm__num">(04)</span><img width="800" height="800" class="tm__img" src="assets/img/master-katya.webp" alt="Катя, мастер маникюра и педикюра" loading="lazy"></div>
-      <div class="tm__head"><h3>Катя</h3><span>(04)</span></div>
-      <p class="tm__t">Быстро и аккуратно — когда хочется красивый результат и сэкономить время.</p>
-      <a class="tm__btn" href="https://n2379744.yclients.com/company/2062923/personal/select-master/master-info/2062923/5895762" target="_blank" rel="noopener">Записаться к Кате</a>
-    </article>
-    <article class="tm">
-      <div class="tm__photo"><span class="tm__num">(05)</span><div class="tm__img tm__img--wait"><span class="wait">нету фотки</span></div></div>
-      <div class="tm__head"><h3>Мари</h3><span>(05)</span></div>
-      <p class="tm__t">Бережное покрытие гель-лаком и укрепление гелем на каждый день.</p>
-      <a class="tm__btn" href="https://n2379744.yclients.com/company/2062923/personal/select-master/master-info/2062923/6252479" target="_blank" rel="noopener">Записаться к Мари</a>
-    </article>
+  <div class="st__media">
+    <figure><img width="900" height="1200" src="assets/img/gosti-gostya-lift.webp" alt="Гостья бэсти показывает разноцветный маникюр" loading="lazy"></figure>
+    <figure><video src="assets/video/video-den-v-studii.mp4" poster="assets/video/video-den-v-studii-poster.webp" muted loop playsinline preload="none" aria-label="Видео: утро в студии"></video></figure>
+    <figure><video src="assets/video/video-polki-luxio.mp4" poster="assets/video/video-polki-luxio-poster.webp" muted loop playsinline preload="none" aria-label="Видео: полки с лаками Luxio"></video></figure>
   </div>
+  <div class="st__cta"><a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться онлайн</a></div>
+</div></section>
+
+<section id="works" class="sec">
+  <div class="wrap sec__head"><div><h2 class="h2">Результат после посещения</h2><p class="lead">Палитра Luxio большая — гости пишут, что глаза разбегаются</p></div><div class="arrows" data-for="works"><button class="arrow" type="button" data-d="-1" aria-label="Назад"><svg aria-hidden="true" width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M21 7H2M8 1 2 7l6 6" stroke="currentColor" stroke-width="1.5"/></svg></button><button class="arrow" type="button" data-d="1" aria-label="Дальше"><svg aria-hidden="true" width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M1 7h19M14 1l6 6-6 6" stroke="currentColor" stroke-width="1.5"/></svg></button></div></div>
+  <div class="row" id="works-row"><button class="wk" type="button" data-i="0"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/01-bordo-meh.webp" alt="Винный маникюр на фоне меха" loading="lazy"></span><span class="wk__cap">Винный, мех</span></button><button class="wk" type="button" data-i="1"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/02-nyud-sumka.webp" alt="Нюдовый маникюр, руки на сумке с бахромой" loading="lazy"></span><span class="wk__cap">Нюд</span></button><button class="wk" type="button" data-i="2"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/03-chernyj-dizajn.webp" alt="Чёрный маникюр с дизайном, Luxio Nightfall" loading="lazy"></span><span class="wk__cap">Чёрный с дизайном</span></button><button class="wk" type="button" data-i="3"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/04-krasnyj-kolco.webp" alt="Красный маникюр и кольцо с камнем" loading="lazy"></span><span class="wk__cap">Красный</span></button><button class="wk" type="button" data-i="4"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/05-poloski.webp" alt="Маникюр с полосками и кольцо-печатка" loading="lazy"></span><span class="wk__cap">Полоски</span></button><button class="wk" type="button" data-i="5"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/06-rozovyj-ochki.webp" alt="Розовый маникюр, солнечные очки" loading="lazy"></span><span class="wk__cap">Розовый</span></button><button class="wk" type="button" data-i="6"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/07-lavandovyj.webp" alt="Лавандовый маникюр, стакан воды" loading="lazy"></span><span class="wk__cap">Лавандовый</span></button><button class="wk" type="button" data-i="7"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/08-bordo-molniya.webp" alt="Бордовый маникюр на красном фоне" loading="lazy"></span><span class="wk__cap">Бордо</span></button><button class="wk" type="button" data-i="8"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/09-pedikyur-dizajn.webp" alt="Педикюр с дизайном" loading="lazy"></span><span class="wk__cap">Педикюр с дизайном</span></button><button class="wk" type="button" data-i="9"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/10-nyud-kofe.webp" alt="Нюдовый маникюр Luxio Haven со стаканом кофе" loading="lazy"></span><span class="wk__cap">Нюд Luxio Haven</span></button><button class="wk" type="button" data-i="10"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/11-temnyj-mashina.webp" alt="Тёмный маникюр в салоне машины" loading="lazy"></span><span class="wk__cap">Тёмный</span></button><button class="wk" type="button" data-i="11"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/13-bordo-listya.webp" alt="Бордовый маникюр на фоне жёлтых листьев" loading="lazy"></span><span class="wk__cap">Бордо, осень</span></button><button class="wk" type="button" data-i="12"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/14-molochnyj-kovyor.webp" alt="Молочный нюдовый маникюр на фоне ковра" loading="lazy"></span><span class="wk__cap">Молочный нюд</span></button><button class="wk" type="button" data-i="13"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/15-pedikyur-krasnyj.webp" alt="Красный педикюр" loading="lazy"></span><span class="wk__cap">Красный педикюр</span></button><button class="wk" type="button" data-i="14"><span class="wk__ph"><img width="900" height="1200" src="assets/img/raboty/16-nyud-leopard.webp" alt="Нюдовый маникюр на леопардовом принте" loading="lazy"></span><span class="wk__cap">Нюд на леопарде</span></button></div>
+  <div class="wrap sec__foot"><a class="link" href="https://t.me/bestie_nail" target="_blank" rel="noopener">Больше работ — в Telegram</a></div>
 </section>
 
-<!-- (03a) ОСНОВАТЕЛЬНИЦА (выбрано 04.11): большая цитата сверху + структура «портрет слева, текст справа». Текст — черновик по фактам студии и отзывам; согласовать с Зухрой до запуска -->
-<section id="founder" class="section fnd">
-  <p class="fc__q">«Бэсти — это лучшая подруга. <span class="hand">Такое место мне и&nbsp;хотелось создать»</span></p>
-  <div class="fnd__row">
-    <figure class="fnd__ph2"><img width="800" height="800" src="assets/img/osnovatelnica-zuhra.webp" alt="Зухра, основательница студии бэсти" loading="lazy"><figcaption><b>Зухра</b><span>основательница бэсти</span></figcaption></figure>
-    <div class="fnd__txt2">
-      <p>Я хотела студию, куда приходят не только за&nbsp;маникюром. Где тебя помнят по&nbsp;имени, знают, какую форму ногтей ты любишь, и&nbsp;сразу предлагают кофе.</p>
-      <p>Иногда гостей встречаю я сама: показываю студию, приношу меню напитков. Сама я делаю брови, а&nbsp;маникюр и&nbsp;педикюр — работа наших мастеров.</p>
-      <p>Пока мастер работает, можно включить фильм на&nbsp;планшете, а&nbsp;в&nbsp;конце сделать массаж рук. Из&nbsp;таких мелочей и&nbsp;складывается ощущение, что ты пришла к&nbsp;подруге.</p>
-      <p class="fnd__end">Заходите в гости</p>
-      <p class="hand fnd__sign">Зухра</p>
-    </div>
-  </div>
+<section id="reviews" class="sec">
+  <div class="wrap sec__head"><h2 class="h2">Что пишут гости</h2><div class="arrows" data-for="reviews"><button class="arrow" type="button" data-d="-1" aria-label="Назад"><svg aria-hidden="true" width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M21 7H2M8 1 2 7l6 6" stroke="currentColor" stroke-width="1.5"/></svg></button><button class="arrow" type="button" data-d="1" aria-label="Дальше"><svg aria-hidden="true" width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M1 7h19M14 1l6 6-6 6" stroke="currentColor" stroke-width="1.5"/></svg></button></div></div>
+  <div class="row" id="reviews-row"><figure class="rv"><div class="rv__ph"><img width="480" height="480" src="assets/img/otzyvy/dasha-1.webp" alt="Фото из отзыва dasha shutemova" loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/dasha-2.webp" alt="Фото из отзыва dasha shutemova" loading="lazy"></div><blockquote class="rv__t">девочки, я в экстазе!🤤<br>сегодня у меня был вечер принцессы)<br>я записалась на маникюр со сложным дизайном и вдобавок сверху френч, мастер Ксения справилась за 1.40 минут, это ваааау!<br>на входе меня встретила лично владелица студии, показала мне студию, предложила меню с напитками, ещё и мороженым угостила! и все это комплиментом🥹 а какая милая!<br><br>отдельно отмечу интерьер и дизайн студии: уже надоели бежевые минималистичные пространства, а здесь яркие детали, зеленые кресла, ковер на полу и кирпичные стены😍<br>по телевизору идут всеми нами любимые фильмы! <br><br>перед уходом мне предложили массаж рук специальной перчаткой, я такого ещё нигде не видела, это удивительно, но очень приятно и как же расслабляет)<br>еще подарили бальзамчик для губ и стикеры, мой внутренний ребенок ликует<br>я вернусь еще много раз, ради наслаждения❤️</blockquote><button class="rv__more" type="button" hidden>Читать полностью</button><figcaption class="rv__who"><span class="rv__ava"><img width="200" height="200" src="assets/img/dasha.jpg" alt="" loading="lazy"></span><span><b>dasha shutemova</b><small>Яндекс Карты · 01.09.2026</small></span></figcaption></figure><figure class="rv"><div class="rv__ph"><img width="480" height="480" src="assets/img/otzyvy/milana-1.webp" alt="Фото из отзыва Milana M." loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/milana-2.webp" alt="Фото из отзыва Milana M." loading="lazy"></div><blockquote class="rv__t">Впервые была в этом салоне и осталась в диком восторге! Локация очень удобная,самый центр Москвы,сервис 10/10,качество услуги так же. Комплекс маникюра с покрытием и снятием сделали за 1,5ч. В конце процедуры предложили спа для рук. Так же удивило комплиментарное меню,большой выбор напитков,также есть десерты. Сама студия с очень уютным дизайном в стиле лофт. Обязательно буду советовать подругам !</blockquote><button class="rv__more" type="button" hidden>Читать полностью</button><figcaption class="rv__who"><span class="rv__ava"><img width="200" height="200" src="assets/img/milana.jpg" alt="" loading="lazy"></span><span><b>Milana M.</b><small>Яндекс Карты · 29.08.2026</small></span></figcaption></figure><figure class="rv"><div class="rv__ph"><img width="480" height="480" src="assets/img/otzyvy/yuliya-1.webp" alt="Фото из отзыва Юлия Драницына" loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/yuliya-2.webp" alt="Фото из отзыва Юлия Драницына" loading="lazy"></div><blockquote class="rv__t">Чудесный салон с прекрасным отношением к своим гостям! ✨✨✨ очень вкусный кофе и зефир. Маникюр идеальный, самый аккуратный и нежный мастер в моей жизни, не заметила как делали даже! Очень красиво вышло, как я и хотела. Подход максимально клиентоориентированный, девочки под меня заказали лак, запомнили какой маникюр я хочу и как меня зовут. Очень приятно ❣️❣️❣️</blockquote><button class="rv__more" type="button" hidden>Читать полностью</button><figcaption class="rv__who"><span class="rv__ava"><img width="200" height="200" src="assets/img/otzyvy/ava-yuliya.webp" alt="" loading="lazy"></span><span><b>Юлия Драницына</b><small>Яндекс Карты · 21.09.2026</small></span></figcaption></figure><figure class="rv"><div class="rv__ph"><img width="480" height="480" src="assets/img/otzyvy/kseniya-l-1.webp" alt="Фото из отзыва Ксения Л" loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/kseniya-l-2.webp" alt="Фото из отзыва Ксения Л" loading="lazy"></div><blockquote class="rv__t">Мне очень понравилось здесь 🤍<br><br>Долго искала студию без светлого интерьера, который уже везде и немного приелся. А здесь все совсем по другому, очень красиво и уютно, хочется возвращаться)<br><br>Отдельно хочу отметить администратора! Безумно классная девушка, видно, что правда любит свое дело и заботится о гостях. Чай нальют, перчатку для массажа рук бесплатно дадут, в общем, сделают все для вашего комфорта 😅<br><br>В этот раз решила сделать лечебный маникюр, потому что ногти уже очень просили снять покрытие<br><br>Желаю студии процветания и побольше классных клиентов))</blockquote><button class="rv__more" type="button" hidden>Читать полностью</button><figcaption class="rv__who"><span class="rv__ava"><img width="200" height="200" src="assets/img/otzyvy/ava-kseniya-l.webp" alt="" loading="lazy"></span><span><b>Ксения Л</b><small>Яндекс Карты · 13.09.2026</small></span></figcaption></figure><figure class="rv"><div class="rv__ph"><img width="480" height="480" src="assets/img/otzyvy/sofya-1.webp" alt="Фото из отзыва Софья К." loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/sofya-2.webp" alt="Фото из отзыва Софья К." loading="lazy"></div><blockquote class="rv__t">Потрясающая студия! <br>Была на маникюре и получила наслаждение от обстановки, невероятно милых и приятных девушек-мастеров и администратора, а самое главное от качества работы - покрытие ровное, кутикула обработана аккуратно, инструменты в стерильных пакетах, мастер заботится о клиенте во время процедуры. В завершении предложили сделать массаж рук специальным массажером - очень приятно от такого сервиса. <br>Также могу отметить что администратор несколько раз предлагала напитки чай, кофе (молоко есть как обычное, так и растительное). <br>Студия превзошла все ожидания🤍</blockquote><button class="rv__more" type="button" hidden>Читать полностью</button><figcaption class="rv__who"><span class="rv__ava"><img width="200" height="200" src="assets/img/otzyvy/ava-sofya.webp" alt="" loading="lazy"></span><span><b>Софья К.</b><small>Яндекс Карты · 14.09.2026</small></span></figcaption></figure><figure class="rv"><div class="rv__ph"><img width="480" height="480" src="assets/img/otzyvy/violetta-1.webp" alt="Фото из отзыва violettavitman" loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/violetta-2.webp" alt="Фото из отзыва violettavitman" loading="lazy"></div><blockquote class="rv__t">Очень понравилась студия: камерная и уютная, с приятной атмосферой, отличным сервисом (даже мороженым угощают 🍨) и очень удобным расположением (5 минут пешком от метро Трубная). Делала педикюр, все прошло прекрасно, хотя я очень требовательный клиент из-за чувствительности кожи. Ушла в отличном настроении и со свежим педикюром 🌸</blockquote><button class="rv__more" type="button" hidden>Читать полностью</button><figcaption class="rv__who"><span class="rv__ava"><img width="200" height="200" src="assets/img/otzyvy/ava-violetta.webp" alt="" loading="lazy"></span><span><b>violettavitman</b><small>Яндекс Карты · 04.09.2026</small></span></figcaption></figure></div>
+  <div class="wrap sec__foot"><a class="link" href="https://yandex.ru/maps/org/besti_neyls/87489915348/reviews/" target="_blank" rel="noopener">Все отзывы на Яндекс Картах</a></div>
 </section>
 
-<!-- (04) В ГОСТЯХ У БЭСТИ: заставка — при прокрутке слова съезжаются к фото с двух сторон; ниже лента кадров слева и текст лесенкой справа (вариант «лента», выбран 03.11) -->
-<section id="studio" class="gosti">
-  <div class="gintro">
-    <div class="gintro__stick">
-      <img loading="lazy" width="900" height="1200" class="gintro__img" src="assets/img/gosti-gostya-lift.webp" alt="Гостья бэсти показывает разноцветный маникюр">
-      <h2 class="gintro__ttl"><span class="gintro__l">В гостях</span><span class="gintro__r">у бэсти</span></h2>
-    </div>
+<section id="contacts" class="sec"><div class="wrap ct">
+  <!-- карта: Яндекс Карты JS API 2.1 (js/karta.js), чёрно-белая подложка, своя метка; пока API не загрузился или без JS — статичная картинка -->
+  <div class="ct__map"><div id="ymap" data-lat="55.767309" data-lon="37.62539">
+    <a class="ct__static" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener"><img width="650" height="450" src="assets/ui/karta-trubnaya-bez-metki.webp" alt="Карта: Печатников пер., 6 — рядом с метро «Трубная»" loading="lazy"><img class="ct__pin" width="64" height="84" src="assets/ui/metka-karta.svg" alt="" loading="lazy"></a>
+  </div></div>
+  <div class="ct__info">
+    <p class="label">Адрес</p>
+    <p class="ct__addr">Печатников пер., 6</p>
+    <ul class="ct__list">
+      <li><span>Метро</span>3 минуты от «Трубной», 1 этаж</li>
+      <li><span>Часы</span>Каждый день 10:00–22:00</li>
+      <li><span>Телефон</span><a href="tel:+79652300425">+7 (965) 230-04-25</a></li>
+      <li><span>Рядом</span>«Золотое Яблоко» и рестораны</li>
+    </ul>
+    <div class="btns"><a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться онлайн</a><a class="btn btn--line" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener">Маршрут</a></div>
   </div>
-
-  <div class="section gosti__body">
-    <div class="ga">
-      <div class="ga__m ga__m--1"><figure><video src="assets/video/video-den-v-studii.mp4" poster="assets/video/video-den-v-studii-poster.webp" muted loop playsinline preload="none" aria-label="Видео: утро в студии"></video></figure><figure><img width="900" height="1200" src="assets/img/gosti-stolik-cvety.webp" alt="Столик в студии с цветами" loading="lazy"></figure></div>
-      <div class="ga__t ga__t--1">
-        <p class="label">(a) атмосфера</p>
-        <p class="ga__h">Кирпичные стены, красный ковёр и&nbsp;зелёные бархатные кресла</p>
-        <p class="ga__p">Студия в Печатниковом переулке, в трёх минутах от «Трубной». Рядом «Золотое Яблоко» и рестораны — можно устроить себе бьюти-день.</p>
-        <p class="hand ga__note">как у лучшей подруги</p>
-      </div>
-      <div class="ga__m ga__m--2"><figure class="ga__wide"><img width="1200" height="900" src="assets/img/gosti-zelyonye-kresla-4x3.webp" alt="Зелёные бархатные кресла и ковёр в студии" loading="lazy"></figure></div>
-      <div class="ga__t ga__t--2">
-        <p class="label">(b) мы угощаем</p>
-        <!-- меню напитков как в первой версии: двойная рамка, название от руки, список с пунктиром -->
-        <div class="dmenu"><div class="dmenu__in">
-          <svg class="dmenu__heart" aria-hidden="true" width="28" height="26" viewBox="0 0 24 22" fill="none"><path d="M12 20.5s-8-4.9-10.4-9.6A5.6 5.6 0 0 1 12 5.2a5.6 5.6 0 0 1 10.4 5.7C20 15.6 12 20.5 12 20.5z" fill="#FFACE4" stroke="#85231A" stroke-width="1.2"/></svg>
-          <p class="dmenu__ttl">В гостях у бэсти</p>
-          <ul class="dmenu__list">
-            <li><span>кофе</span><small>с обычным или растительным молоком</small></li>
-            <li>гречишный чай</li>
-            <li>клубничный улун</li>
-            <li>матча</li>
-            <li>какао на банановом</li>
-            <li>мороженое</li>
-          </ul>
-          <p class="dmenu__note">Напитки и десерты во время визита</p>
-        </div></div>
-      </div>
-      <div class="ga__m ga__m--3"><figure><img width="900" height="1200" src="assets/img/gosti-polka.webp" alt="Полка с уходом в студии" loading="lazy"></figure><figure><video src="assets/video/video-process.mp4" poster="assets/video/video-process-poster.webp" muted loop playsinline preload="none" aria-label="Видео: мастер делает маникюр"></video></figure></div>
-      <div class="ga__t ga__t--3">
-        <p class="label">(c) кресло с кино</p>
-        <p class="ga__h">Персональный планшет с&nbsp;наушниками</p>
-        <p class="ga__p">Пока мастер работает, время в студии проходит незаметно.</p>
-      </div>
-      <div class="ga__m ga__m--4"><figure><video src="assets/video/video-polki-luxio.mp4" poster="assets/video/video-polki-luxio-poster.webp" muted loop playsinline preload="none" aria-label="Видео: полки с лаками Luxio"></video></figure><figure><img width="900" height="1200" src="assets/img/gosti-flakon-kirpich.webp" alt="Маникюр на фоне кирпичной стены" loading="lazy"></figure></div>
-      <div class="ga__t ga__t--4">
-        <p class="label">(d) стерильно</p>
-        <p class="ga__h">Инструменты распаковывают при&nbsp;вас</p>
-        <p class="ga__p">Из стерильного пакета, на ваших глазах. Покрытие — палитра Luxio.</p>
-        <a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться онлайн</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- (05) РАБОТЫ: как в первой версии — веер карточек, листается кнопками и свайпом, средняя открывается на весь экран (вырастает из своей карточки). 16 работ с Диска клиента, без повторов -->
-<section id="works" class="section works2">
-  <div class="grid head">
-    <h2>Руки после бэсти</h2>
-    <p class="aside">Палитра Luxio большая — гостьи пишут, что глаза разбегаются</p>
-  </div>
-  <div class="pile" aria-label="Работы мастеров — листайте свайпом">
-    <button class="pc" type="button" data-i="0"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/01-bordo-meh.webp" alt="Винный маникюр на фоне меха" loading="lazy"></span><span class="pc__cap"><span>(01) винный, мех</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="1"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/02-nyud-sumka.webp" alt="Нюдовый маникюр, руки на сумке с бахромой" loading="lazy"></span><span class="pc__cap"><span>(02) нюд</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="2"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/03-chernyj-dizajn.webp" alt="Чёрный маникюр с дизайном, Luxio Nightfall" loading="lazy"></span><span class="pc__cap"><span>(03) чёрный с дизайном</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="3"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/04-krasnyj-kolco.webp" alt="Красный маникюр и кольцо с камнем" loading="lazy"></span><span class="pc__cap"><span>(04) красный</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="4"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/05-poloski.webp" alt="Маникюр с полосками и кольцо-печатка" loading="lazy"></span><span class="pc__cap"><span>(05) полоски</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="5"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/06-rozovyj-ochki.webp" alt="Розовый маникюр, солнечные очки" loading="lazy"></span><span class="pc__cap"><span>(06) розовый</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="6"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/07-lavandovyj.webp" alt="Лавандовый маникюр, стакан воды" loading="lazy"></span><span class="pc__cap"><span>(07) лавандовый</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="7"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/08-bordo-molniya.webp" alt="Бордовый маникюр на красном фоне" loading="lazy"></span><span class="pc__cap"><span>(08) бордо</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="8"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/09-pedikyur-dizajn.webp" alt="Педикюр с дизайном" loading="lazy"></span><span class="pc__cap"><span>(09) педикюр с дизайном</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="9"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/10-nyud-kofe.webp" alt="Нюдовый маникюр Luxio Haven со стаканом кофе" loading="lazy"></span><span class="pc__cap"><span>(10) нюд Luxio Haven</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="10"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/11-temnyj-mashina.webp" alt="Тёмный маникюр в салоне машины" loading="lazy"></span><span class="pc__cap"><span>(11) тёмный</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="11"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/12-rozovyj-flakon.webp" alt="Розовый нюдовый маникюр и флакон духов" loading="lazy"></span><span class="pc__cap"><span>(12) розовый нюд</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="12"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/13-bordo-listya.webp" alt="Бордовый маникюр на фоне жёлтых листьев" loading="lazy"></span><span class="pc__cap"><span>(13) бордо, осень</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="13"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/14-molochnyj-kovyor.webp" alt="Молочный нюдовый маникюр на фоне ковра" loading="lazy"></span><span class="pc__cap"><span>(14) молочный нюд</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="14"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/15-pedikyur-krasnyj.webp" alt="Красный педикюр" loading="lazy"></span><span class="pc__cap"><span>(15) красный педикюр</span><span class="pc__note">⤢ на весь экран</span></span></button>
-    <button class="pc" type="button" data-i="15"><span class="pc__ph"><img width="900" height="1200" src="assets/img/raboty/16-nyud-leopard.webp" alt="Нюдовый маникюр на леопардовом принте" loading="lazy"></span><span class="pc__cap"><span>(16) нюд на леопарде</span><span class="pc__note">⤢ на весь экран</span></span></button>
-  </div>
-  <div class="pile__nav">
-    <button class="pile__btn" type="button" data-d="-1" aria-label="Предыдущая работа"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="#85231A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-    <span class="pile__n"><b>1</b> / 16</span>
-    <button class="pile__btn pile__btn--next" type="button" data-d="1" aria-label="Следующая работа"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#85231A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-  </div>
-  <a class="works2__tg" href="https://t.me/bestie_nail" target="_blank" rel="noopener">Больше работ — в Telegram →</a>
-  <div class="lb" hidden><figure class="lb__card"><img loading="lazy" alt=""><figcaption></figcaption></figure><button class="lb__close" type="button" aria-label="Закрыть">×</button></div>
-</section>
-
-<!-- (06) ОТЗЫВЫ: выбран вариант A (04.11) — заголовок и рейтинг закреплены слева, отзывы с фото гостей справа. Иконка — своя: письмо с сердечком. Тексты и фото — Яндекс Карты, выгрузка 04.11.2026 -->
-<section id="reviews" class="section rv2">
-  <div class="rvx rvx--a">
-    <div class="rva__side"><div class="rva__stick"><h2>Что пишут <span class="nowrap">гостьи<svg class="hd-ico" aria-hidden="true" width="92" height="74" viewBox="0 0 92 74" fill="none"><path d="M8 22c1-5 4-7 9-7 18-1 40-2 60-1 5 0 8 3 8 8 1 11 1 23 0 34-1 5-4 7-9 7-19 1-40 1-59 0-5 0-8-3-8-8-1-11-2-22-1-33z" fill="#FFFFFF" stroke="#85231A" stroke-width="2.6" stroke-linejoin="round"/><path d="M10 19c11 9 22 17 34 24 4 2 7 2 10-1 10-8 20-15 29-24" stroke="#85231A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M46 40c-3-3-8-6-8-10 0-3 2-5 5-5 2 0 3 1 4 3 1-2 3-3 5-3 3 0 4 3 4 5 0 4-6 7-10 10z" fill="#FFACE4" stroke="#85231A" stroke-width="1.8" stroke-linejoin="round"/><path d="M70 10l4-7M79 13l7-4M62 9l-1-7" stroke="#85231A" stroke-width="2.2" stroke-linecap="round"/></svg></span></h2><a class="rv2__all" href="https://yandex.ru/maps/org/besti_neyls/87489915348/reviews/" target="_blank" rel="noopener"><img loading="lazy" width="24" height="21" src="assets/ui/cursor-nail-sm.png" alt=""><span>Нажмите, чтобы увидеть больше отзывов</span></a></div></div>
-    <div class="rva__list"><figure class="rvm rva__item"><div class="rvm__ph"><img width="480" height="480" src="assets/img/otzyvy/dasha-1.webp" alt="Фото из отзыва dasha shutemova" loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/dasha-2.webp" alt="Фото из отзыва dasha shutemova" loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/dasha-3.webp" alt="Фото из отзыва dasha shutemova" loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/dasha-4.webp" alt="Фото из отзыва dasha shutemova" loading="lazy"></div><blockquote class="rvm__t">девочки, я в экстазе!🤤<br>сегодня у меня был вечер принцессы)<br>я записалась на маникюр со сложным дизайном и вдобавок сверху френч, мастер Ксения справилась за 1.40 минут, это ваааау!<br>на входе меня встретила лично владелица студии, показала мне студию, предложила меню с напитками, ещё и мороженым угостила! и все это комплиментом🥹 а какая милая!<br><br>отдельно отмечу интерьер и дизайн студии: уже надоели бежевые минималистичные пространства, а здесь яркие детали, зеленые кресла, ковер на полу и кирпичные стены😍<br>по телевизору идут всеми нами любимые фильмы! <br><br>перед уходом мне предложили массаж рук специальной перчаткой, я такого ещё нигде не видела, это удивительно, но очень приятно и как же расслабляет)<br>еще подарили бальзамчик для губ и стикеры, мой внутренний ребенок ликует<br>я вернусь еще много раз, ради наслаждения❤️</blockquote><button class="rvm__more" type="button" hidden>ещё</button><figcaption><span class="rvm__ava"><img loading="lazy" width="200" height="200" src="assets/img/dasha.jpg" alt=""></span><span><b>dasha shutemova</b><small>Знаток города 5 уровня · 01.09.2026</small></span></figcaption></figure><figure class="rvm rva__item"><div class="rvm__ph"><img width="480" height="480" src="assets/img/otzyvy/milana-1.webp" alt="Фото из отзыва Milana M." loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/milana-2.webp" alt="Фото из отзыва Milana M." loading="lazy"></div><blockquote class="rvm__t">Впервые была в этом салоне и осталась в диком восторге! Локация очень удобная,самый центр Москвы,сервис 10/10,качество услуги так же. Комплекс маникюра с покрытием и снятием сделали за 1,5ч. В конце процедуры предложили спа для рук. Так же удивило комплиментарное меню,большой выбор напитков,также есть десерты. Сама студия с очень уютным дизайном в стиле лофт. Обязательно буду советовать подругам !</blockquote><button class="rvm__more" type="button" hidden>ещё</button><figcaption><span class="rvm__ava"><img loading="lazy" width="200" height="200" src="assets/img/milana.jpg" alt=""></span><span><b>Milana M.</b><small>Знаток города 5 уровня · 29.08.2026</small></span></figcaption></figure><figure class="rvm rva__item"><div class="rvm__ph"><img width="480" height="480" src="assets/img/otzyvy/yuliya-1.webp" alt="Фото из отзыва Юлия Драницына" loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/yuliya-2.webp" alt="Фото из отзыва Юлия Драницына" loading="lazy"></div><blockquote class="rvm__t">Чудесный салон с прекрасным отношением к своим гостям! ✨✨✨ очень вкусный кофе и зефир. Маникюр идеальный, самый аккуратный и нежный мастер в моей жизни, не заметила как делали даже! Очень красиво вышло, как я и хотела. Подход максимально клиентоориентированный, девочки под меня заказали лак, запомнили какой маникюр я хочу и как меня зовут. Очень приятно ❣️❣️❣️</blockquote><button class="rvm__more" type="button" hidden>ещё</button><figcaption><span class="rvm__ava"><img loading="lazy" width="200" height="200" src="assets/img/otzyvy/ava-yuliya.webp" alt=""></span><span><b>Юлия Драницына</b><small>Знаток города 6 уровня · 21.09.2026</small></span></figcaption></figure><figure class="rvm rva__item"><div class="rvm__ph"><img width="480" height="480" src="assets/img/otzyvy/kseniya-l-1.webp" alt="Фото из отзыва Ксения Л" loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/kseniya-l-2.webp" alt="Фото из отзыва Ксения Л" loading="lazy"></div><blockquote class="rvm__t">Мне очень понравилось здесь 🤍<br><br>Долго искала студию без светлого интерьера, который уже везде и немного приелся. А здесь все совсем по другому, очень красиво и уютно, хочется возвращаться)<br><br>Отдельно хочу отметить администратора! Безумно классная девушка, видно, что правда любит свое дело и заботится о гостях. Чай нальют, перчатку для массажа рук бесплатно дадут, в общем, сделают все для вашего комфорта 😅<br><br>В этот раз решила сделать лечебный маникюр, потому что ногти уже очень просили снять покрытие<br><br>Желаю студии процветания и побольше классных клиентов))</blockquote><button class="rvm__more" type="button" hidden>ещё</button><figcaption><span class="rvm__ava"><img loading="lazy" width="200" height="200" src="assets/img/otzyvy/ava-kseniya-l.webp" alt=""></span><span><b>Ксения Л</b><small>Знаток города 5 уровня · 13.09.2026</small></span></figcaption></figure><figure class="rvm rva__item"><div class="rvm__ph"><img width="480" height="480" src="assets/img/otzyvy/sofya-1.webp" alt="Фото из отзыва Софья К." loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/sofya-2.webp" alt="Фото из отзыва Софья К." loading="lazy"></div><blockquote class="rvm__t">Потрясающая студия! <br>Была на маникюре и получила наслаждение от обстановки, невероятно милых и приятных девушек-мастеров и администратора, а самое главное от качества работы - покрытие ровное, кутикула обработана аккуратно, инструменты в стерильных пакетах, мастер заботится о клиенте во время процедуры. В завершении предложили сделать массаж рук специальным массажером - очень приятно от такого сервиса. <br>Также могу отметить что администратор несколько раз предлагала напитки чай, кофе (молоко есть как обычное, так и растительное). <br>Студия превзошла все ожидания🤍</blockquote><button class="rvm__more" type="button" hidden>ещё</button><figcaption><span class="rvm__ava"><img loading="lazy" width="200" height="200" src="assets/img/otzyvy/ava-sofya.webp" alt=""></span><span><b>Софья К.</b><small>Знаток города 5 уровня · 14.09.2026</small></span></figcaption></figure><figure class="rvm rva__item"><div class="rvm__ph"><img width="480" height="480" src="assets/img/otzyvy/violetta-1.webp" alt="Фото из отзыва violettavitman" loading="lazy"><img width="480" height="480" src="assets/img/otzyvy/violetta-2.webp" alt="Фото из отзыва violettavitman" loading="lazy"></div><blockquote class="rvm__t">Очень понравилась студия: камерная и уютная, с приятной атмосферой, отличным сервисом (даже мороженым угощают 🍨) и очень удобным расположением (5 минут пешком от метро Трубная). Делала педикюр, все прошло прекрасно, хотя я очень требовательный клиент из-за чувствительности кожи. Ушла в отличном настроении и со свежим педикюром 🌸</blockquote><button class="rvm__more" type="button" hidden>ещё</button><figcaption><span class="rvm__ava"><img loading="lazy" width="200" height="200" src="assets/img/otzyvy/ava-violetta.webp" alt=""></span><span><b>violettavitman</b><small>Знаток города 7 уровня · 04.09.2026</small></span></figcaption></figure></div>
-  </div>
-</section>
-
-<!-- (07) КАК ДОЙТИ -->
-<!-- (07) КАК ДОЙТИ: как у MECCA — настоящая чёрно-белая карта на всю ширину, поверх неё окно «как_дойти.txt» (выбрано 04.11) -->
-<section id="route" class="route2">
-  <!-- настоящая карта: Яндекс Карты JS API 2.1 (js/karta.js), чёрно-белая подложка, своя метка. Пока API не загрузился или без JS — статичная картинка -->
-  <div class="route2__map" id="ymap" data-lat="55.767309" data-lon="37.62539">
-    <a class="route2__static" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener">
-      <span class="map__img"><img width="650" height="450" src="assets/ui/karta-trubnaya-bez-metki.webp" alt="Карта: Печатников пер., 6 — рядом с метро «Трубная»" loading="lazy"><span class="dog" aria-hidden="true"><span class="dog__shadow"></span><span class="dog__body"><span class="dog__tag">мы тут</span><img loading="lazy" width="1" height="1" src="assets/ui/pxdog-maltipu.svg" alt=""></span></span></span>
-    </a>
-  </div>
-  <div class="win rk rk--a">
-    <div class="win__bar"><span>// как_дойти.txt</span><span aria-hidden="true">_ □ ×</span></div>
-    <div class="rk__in">
-      <p class="rk__big">Печатников пер., 6</p>
-      <p class="rk__sub">1 этаж · 3 минуты от метро «Трубная»</p>
-      <ul class="rk__list"><li><span>часы</span>каждый день 10:00–22:00</li><li><span>телефон</span><a href="tel:+79652300425">+7 (965) 230-04-25</a></li><li><span>рядом</span>«Золотое Яблоко» и рестораны</li></ul>
-      <div class="rk__btns"><a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться онлайн</a><a class="btn btn--ghost" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener">Маршрут</a></div>
-    </div>
-  </div>
-</section>
+</div></section>
 </main>
 
-<!-- ПОДВАЛ как в первой версии: ретро-переход ступенями прямо из карты, тёмное бордо с полосами «кинескопа», четыре колонки, лента услуг, БЭСТИ из линий -->
-<div class="ft-steps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
-<footer class="ft">
-  <div class="ft__cols">
-    <div class="ft__brand"><img width="1766" height="580" src="assets/ui/logo-znak-rozovyj.svg" alt="бэсти"><p>Студия маникюра и педикюра в&nbsp;3&nbsp;минутах от&nbsp;метро «Трубная». Каждый день <span style="white-space:nowrap">10:00–22:00</span></p></div>
-    <div class="ft__col"><p class="ft__lbl">Контакты</p><span>Бэсти Нейлс — студия маникюра</span><a href="tel:+79652300425" style="text-decoration:none">+7 (965) 230-04-25</a><a href="https://t.me/bestie_nail" target="_blank" rel="noopener">Telegram @bestie_nail</a><span>Instagram* — <span class="wait wait--dark">[ждём: ссылка на аккаунт]</span></span></div>
-    <div class="ft__col"><p class="ft__lbl">Адрес и часы</p><span>Москва, Печатников пер., 6</span><span>Ежедневно 10:00–22:00</span></div>
-    <div class="ft__col ft__col--req"><p class="ft__lbl">Реквизиты и документы</p><span>ИП Абдулагаева Зухра Загитдиновна</span><span><span class="wait wait--dark">[ждём: ИНН и ОГРНИП]</span></span><span><span class="wait wait--dark">[ждём: политика обработки персональных данных]</span></span><span class="ft__note">*Instagram принадлежит компании Meta, признанной экстремистской и запрещённой на территории РФ</span></div>
+<footer class="ft"><div class="wrap">
+  <div class="ft__top">
+    <div class="ft__logo"><img width="1766" height="580" src="assets/ui/logo-znak-rozovyj.svg" alt="бэсти" loading="lazy"><p>Студия маникюра и&nbsp;педикюра в&nbsp;3&nbsp;минутах от&nbsp;метро «Трубная»</p></div>
+    <div class="ft__col"><p class="ft__h">Контакты</p><a href="tel:+79652300425">+7 (965) 230-04-25</a><a href="https://t.me/bestie_nail" target="_blank" rel="noopener">Telegram @bestie_nail</a><span>Instagram* — <span class="wait">[ждём: ссылка на аккаунт]</span></span></div>
+    <div class="ft__col"><p class="ft__h">Адрес и часы</p><span>Москва, Печатников пер., 6</span><span>Каждый день 10:00–22:00</span></div>
+    <div class="ft__col"><p class="ft__h">Документы</p><span>ИП Абдулагаева Зухра Загитдиновна</span><span class="wait">[ждём: ИНН и ОГРНИП]</span><span class="wait">[ждём: политика обработки персональных данных]</span></div>
   </div>
-  <div class="ft__run" aria-label="Услуги"><div class="ft__runrow"><span class="ft__seg"><span>Маникюр</span><i aria-hidden="true">✳</i><span>Педикюр</span><i aria-hidden="true">✳</i><span>Покрытие Luxio</span><i aria-hidden="true">✳</i><span>Френч</span><i aria-hidden="true">✳</i><span>Японский маникюр</span><i aria-hidden="true">✳</i><span>Пилочный маникюр</span><i aria-hidden="true">✳</i><span>Укрепление гелем</span><i aria-hidden="true">✳</i><span>Спа-уход</span><i aria-hidden="true">✳</i><span>Брови</span><i aria-hidden="true">✳</i><span>Ресницы</span><i aria-hidden="true">✳</i><span>Мужской маникюр</span><i aria-hidden="true">✳</i></span><span class="ft__seg" aria-hidden="true"><span>Маникюр</span><i aria-hidden="true">✳</i><span>Педикюр</span><i aria-hidden="true">✳</i><span>Покрытие Luxio</span><i aria-hidden="true">✳</i><span>Френч</span><i aria-hidden="true">✳</i><span>Японский маникюр</span><i aria-hidden="true">✳</i><span>Пилочный маникюр</span><i aria-hidden="true">✳</i><span>Укрепление гелем</span><i aria-hidden="true">✳</i><span>Спа-уход</span><i aria-hidden="true">✳</i><span>Брови</span><i aria-hidden="true">✳</i><span>Ресницы</span><i aria-hidden="true">✳</i><span>Мужской маникюр</span><i aria-hidden="true">✳</i></span></div></div>
-  <div class="ft__big" aria-hidden="true"><span><b>Б</b></span><span><b>Э</b></span><span><b>С</b></span><span><b>Т</b></span><span><b>И</b></span></div>
-</footer>
+  <div class="ft__bot"><span>© 2026 бэсти</span><span>*Instagram принадлежит компании Meta, признанной экстремистской и&nbsp;запрещённой на&nbsp;территории РФ</span></div>
+</div></footer>
 
-<script src="js/prices.js?v=202611041012" defer></script>
-<script src="js/main.js?v=202611041012" defer></script>
-<script src="js/karta.js?v=202611041012" defer></script>
-<script src="js/variants.js?v=202611041012" defer></script>
+<!-- акция первого визита: всплывает через несколько секунд, один раз за посещение (вместо купона на обложке) -->
+<div class="promo" id="promo" role="dialog" aria-modal="true" aria-labelledby="promo-t" hidden>
+  <div class="promo__box" tabindex="-1">
+    <button class="promo__x" type="button" aria-label="Закрыть">×</button>
+    <img class="promo__logo" width="1766" height="580" src="assets/ui/logo-znak-rozovyj.svg" alt="бэсти" loading="lazy">
+    <p class="promo__lbl" id="promo-t">Первый визит в&nbsp;бэсти</p>
+    <p class="promo__big">−15%</p>
+    <p class="promo__t">на сэт-комплекс Luxio: снятие гель-лака, маникюр, выравнивание и&nbsp;покрытие Luxio</p>
+    <p class="promo__price">2 890 ₽<span class="sr"> вместо </span><s>3 400 ₽</s></p>
+    <a class="btn btn--light" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Записаться онлайн</a>
+  </div>
+</div>
+
+<div class="lb" hidden><figure><img alt=""><figcaption></figcaption></figure><button class="lb__x" type="button" aria-label="Закрыть">×</button><button class="arrow lb__prev" type="button" aria-label="Предыдущая работа"><svg aria-hidden="true" width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M21 7H2M8 1 2 7l6 6" stroke="currentColor" stroke-width="1.5"/></svg></button><button class="arrow lb__next" type="button" aria-label="Следующая работа"><svg aria-hidden="true" width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M1 7h19M14 1l6 6-6 6" stroke="currentColor" stroke-width="1.5"/></svg></button></div>
+
+<script src="js/prices.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/karta.js" defer></script>
 </body>
 </html>

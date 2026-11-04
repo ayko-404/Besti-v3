@@ -167,21 +167,27 @@
     addEventListener('resize', upd); upd();
   });
 
-  // работы (как у soyka): одно крупное фото, листается свайпом (scroll-snap) и стрелками со счётчиком; нажатие — на весь экран
-  const track = document.querySelector('.ws__track'), lb = document.querySelector('.lb');
-  const works = track ? [...track.querySelectorAll('.ws__sl')] : [], wsN = document.querySelector('.ws__n b');
-  if (track && works.length) {
-    let cur = 0;
-    const step = () => works[0].offsetWidth + (parseFloat(getComputedStyle(track).columnGap) || 0);
-    const mark = (i) => { cur = i; if (wsN) wsN.textContent = i + 1; };
-    const go = (i, smooth = true) => { i = (i + works.length) % works.length; if (Math.abs(i - cur) > 1) smooth = false; /* с последнего на первое — сразу, без прокрутки через все фото */ track.scrollTo({ left: i * step(), behavior: smooth ? 'smooth' : 'auto' }); mark(i); };
+  // крупные слайдеры (как у soyka): работы и мастера — одна карточка на экран, свайп (scroll-snap), стрелки и счётчик «1 / N»
+  const slider = (root) => {
+    const track = root.querySelector('.ws__track'), items = [...track.children], n = root.querySelector('.ws__n b');
+    const s = { items, cur: 0 };
+    const step = () => items[0].offsetWidth + (parseFloat(getComputedStyle(track).columnGap) || 0);
+    const mark = (i) => { s.cur = i; if (n) n.textContent = i + 1; };
+    s.go = (i, smooth = true) => { i = (i + items.length) % items.length; if (Math.abs(i - s.cur) > 1) smooth = false; /* с последнего на первое — сразу, без прокрутки через все */ track.scrollTo({ left: i * step(), behavior: smooth ? 'smooth' : 'auto' }); mark(i); };
     track.addEventListener('scroll', () => requestAnimationFrame(() => {
-      const i = Math.min(works.length - 1, Math.round(track.scrollLeft / step()));
-      if (i !== cur) mark(i);
+      const i = Math.min(items.length - 1, Math.round(track.scrollLeft / step()));
+      if (i !== s.cur) mark(i);
     }), { passive: true });
-    document.querySelectorAll('.ws__nav .arrow').forEach((b) => b.addEventListener('click', () => go(cur + +b.dataset.d)));
+    root.querySelectorAll('.ws__nav .arrow').forEach((b) => b.addEventListener('click', () => s.go(s.cur + +b.dataset.d)));
     mark(0);
+    return s;
+  };
+  document.querySelectorAll('.ws').forEach((r) => { r._s = slider(r); });
 
+  // работы: нажатие на фото — просмотр на весь экран, синхронно со слайдером
+  const wsWorks = document.querySelector('#works .ws'), lb = document.querySelector('.lb');
+  if (wsWorks) {
+    const sl = wsWorks._s, works = sl.items;
     if (lb) {
       const img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
       let from = null;
@@ -189,21 +195,21 @@
         i = (i + works.length) % works.length;
         const s = works[i].querySelector('img');
         img.src = s.src; img.alt = s.alt; cap.textContent = works[i].dataset.cap;
-        go(i, false); // фото на странице идёт следом за просмотром
+        sl.go(i, false); // фото на странице идёт следом за просмотром
       };
       const open = (i, btn) => { from = btn; show(i); lb.hidden = false; lockScroll(true); requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add('is-on'))); lb.querySelector('.lb__x').focus({ preventScroll: true }); };
-      const close = () => { lb.classList.remove('is-on'); setTimeout(() => { lb.hidden = true; lockScroll(false); if (from) works[cur].focus({ preventScroll: true }); }, 250); };
+      const close = () => { lb.classList.remove('is-on'); setTimeout(() => { lb.hidden = true; lockScroll(false); if (from) works[sl.cur].focus({ preventScroll: true }); }, 250); };
       works.forEach((w, i) => w.addEventListener('click', () => open(i, w)));
-      lb.querySelector('.lb__prev').addEventListener('click', () => show(cur - 1));
-      lb.querySelector('.lb__next').addEventListener('click', () => show(cur + 1));
+      lb.querySelector('.lb__prev').addEventListener('click', () => show(sl.cur - 1));
+      lb.querySelector('.lb__next').addEventListener('click', () => show(sl.cur + 1));
       lb.addEventListener('click', (e) => { if (e.target === lb || e.target.closest('.lb__x')) close(); });
       let sx = null;
       lb.addEventListener('pointerdown', (e) => { sx = e.clientX; });
-      lb.addEventListener('pointerup', (e) => { if (sx === null) return; const d = e.clientX - sx; sx = null; if (Math.abs(d) > 50) show(cur + (d < 0 ? 1 : -1)); });
+      lb.addEventListener('pointerup', (e) => { if (sx === null) return; const d = e.clientX - sx; sx = null; if (Math.abs(d) > 50) show(sl.cur + (d < 0 ? 1 : -1)); });
       document.addEventListener('keydown', (e) => {
         if (lb.hidden) return;
-        if (e.key === 'ArrowRight') show(cur + 1);
-        if (e.key === 'ArrowLeft') show(cur - 1);
+        if (e.key === 'ArrowRight') show(sl.cur + 1);
+        if (e.key === 'ArrowLeft') show(sl.cur - 1);
       });
     }
   }

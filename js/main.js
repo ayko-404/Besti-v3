@@ -238,39 +238,35 @@
     [...gl.children].forEach((x) => gio.observe(x));
   }
 
-  // «Почему бэсти»: три варианта (?preim=A | B | C, по умолчанию A) и их анимации при прокрутке.
-  // Переключатель под заголовком меняет вариант на месте, без перезагрузки (временный — убрать, когда вариант выберут)
+  // «Почему бэсти» — плитки (04.11): появление по очереди, параллакс цифр при прокрутке, наклон и блик за курсором (только мышь)
   const pros = document.querySelector('.pros');
   if (pros) {
-    const items = [...pros.querySelectorAll('.pr__i')], list = pros.querySelector('.pr');
-    items.forEach((it, i) => it.style.setProperty('--d', (i * 0.18) + 's'));
-    let pio = null, cio = null;
-    const apply = (v) => {
-      if (pio) pio.disconnect(); if (cio) cio.disconnect();
-      pros.classList.remove('pros--a', 'pros--b', 'pros--c'); pros.classList.add('pros--' + v);
-      const old = list.querySelector('.pr__big'); if (old) old.remove();
-      items.forEach((it) => it.classList.remove('is-on', 'is-cur'));
-      pros.querySelectorAll('.pr__sw button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === v));
-      if ('IntersectionObserver' in window && !calm) {
-        pio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-on'); pio.unobserve(en.target); } }), { rootMargin: '0px 0px -15% 0px' });
-        requestAnimationFrame(() => requestAnimationFrame(() => items.forEach((it) => pio.observe(it)))); // кадр паузы — чтобы анимация проигралась заново
-      } else items.forEach((it) => it.classList.add('is-on'));
-      if (v === 'b') {
-        // одна большая цифра слева, прокручивается к пункту в центре экрана
-        const big = document.createElement('div'); big.className = 'pr__big'; big.setAttribute('aria-hidden', 'true');
-        big.innerHTML = items.map((_, i) => '<span>' + (i + 1) + '</span>').join('');
-        list.prepend(big);
-        const set = (i) => { items.forEach((it, k) => it.classList.toggle('is-cur', k === i)); big.querySelectorAll('span').forEach((s) => s.style.setProperty('--i', i)); };
-        set(0);
-        if ('IntersectionObserver' in window) {
-          cio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) set(items.indexOf(en.target)); }), { rootMargin: '-45% 0px -45% 0px' });
-          items.forEach((it) => cio.observe(it));
-        }
-      }
-      try { history.replaceState(null, '', location.pathname + '?preim=' + v.toUpperCase() + location.hash); } catch (e) {}
-    };
-    pros.querySelectorAll('.pr__sw button').forEach((b) => b.addEventListener('click', () => apply(b.dataset.v)));
-    apply(((new URLSearchParams(location.search).get('preim') || 'A').toLowerCase().match(/^[abc]$/) || ['a'])[0]);
+    const items = [...pros.querySelectorAll('.pr__i')];
+    items.forEach((it, i) => it.style.setProperty('--d', (i * 0.14) + 's'));
+    if ('IntersectionObserver' in window && !calm) {
+      const pio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-on'); pio.unobserve(en.target); } }), { rootMargin: '0px 0px -12% 0px' });
+      items.forEach((it) => pio.observe(it));
+      // параллакс: цифра чуть плывёт против прокрутки, пока плитка на экране
+      let tick = false;
+      const drift = () => { tick = false; const vh = innerHeight; items.forEach((it) => { const r = it.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const k = (r.top + r.height / 2 - vh / 2) / vh; it.style.setProperty('--py', (k * 46).toFixed(1) + 'px'); }); };
+      addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(drift); } }, { passive: true });
+      drift();
+      // наклон и блик за курсором — только там, где есть мышь
+      if (matchMedia('(hover: hover) and (pointer: fine)').matches) items.forEach((it) => {
+        it.addEventListener('pointermove', (e) => {
+          if (!it.classList.contains('is-on')) return;
+          const r = it.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+          it.classList.add('is-tilt');
+          it.style.setProperty('--ry', ((x - .5) * 7).toFixed(2) + 'deg');
+          it.style.setProperty('--rx', ((.5 - y) * 7).toFixed(2) + 'deg');
+          it.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+          it.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+          it.style.setProperty('--nx', ((.5 - x) * 18).toFixed(1) + 'px');
+          it.style.setProperty('--ny', ((.5 - y) * 18).toFixed(1) + 'px');
+        });
+        it.addEventListener('pointerleave', () => { it.classList.remove('is-tilt'); ['--rx', '--ry'].forEach((k) => it.style.setProperty(k, '0deg')); ['--nx', '--ny'].forEach((k) => it.style.setProperty(k, '0px')); });
+      });
+    } else items.forEach((it) => it.classList.add('is-on'));
   }
 
   // Escape закрывает открытое окно

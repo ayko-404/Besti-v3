@@ -19,6 +19,31 @@
   mb.addEventListener('click', () => setMenu(menu.hidden));
   menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
 
+  // ВРЕМЕННО: варианты заголовка обложки (?zag=a…f, служебная панель). Две строки, перенос задан вручную.
+  // Описание под заголовком убрано (правка 04.11): на обложке только заголовок и кнопки. Убрать после выбора варианта.
+  const ZAG = {
+    a: { l1: 'Маникюр,', l2: 'похожий на&nbsp;тебя', ty: true },
+    b: { l1: 'Маникюр', l2: 'с&nbsp;характером', ty: false },
+    c: { l1: 'Маникюр', l2: 'у&nbsp;твоей бэсти', ty: true },
+    d: { l1: 'Маникюр', l2: 'под настроение', ty: false },
+    e: { l1: 'Твой маникюр,', l2: 'твои правила', ty: true },
+    f: { l1: 'Маникюр', l2: 'в&nbsp;гостях у&nbsp;бэсти', ty: false }
+  };
+  const zp = document.querySelector('.vpanel[aria-label="Варианты заголовка"]');
+  const setZag = (k) => {
+    const z = ZAG[k] || ZAG.c;
+    document.getElementById('zag').innerHTML = '<span>' + z.l1 + '</span><em><span>' + z.l2 + '</span></em>';
+    if (zp) zp.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.z === (ZAG[k] ? k : 'c'))));
+  };
+  let zk = 'c';
+  try { zk = (new URLSearchParams(location.search).get('zag') || 'c').toLowerCase(); } catch (e) {}
+  setZag(zk);
+  if (zp) zp.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    setZag(b.dataset.z);
+    const u = new URL(location.href); u.searchParams.set('zag', b.dataset.z); history.replaceState(null, '', u);
+  });
+
 
   // акция первого визита: окно всплывает через 4 секунды, один раз за посещение сайта
   const promo = document.getElementById('promo');

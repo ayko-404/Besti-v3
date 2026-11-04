@@ -105,7 +105,6 @@ button { font: inherit; color: inherit; }
 .ha { position: absolute; z-index: 2; left: var(--pad); right: var(--pad); bottom: clamp(36px, 5vw, 64px); display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; }
 .ha h1 { font-family: var(--disp); font-weight: 300; font-size: var(--t-h1a); line-height: .8; letter-spacing: -.01em; }
 .ha h1 span { display: block; }
-.ha__sub { max-width: 540px; margin-top: 34px; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.55; opacity: .92; }
 .ha .btns { flex: none; flex-direction: column; gap: 14px; width: 330px; }
 .ha .btn > span { flex: 1; }
 .ha .btn { height: 60px; }
@@ -265,6 +264,10 @@ button { font: inherit; color: inherit; }
 .hd__logo img, .hd.is-solid .hd__logo img { height: 28px; }
 .hd .btn > span { padding: 0 9px; }
 }
+.vpanel { position: absolute; left: 50%; top: 116px; transform: translateX(-50%); z-index: 40; display: flex; align-items: center; gap: 4px; padding: 6px 8px; background: #EDEDED; color: #333; border: 1px solid #C8C8C8; font: 12px/1.2 system-ui, sans-serif; white-space: nowrap; }
+.vpanel button { min-width: 28px; padding: 4px 8px; border: 1px solid #BBB; background: #FFF; font: inherit; cursor: pointer; }
+.vpanel button[aria-pressed="true"] { background: #555; border-color: #555; color: #FFF; }
+@media (max-width: 900px) { .vpanel { top: 80px; } }
 @media (prefers-reduced-motion: reduce) {
 html { scroll-behavior: auto; }
 *, *::before, *::after { transition: none !important; }

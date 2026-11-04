@@ -139,7 +139,7 @@
     pc.innerHTML = '<div class="pc__cats" role="tablist" aria-label="Категории услуг">' + cats.map((c, i) => {
       const from = Math.min(...c.rows.map((r) => num(r.p)));
       return '<button class="pc__cat" type="button" role="tab" id="pc-t-' + c.id + '" aria-controls="pc-panel" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '">' +
-        '<span class="pc__ph"><img src="' + (c.kv || c.img) + '" width="720" height="720" alt="" loading="lazy"></span>' +
+        '<span class="pc__ph">' + (c.vid ? '<video src="' + c.vid + '.mp4" poster="' + c.vid + '-poster.webp" muted loop playsinline preload="none" aria-hidden="true"></video>' : '<img src="' + (c.kv || c.img) + '" width="720" height="720" alt="" loading="lazy">') + '</span>' +
         '<span class="pc__t">' + esc(c.title) + '</span><span class="pc__from">от ' + fmt(from) + ' ₽</span></button>';
     }).join('') + '</div><div class="pc__panel" id="pc-panel" role="tabpanel"></div>';
     const tabs = [...pc.querySelectorAll('.pc__cat')], panel = pc.querySelector('.pc__panel');

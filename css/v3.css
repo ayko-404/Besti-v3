@@ -348,7 +348,7 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .ct__info .h2 em { color: inherit; }
 .ct__sub { margin-top: 10px; color: rgba(255, 250, 246, .72); font-size: 16px; line-height: 1.5; }
 .ct__rows { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 24px 0 26px; padding-top: 20px; border-top: 1px solid rgba(255, 250, 246, .22); }
-.ct__rows span { display: block; color: rgba(255, 250, 246, .6); font-size: 13px; }
+.ct__rows span { display: block; color: rgba(255, 250, 246, .78); font-size: 13px; } /* контраст ≥ 4,5:1 на бордо (техаудит 04.11) */
 .ct__rows b, .ct__rows a { display: block; margin-top: 4px; color: var(--cream); font-weight: 500; font-size: 18px; text-decoration: none; white-space: nowrap; }
 .ct__info .btns { gap: 10px; flex-wrap: nowrap; }
 .ct__info .btn { height: 48px; }
@@ -480,6 +480,12 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .ct__list li { grid-template-columns: 1fr; gap: 0; }
   .promo__box { padding: 52px 24px 28px; }
   .lb .arrow { top: auto; bottom: 16px; margin: 0; }
+}
+@media (min-width: 600px) and (max-width: 900px) { /* планшет (техаудит 04.11): три видео в ряд, ниже капучино и гостья — а не одно видео на весь экран */
+  .gl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .gl__i--g2, .gl__i--g5, .gl__i--g6 { grid-column: auto !important; aspect-ratio: 9 / 16; }
+  .gl__i--g1 { grid-column: span 2 !important; aspect-ratio: 4 / 3; }
+  .gl__i--g3 { grid-column: auto !important; aspect-ratio: 2 / 3; }
 }
 @media (min-width: 410px) and (max-width: 900px) { .hd { --lg-max: 48px; --lg-min: 34px; } } /* телефон: где есть место — логотип крупнее */
 @media (min-width: 600px) and (max-width: 900px) { .hd { --lg-max: 72px; --lg-min: 44px; } }

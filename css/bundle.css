@@ -7,7 +7,7 @@
 @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(../fonts/cormorant-garamond-300-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: 'Cormorant Garamond'; font-style: normal; font-weight: 300; font-display: swap; src: url(../fonts/cormorant-garamond-300-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../fonts/inter-400-600-cyrillic.woff2) format('woff2'); unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
-@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../fonts/inter-400-600-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../fonts/inter-400-600-rubl.woff2) format('woff2'); unicode-range: U+20BD; }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(../fonts/inter-400-600-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: 'Cormorant Cifry'; font-style: normal; font-weight: 700; font-display: swap; src: url(../fonts/cormorant-garamond-700-cifry.woff2) format('woff2'); unicode-range: U+30-39; }
 :root {
@@ -301,7 +301,7 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .ct__info .h2 em { color: inherit; }
 .ct__sub { margin-top: 10px; color: rgba(255, 250, 246, .72); font-size: 16px; line-height: 1.5; }
 .ct__rows { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 24px 0 26px; padding-top: 20px; border-top: 1px solid rgba(255, 250, 246, .22); }
-.ct__rows span { display: block; color: rgba(255, 250, 246, .6); font-size: 13px; }
+.ct__rows span { display: block; color: rgba(255, 250, 246, .78); font-size: 13px; }
 .ct__rows b, .ct__rows a { display: block; margin-top: 4px; color: var(--cream); font-weight: 500; font-size: 18px; text-decoration: none; white-space: nowrap; }
 .ct__info .btns { gap: 10px; flex-wrap: nowrap; }
 .ct__info .btn { height: 48px; }
@@ -419,6 +419,12 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .ct__list li { grid-template-columns: 1fr; gap: 0; }
 .promo__box { padding: 52px 24px 28px; }
 .lb .arrow { top: auto; bottom: 16px; margin: 0; }
+}
+@media (min-width: 600px) and (max-width: 900px) {
+.gl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.gl__i--g2, .gl__i--g5, .gl__i--g6 { grid-column: auto !important; aspect-ratio: 9 / 16; }
+.gl__i--g1 { grid-column: span 2 !important; aspect-ratio: 4 / 3; }
+.gl__i--g3 { grid-column: auto !important; aspect-ratio: 2 / 3; }
 }
 @media (min-width: 410px) and (max-width: 900px) { .hd { --lg-max: 48px; --lg-min: 34px; } }
 @media (min-width: 600px) and (max-width: 900px) { .hd { --lg-max: 72px; --lg-min: 44px; } }

@@ -108,19 +108,21 @@
   fitZag();
 
 
-  // акция первого визита: окно всплывает через 4 секунды, один раз за посещение сайта
+  // акция первого визита (04.11, как у predubezhdai): окно всплывает спустя время — через 15 секунд на сайте, один раз за посещение.
+  // Если в этот момент открыто меню или просмотр работы — ждём, пока закроют. ?promo=1 — показать сразу (для проверки)
   const promo = document.getElementById('promo');
   const closePromo = () => { promo.classList.remove('is-on'); setTimeout(() => { promo.hidden = true; lockScroll(false); }, 300); };
   const openPromo = () => {
-    if (!menu.hidden || !document.querySelector('.lb').hidden) return; // не перекрываем меню и просмотр работы
+    if (!menu.hidden || !document.querySelector('.lb').hidden || root.classList.contains('is-intro')) { setTimeout(openPromo, 3000); return; }
     promo.hidden = false; lockScroll(true);
     requestAnimationFrame(() => requestAnimationFrame(() => promo.classList.add('is-on')));
     promo.querySelector('.promo__box').focus({ preventScroll: true });
+    try { sessionStorage.setItem('besti-promo', '1'); } catch (e) {}
   };
+  const force = /[?&]promo=1/.test(location.search);
   let seen = false;
   try { seen = sessionStorage.getItem('besti-promo') === '1'; } catch (e) { /* без хранилища просто покажем */ }
-  const promoDelay = introOn ? 8000 : 4000; // с заставкой — после неё
-  if (!seen) setTimeout(() => { openPromo(); try { sessionStorage.setItem('besti-promo', '1'); } catch (e) {} }, promoDelay);
+  if (force || !seen) setTimeout(openPromo, force ? 1500 : 15000);
   promo.addEventListener('click', (e) => { if (e.target === promo || e.target.closest('.promo__x, a')) closePromo(); });
 
   // прайс: разделы раскрываются, в строке раздела — цена «от»

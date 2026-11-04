@@ -112,8 +112,9 @@
   </div>
 </div></section>
 
+<!-- как дойти (04.11: «карту больше и стильнее»): карта во всю ширину, тёплая чёрно-белая, адрес, часы и кнопки — светлой карточкой поверх карты (на телефоне — под картой) -->
 <section id="contacts" class="sec"><div class="wrap ct">
-  <!-- карта: Яндекс Карты JS API 2.1 (js/karta.js), чёрно-белая подложка, своя метка; пока API не загрузился или без JS — статичная картинка -->
+  <!-- карта: Яндекс Карты JS API 2.1 (js/karta.js), своя метка; пока API не загрузился или без JS — статичная картинка -->
   <div class="ct__map"><div id="ymap" data-lat="55.767309" data-lon="37.62539">
     <a class="ct__static" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener"><img width="650" height="450" src="assets/ui/karta-trubnaya-bez-metki.webp" alt="Карта: Печатников пер., 6 — рядом с метро «Трубная»" loading="lazy"><img class="ct__pin" width="64" height="84" src="assets/ui/metka-karta.svg" alt="" loading="lazy"></a>
   </div></div>
@@ -125,27 +126,37 @@
       <li><span>Телефон</span><a href="tel:+79652300425">+7 (965) 230-04-25</a></li>
       <li><span>Рядом</span>«Золотое Яблоко» и рестораны</li>
     </ul>
-    <div class="btns"><a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener"><span>Записаться</span><i aria-hidden="true"></i></a><a class="btn btn--light" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener"><span>Маршрут</span><i aria-hidden="true"></i></a></div>
+    <div class="btns"><a class="btn" href="https://n2379744.yclients.com/" target="_blank" rel="noopener"><span>Записаться</span><i aria-hidden="true"></i></a><a class="btn btn--line" href="https://yandex.ru/maps/org/besti_neyls/87489915348/" target="_blank" rel="noopener"><span>Маршрут</span><i aria-hidden="true"></i></a></div>
   </div>
 </div></section>
 </main>
 
+<!-- подвал (04.11: «упростить по максимуму, по типу soyka»): заголовок, строка, три кнопки-пилюли; внизу логотип и обязательные юридические строки -->
 <footer class="ft"><div class="wrap">
-  <div class="ft__top">
-    <div class="ft__logo"><img width="1766" height="580" src="assets/ui/logo-znak-rozovyj.svg" alt="бэсти" loading="lazy"><p>Студия маникюра и&nbsp;педикюра в&nbsp;3&nbsp;минутах от&nbsp;метро «Трубная»</p></div>
-    <div class="ft__col"><p class="ft__h">Контакты</p><a href="tel:+79652300425">+7 (965) 230-04-25</a><a href="https://t.me/bestie_nail" target="_blank" rel="noopener">Telegram @bestie_nail</a><span>Instagram* — <span class="wait">[ждём: ссылка на аккаунт]</span></span></div>
-    <div class="ft__col"><p class="ft__h">Адрес и часы</p><span>Москва, Печатников пер., 6</span><span>Каждый день 10:00–22:00</span></div>
-    <div class="ft__col"><p class="ft__h">Документы</p><span>ИП Абдулагаева Зухра Загитдиновна</span><span class="wait">[ждём: ИНН и ОГРНИП]</span><span class="wait">[ждём: политика обработки персональных данных]</span></div>
+  <div class="ft__main">
+    <div class="ft__txt">
+      <h2 class="ft__t">Подписывайтесь <em>на&nbsp;бэсти</em></h2>
+      <p>Показываем работы мастеров и&nbsp;жизнь студии.</p>
+    </div>
+    <div class="ft__pills">
+      <a class="pill" href="https://t.me/bestie_nail" target="_blank" rel="noopener">Telegram</a>
+      <a class="pill" href="#" data-wait="instagram" title="[ждём: ссылка на аккаунт]">Instagram*</a>
+      <a class="pill" href="https://n2379744.yclients.com/" target="_blank" rel="noopener">Онлайн-запись</a>
+    </div>
   </div>
-  <div class="ft__bot"><span>© 2026 бэсти</span><span>*Instagram принадлежит компании Meta, признанной экстремистской и&nbsp;запрещённой на&nbsp;территории РФ</span></div>
+  <div class="ft__bot">
+    <img class="ft__logo" width="1766" height="580" src="assets/ui/logo-znak-rozovyj.svg" alt="бэсти" loading="lazy">
+    <p>© 2026 бэсти · ИП Абдулагаева Зухра Загитдиновна · <span class="wait">[ждём: ИНН и ОГРНИП]</span> · <span class="wait">[ждём: политика обработки персональных данных]</span><br>*Instagram принадлежит компании Meta, признанной экстремистской и&nbsp;запрещённой на&nbsp;территории РФ</p>
+  </div>
 </div></footer>
 
 <!-- акция первого визита: всплывает через несколько секунд, один раз за посещение (вместо купона на обложке) -->
+<!-- акция первого визита (04.11, как у predubezhdai.ru): окно по центру поверх затемнённой страницы, всплывает спустя время (~15 с), один раз за посещение; ?promo=1 — показать сразу для проверки. Условия — из первой версии сайта (купон клиента) -->
 <div class="promo" id="promo" role="dialog" aria-modal="true" aria-labelledby="promo-t" hidden>
   <div class="promo__box" tabindex="-1">
     <button class="promo__x" type="button" aria-label="Закрыть"></button>
-    <img class="promo__logo" width="1766" height="580" src="assets/ui/logo-znak-bordo.svg" alt="бэсти" loading="lazy">
-    <p class="label" id="promo-t">Первый визит в&nbsp;бэсти</p>
+    <img class="promo__ph" width="720" height="720" src="assets/img/uslugi/manikyur-kv.webp" alt="" loading="lazy">
+    <p class="promo__h" id="promo-t">Подарок на&nbsp;первый визит</p>
     <p class="promo__big">−15%</p>
     <p class="promo__t">на сэт-комплекс Luxio: снятие гель-лака, маникюр, выравнивание и&nbsp;покрытие Luxio</p>
     <p class="promo__price">2 890 ₽<span class="sr"> вместо </span><s>3 400 ₽</s></p>

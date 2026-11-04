@@ -214,14 +214,6 @@
     }
   }
 
-  // преимущества: рукописные цифры «пишутся», когда блок появляется на экране (без JS и при «меньше движения» — сразу видны)
-  const pros = document.querySelector('.pr');
-  if (pros && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    pros.classList.add('is-wait');
-    const io = new IntersectionObserver(([en]) => { if (en.isIntersecting) { pros.classList.add('is-on'); io.disconnect(); } }, { threshold: .35 });
-    io.observe(pros);
-  }
-
   // Escape закрывает открытое окно
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;

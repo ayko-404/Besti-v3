@@ -23,7 +23,7 @@
   --t-small: 15px;
   --t-ui: 13px;                                 /* кнопки, метки, меню — заглавными с разрядкой */
   --t-h1a: clamp(56px, 8.8vw, 136px);           /* обложка: крупно, как у devichnik, три строки; «чуть поменьше» (04.11): 150 → 127 px на 1440 */
-  --t-h2: clamp(44px, 6.2vw, 92px);              /* заголовки блоков — крупнее (04.11): было до 64 px */
+  --t-h2: clamp(52px, 7.6vw, 118px);             /* заголовки блоков — ещё крупнее (04.11): было 44–92 px, подписи капсом над ними убраны */
   --t-h3: clamp(28px, 2.5vw, 38px);
   --line: 1px solid rgba(31, 21, 19, .14);
   --i-chev: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M4.5 2.5 8 6l-3.5 3.5' fill='none' stroke='%23000' stroke-width='1.2'/%3E%3C/svg%3E");
@@ -59,7 +59,7 @@ button { font: inherit; color: inherit; }
 /* заголовок блока: маленькая метка + тонкая строка с курсивом, по центру */
 .sh { max-width: 900px; margin: 0 auto clamp(44px, 5vw, 72px); padding: 0 var(--pad); text-align: center; }
 .label { color: var(--muted); font-family: var(--ui); font-weight: 500; font-size: 12.5px; letter-spacing: .2em; text-transform: uppercase; }
-.h2 { margin-top: 18px; color: var(--bordo); font-family: var(--disp); font-weight: 300; font-size: var(--t-h2); line-height: .9; }
+.h2 { margin-top: 0; color: var(--bordo); font-family: var(--disp); font-weight: 300; font-size: var(--t-h2); line-height: .9; }
 .lead { max-width: 580px; margin: 22px auto 0; color: var(--muted); font-size: 18px; line-height: 1.6; }
 
 /* кнопки как у airfield: прямоугольник, подпись заглавными, отдельная клетка со стрелкой */
@@ -206,9 +206,7 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 /* студия */
 .st__wide { aspect-ratio: 2 / 1; overflow: hidden; background: #E8DDD3; }
 .st__wide img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
-.st__facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px clamp(32px, 4vw, 64px); margin: clamp(48px, 6vw, 80px) 0; }
-.st__f h3 { margin-bottom: 12px; color: var(--bordo); font-family: var(--disp); font-weight: 300; font-size: var(--t-h3); line-height: .95; }
-.st__media { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.6vw, 22px); }
+.st__media { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.6vw, 22px); margin-top: clamp(12px, 1.6vw, 22px); }
 .st__media figure { aspect-ratio: 3 / 4; overflow: hidden; background: #E8DDD3; }
 .st__media img, .st__media video { width: 100%; height: 100%; object-fit: cover; }
 
@@ -224,16 +222,27 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .ws__n { min-width: 64px; color: var(--muted); font-size: 15px; text-align: center; font-variant-numeric: tabular-nums; }
 .ws__n b { color: var(--ink); font-weight: 500; }
 
-/* преимущества (04.11): три колонки, крупные рукописные цифры (Gogol, как логотип) «пишутся» слева направо при появлении */
-.pr__head { margin-bottom: clamp(44px, 5.5vw, 84px); }
-.pr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(32px, 4.5vw, 72px); margin: 0; padding: 0; list-style: none; }
-.pr__n { display: block; height: .66em; padding: 0 .08em; margin-left: -.06em; color: var(--bordo); font-family: 'Gogol', var(--disp); font-size: clamp(170px, 14.5vw, 220px); line-height: 1; } /* у Gogol цифра занимает 0,07–0,64 em от верха строки — высота .66em без пустоты снизу */
-.pr__i h3 { margin-top: 22px; padding-top: 26px; border-top: 1px solid rgba(31, 21, 19, .18); color: var(--bordo); font-family: var(--disp); font-weight: 300; font-size: var(--t-h3); line-height: .95; }
-.pr__i p { max-width: 24em; margin-top: 16px; color: var(--muted); }
-.pr.is-wait .pr__n { clip-path: inset(-20% 100% -20% -20%); transition: clip-path 1.1s cubic-bezier(.45, .05, .25, 1); }
-.pr.is-wait .pr__i:nth-child(2) .pr__n { transition-delay: .25s; }
-.pr.is-wait .pr__i:nth-child(3) .pr__n { transition-delay: .5s; }
-.pr.is-wait.is-on .pr__n { clip-path: inset(-20% -20% -20% -20%); }
+/* преимущества (04.11, вторая редакция): слева крупная карточка рейтинга, справа четыре карточки с фото студии */
+.pr__h { margin-bottom: clamp(40px, 5vw, 72px); }
+.pr { display: grid; grid-template-columns: minmax(0, 1.1fr) repeat(2, minmax(0, 1fr)); gap: clamp(28px, 3vw, 44px) clamp(20px, 2.4vw, 36px); }
+.pr__cs { display: contents; }
+.pr__rate { grid-row: span 2; display: flex; flex-direction: column; padding: clamp(28px, 3vw, 48px); border-radius: var(--r-card); background: var(--bordo); color: var(--cream); text-decoration: none; transition: background .2s; }
+.pr__rate:hover { background: var(--bordo-d); }
+.pr__big { font-family: var(--disp); font-weight: 300; font-size: clamp(150px, 15vw, 240px); line-height: .8; letter-spacing: -.02em; }
+.pr__stars { display: flex; gap: 6px; margin-top: 22px; }
+.pr__stars svg { width: 22px; height: 22px; fill: var(--pink); }
+.pr__rt { margin-top: 18px; font-family: var(--disp); font-weight: 300; font-style: italic; font-size: var(--t-h3); line-height: 1; }
+.pr__rs { max-width: 22em; margin-top: 14px; color: rgba(255, 250, 246, .75); }
+.pr__q { display: block; margin-top: auto; padding-top: 28px; border-top: 1px solid rgba(255, 250, 246, .25); font-family: var(--disp); font-weight: 300; font-style: italic; font-size: clamp(22px, 1.9vw, 28px); line-height: 1.15; } /* дословная цитата из отзыва с Яндекс Карт */
+.pr__q small { display: block; margin-top: 12px; color: rgba(255, 250, 246, .6); font-family: var(--ui); font-style: normal; font-size: 13px; }
+.pr__more { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; font-family: var(--ui); font-weight: 500; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase; }
+.pr__more i { width: 11px; height: 11px; background: currentColor; -webkit-mask: var(--i-out) center / contain no-repeat; mask: var(--i-out) center / contain no-repeat; transition: transform .25s; }
+.pr__rate:hover .pr__more i { transform: translate(2px, -2px); }
+.pr__c figure { aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--r-card); background: #DDD6CE; }
+.pr__c img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
+.pr__c:hover img { transform: scale(1.03); }
+.pr__c h3 { margin-top: 20px; color: var(--bordo); font-family: var(--disp); font-weight: 300; font-size: var(--t-h3); line-height: .95; }
+.pr__c p { max-width: 26em; margin-top: 10px; color: var(--muted); }
 
 /* отзывы */
 .rv { display: flex; flex-direction: column; width: clamp(300px, 32vw, 440px); padding: 28px; background: var(--paper); }
@@ -295,9 +304,9 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 /* ── круглая кнопка записи (04.11, по образцу soyka.beauty; «сделай покрасивее»): бордовый круг, по кругу медленно
    вращается «ЗАПИСАТЬСЯ ОНЛАЙН ·», в центре стрелка. Появляется, когда обложку с её кнопками прокрутили ── */
 /* плавающая кнопка записи (04.11, финал): круглая, справа внизу, «Онлайн-запись» по центру, тонкая обводка; видна везде, кроме первого экрана */
-.fab { position: fixed; right: 24px; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 45; display: grid; place-items: center; width: 104px; height: 104px; border-radius: 50%; background: #F7CFDF; color: var(--bordo); box-shadow: inset 0 0 0 1px var(--bordo); text-decoration: none; opacity: 0; transform: scale(.85); pointer-events: none; transition: opacity .4s ease, transform .5s cubic-bezier(.2, .8, .2, 1), background .2s; }
+.fab { position: fixed; right: 24px; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 45; display: grid; place-items: center; width: 104px; height: 104px; border-radius: 50%; background: #15110F; color: #FFF; box-shadow: inset 0 0 0 1.5px #FFF; text-decoration: none; opacity: 0; transform: scale(.85); pointer-events: none; transition: opacity .4s ease, transform .5s cubic-bezier(.2, .8, .2, 1), background .2s; }
 .fab.is-on { opacity: 1; transform: none; pointer-events: auto; }
-.fab:hover { background: #F3BDD2; } /* пастельный розовый из фирменной гаммы (04.11: «теряется на фоне»), текст и обводка бордовые */
+.fab:hover { background: #2A2320; } /* чёрная с белой обводкой по краю круга (04.11: «обычная обводка у круга, а не в круге») */
 .fab__t { position: relative; display: block; padding-left: .1em; font-family: var(--ui); font-weight: 500; font-size: 11px; line-height: 1.25; letter-spacing: .1em; text-transform: uppercase; text-align: center; } /* текст ровно по центру круга: стрелка и дефис не сдвигают его, padding-left гасит хвостовой letter-spacing */
 .fab__h { position: absolute; }
 .fab__ic { position: absolute; left: 50%; top: 100%; width: 12px; height: 12px; margin: 7px 0 0 -6px; background: currentColor; -webkit-mask: var(--i-out) center / contain no-repeat; mask: var(--i-out) center / contain no-repeat; transition: transform .25s; }
@@ -354,15 +363,19 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .acc__from { grid-row: 2; grid-column: 2; align-self: start; }
   .acc__pl { grid-row: 1 / 3; grid-column: 3; }
   .acc__row { gap: 2px 18px; }
-  .st__facts { grid-template-columns: 1fr; }
   .st__wide { aspect-ratio: 4 / 3; }
   .st__media { display: flex; gap: 12px; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; scroll-padding: 0 var(--pad); }
   .st__media::-webkit-scrollbar { display: none; }
   .st__media figure { flex: 0 0 72%; scroll-snap-align: start; }
   .wks { grid-template-columns: 1fr; gap: 32px; }
-  .pr { grid-template-columns: 1fr; gap: 44px; }
-  .pr__n { font-size: 150px; }
-  .pr__i h3 { margin-top: 18px; padding-top: 20px; }
+  .pr { grid-template-columns: 1fr; gap: 28px; }
+  .pr__rate { grid-row: auto; padding: 28px 24px; }
+  .pr__big { font-size: 128px; }
+  .pr__stars svg { width: 18px; height: 18px; }
+  .pr__q { margin-top: 26px; padding-top: 22px; font-size: 21px; }
+  .pr__cs { display: flex; gap: 12px; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 var(--pad); scrollbar-width: none; } /* карточки лентой со свайпом, чтобы не растягивать страницу */
+  .pr__cs::-webkit-scrollbar { display: none; }
+  .pr__c { flex: 0 0 78%; scroll-snap-align: start; }
   .ws__track { margin-right: calc(-1 * var(--pad)); }
   .ws__sl { flex-basis: calc(100% - var(--pad) - 12px); } /* справа выглядывает край следующего фото */
   .rv { width: 84vw; padding: 22px; }

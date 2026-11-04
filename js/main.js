@@ -4,6 +4,31 @@
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const lockScroll = (on) => { document.documentElement.style.overflow = on ? 'hidden' : ''; };
 
+  // логотип «пишется от руки» (правка 04.11): при загрузке штрихи прорисовываются по очереди слева направо,
+  // затем буквы заливаются цветом и проявляется подпись «студия маникюра». Без анимации — если в системе «уменьшить движение»
+  const lgSvg = document.querySelector('.hd__logo .lg');
+  if (lgSvg && lgSvg.animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const lgLink = lgSvg.closest('.hd__logo');
+    const paths = [...lgSvg.querySelectorAll('path')].sort((a, b) => a.getBBox().x - b.getBBox().x);
+    const lens = paths.map((p) => p.getTotalLength());
+    const sum = lens.reduce((a, b) => a + b, 0);
+    lgSvg.classList.add('is-writing'); lgLink.classList.add('is-writing');
+    let t = 200;
+    paths.forEach((p, i) => {
+      const d = Math.max(260, 2300 * lens[i] / sum); // длинный штрих пишется дольше
+      p.style.strokeDasharray = lens[i]; p.style.strokeDashoffset = lens[i];
+      p.animate([{ strokeDashoffset: lens[i] }, { strokeDashoffset: 0 }], { duration: d, delay: t, easing: 'ease-in-out', fill: 'forwards' });
+      t += d * 0.82; // следующая буква начинается чуть раньше, чем закончилась предыдущая — как рука на бумаге
+    });
+    const fillAt = t + 150;
+    paths.forEach((p) => p.animate([{ fillOpacity: 0, strokeOpacity: 1 }, { fillOpacity: 1, strokeOpacity: 0 }], { duration: 550, delay: fillAt, easing: 'ease-out', fill: 'forwards' }));
+    setTimeout(() => lgLink.classList.remove('is-writing'), fillAt);
+    setTimeout(() => {
+      lgSvg.classList.remove('is-writing');
+      paths.forEach((p) => { p.getAnimations().forEach((a) => a.cancel()); p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; });
+    }, fillAt + 600);
+  }
+
   // шапка поверх обложки прозрачная; когда обложка ушла вверх — светлая
   const hd = document.querySelector('.hd'), hero = document.querySelector('.hero');
   // логотип наверху большой и по прокрутке плавно уменьшается: --p от 0 (верх страницы) до 1 (прокручено 320 px и больше)
@@ -24,53 +49,20 @@
   mb.addEventListener('click', () => setMenu(menu.hidden));
   menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
 
-  // ВРЕМЕННО: варианты заголовка обложки (?zag=a…f, &caps=1 — заглавными; служебная панель).
-  // Три строки примерно равной длины, как у devichnik; перенос задан вручную; последняя строка — курсивный акцент.
-  // Описание под заголовком убрано (правка 04.11). Убрать после выбора варианта.
-  // Голос бренда (бриф, research.md §16): «подруга со вкусом зовёт в гости» — на «вы», тепло, с подмигиванием, вещи вместо эпитетов,
-  // 2–6 слов, без «!»; подмигивание — как в названиях комплексов («Дорогая привычка», «Роскошный максимум»)
-  const ZAG = { // со «студией маникюра» (просьба Дмитрия 04.11), как у devichnik, но на «вы»
-    a: ['Бэсти&nbsp;—', 'ваша студия', 'маникюра'],
-    b: ['Студия', 'маникюра', 'вашей бэсти'],
-    c: ['Студия', 'маникюра', 'с&nbsp;кофе и&nbsp;кино'],
-    d: ['Студия', 'маникюра,', 'где вас ждут'],
-    e: ['Студия', 'маникюра', 'по-дружески'],
-    f: ['Ваша', 'студия', 'маникюра']
-  };
-  const zh = document.getElementById('zag'), zp = document.querySelector('.vpanel[aria-label="Варианты заголовка"]');
-  const st = { z: 'a', caps: false, round: false };
-  try { const q = new URLSearchParams(location.search); st.z = ZAG[(q.get('zag') || '').toLowerCase()] ? q.get('zag').toLowerCase() : 'a'; st.caps = q.get('caps') === '1'; st.round = q.get('round') === '1'; } catch (e) {}
+  // Заголовок обложки (04.11, «пока»): «Студия / маникюра, / где тебя ждут» — в разметке index.html.
+  // Строки не переносятся: если самая длинная не влезает в свою колонку — шрифт уменьшается ровно настолько, насколько нужно.
+  const zh = document.getElementById('zag');
   const fitZag = () => {
     zh.style.fontSize = '';
     const ha = zh.closest('.ha'), btns = ha.querySelector('.btns');
     const avail = getComputedStyle(ha).flexDirection === 'column' ? ha.clientWidth : ha.clientWidth - btns.offsetWidth - 40;
     const widest = Math.max(...[...zh.querySelectorAll('span')].map((s) => { const r = document.createRange(); r.selectNodeContents(s); return r.getBoundingClientRect().width; }));
     if (widest > avail) zh.style.fontSize = Math.floor(parseFloat(getComputedStyle(zh).fontSize) * avail / widest) + 'px';
-  }; // строки заголовка не переносятся: если самая длинная не влезает — шрифт уменьшается ровно настолько, насколько нужно
-  addEventListener('resize', () => fitZag());
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => fitZag());
-  const drawZag = () => {
-    const l = ZAG[st.z];
-    zh.innerHTML = '<span>' + l[0] + '</span><span>' + l[1] + '</span><em><span>' + l[2] + '</span></em>';
-    zh.classList.toggle('is-caps', st.caps);
-    document.documentElement.classList.toggle('is-round', st.round); // вариант с небольшими скруглениями у кнопок и элементов
-    fitZag();
-    if (zp) {
-      zp.querySelectorAll('[data-z]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.z === st.z)));
-      zp.querySelector('[data-caps]').setAttribute('aria-pressed', String(st.caps));
-      zp.querySelector('[data-round]').setAttribute('aria-pressed', String(st.round));
-    }
   };
-  drawZag();
-  if (zp) zp.addEventListener('click', (e) => {
-    const b = e.target.closest('button'); if (!b) return;
-    if (b.dataset.z) st.z = b.dataset.z; else if (b.dataset.round) st.round = !st.round; else st.caps = !st.caps;
-    drawZag();
-    const u = new URL(location.href); u.searchParams.set('zag', st.z);
-    if (st.caps) u.searchParams.set('caps', '1'); else u.searchParams.delete('caps');
-    if (st.round) u.searchParams.set('round', '1'); else u.searchParams.delete('round');
-    history.replaceState(null, '', u);
-  });
+  addEventListener('resize', fitZag);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitZag);
+
+  fitZag();
 
 
   // акция первого визита: окно всплывает через 4 секунды, один раз за посещение сайта

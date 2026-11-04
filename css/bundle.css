@@ -57,7 +57,7 @@ button { font: inherit; color: inherit; }
 .sec--dark .ws__n b { color: var(--cream); }
 .sec--dark .arrow { border-color: rgba(255, 250, 246, .35); color: var(--cream); }
 .sec--dark .arrow:hover { background: var(--cream); border-color: var(--cream); color: var(--ink); }
-.sec--dark .ws__sl { background: #2A2220; }
+.sec--dark .ws__sl, .sec--dark .gl__i { background: #2A2220; }
 .sh { max-width: 900px; margin: 0 auto clamp(44px, 5vw, 72px); padding: 0 var(--pad); text-align: center; }
 .label { color: var(--muted); font-family: var(--ui); font-weight: 500; font-size: 12.5px; letter-spacing: .2em; text-transform: uppercase; }
 .h2 { margin-top: 0; color: var(--bordo); font-family: var(--disp); font-weight: 300; font-size: var(--t-h2); line-height: .9; }

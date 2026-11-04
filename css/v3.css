@@ -245,6 +245,12 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 @media (max-width: 1100px) { .pr { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* «Почему бэсти» — три варианта на выбор (04.11: «цифры мелкие, добавить анимаций, предложи варианты»). Переключение: ?preim=A | B | C, по умолчанию A */
+/* временный переключатель вариантов под заголовком (04.11) — убрать вместе с лишними вариантами */
+.pr__sw { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 24px; }
+.pr__sw span { margin-right: 4px; color: var(--muted); font-size: 14px; }
+.pr__sw button { height: 38px; padding: 0 16px; border: 1px solid rgba(31, 21, 19, .3); border-radius: 999px; background: none; color: var(--ink); font-family: var(--ui); font-size: 14px; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.pr__sw button:hover { border-color: var(--ink); }
+.pr__sw button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--cream); }
 /* A — «лак наливается»: огромные контурные цифры, при появлении заливаются бордовым снизу вверх */
 .pros--a .pr__n { position: relative; display: inline-block; color: transparent; -webkit-text-stroke: 1.5px var(--ink); font-size: clamp(190px, 18vw, 270px); line-height: .76; }
 .pros--a .pr__n::after { content: attr(data-n); position: absolute; left: 0; top: 0; color: var(--bordo); -webkit-text-stroke: 0; clip-path: inset(100% 0 0 0); transition: clip-path 1.5s cubic-bezier(.65, 0, .25, 1) var(--d, 0s); }

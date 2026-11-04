@@ -108,7 +108,7 @@
   fitZag();
 
 
-  // акция первого визита (04.11, как у predubezhdai): окно всплывает спустя время — через 15 секунд на сайте, один раз за посещение.
+  // акция первого визита (04.11, как у predubezhdai): окно всплывает спустя время — через 7 секунд на сайте (15 — «очень долго»), один раз за посещение.
   // Если в этот момент открыто меню или просмотр работы — ждём, пока закроют. ?promo=1 — показать сразу (для проверки)
   const promo = document.getElementById('promo');
   const closePromo = () => { promo.classList.remove('is-on'); setTimeout(() => { promo.hidden = true; lockScroll(false); }, 300); };
@@ -122,7 +122,7 @@
   const force = /[?&]promo=1/.test(location.search);
   let seen = false;
   try { seen = sessionStorage.getItem('besti-promo') === '1'; } catch (e) { /* без хранилища просто покажем */ }
-  if (force || !seen) setTimeout(openPromo, force ? 1500 : 15000);
+  if (force || !seen) setTimeout(openPromo, force ? 1500 : 7000);
   promo.addEventListener('click', (e) => { if (e.target === promo || e.target.closest('.promo__x, a')) closePromo(); });
 
   // прайс: разделы раскрываются, в строке раздела — цена «от»
@@ -238,29 +238,39 @@
     [...gl.children].forEach((x) => gio.observe(x));
   }
 
-  // «Почему бэсти»: три варианта (?preim=A | B | C, по умолчанию A) и их анимации при прокрутке
+  // «Почему бэсти»: три варианта (?preim=A | B | C, по умолчанию A) и их анимации при прокрутке.
+  // Переключатель под заголовком меняет вариант на месте, без перезагрузки (временный — убрать, когда вариант выберут)
   const pros = document.querySelector('.pros');
   if (pros) {
-    const v = ((new URLSearchParams(location.search).get('preim') || 'A').toLowerCase().match(/^[abc]$/) || ['a'])[0];
-    pros.classList.add('pros--' + v);
-    const items = [...pros.querySelectorAll('.pr__i')];
+    const items = [...pros.querySelectorAll('.pr__i')], list = pros.querySelector('.pr');
     items.forEach((it, i) => it.style.setProperty('--d', (i * 0.18) + 's'));
-    if ('IntersectionObserver' in window && !calm) {
-      const pio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-on'); pio.unobserve(en.target); } }), { rootMargin: '0px 0px -15% 0px' });
-      items.forEach((it) => pio.observe(it));
-    } else items.forEach((it) => it.classList.add('is-on'));
-    if (v === 'b') {
-      // одна большая цифра слева, прокручивается к пункту в центре экрана
-      const big = document.createElement('div'); big.className = 'pr__big'; big.setAttribute('aria-hidden', 'true');
-      big.innerHTML = items.map((_, i) => '<span>' + (i + 1) + '</span>').join('');
-      pros.querySelector('.pr').prepend(big);
-      const set = (i) => { items.forEach((it, k) => it.classList.toggle('is-cur', k === i)); big.style.setProperty('--i', i); big.querySelectorAll('span').forEach((s) => s.style.setProperty('--i', i)); };
-      set(0);
-      if ('IntersectionObserver' in window) {
-        const cio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) set(items.indexOf(en.target)); }), { rootMargin: '-45% 0px -45% 0px' });
-        items.forEach((it) => cio.observe(it));
+    let pio = null, cio = null;
+    const apply = (v) => {
+      if (pio) pio.disconnect(); if (cio) cio.disconnect();
+      pros.classList.remove('pros--a', 'pros--b', 'pros--c'); pros.classList.add('pros--' + v);
+      const old = list.querySelector('.pr__big'); if (old) old.remove();
+      items.forEach((it) => it.classList.remove('is-on', 'is-cur'));
+      pros.querySelectorAll('.pr__sw button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === v));
+      if ('IntersectionObserver' in window && !calm) {
+        pio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-on'); pio.unobserve(en.target); } }), { rootMargin: '0px 0px -15% 0px' });
+        requestAnimationFrame(() => requestAnimationFrame(() => items.forEach((it) => pio.observe(it)))); // кадр паузы — чтобы анимация проигралась заново
+      } else items.forEach((it) => it.classList.add('is-on'));
+      if (v === 'b') {
+        // одна большая цифра слева, прокручивается к пункту в центре экрана
+        const big = document.createElement('div'); big.className = 'pr__big'; big.setAttribute('aria-hidden', 'true');
+        big.innerHTML = items.map((_, i) => '<span>' + (i + 1) + '</span>').join('');
+        list.prepend(big);
+        const set = (i) => { items.forEach((it, k) => it.classList.toggle('is-cur', k === i)); big.querySelectorAll('span').forEach((s) => s.style.setProperty('--i', i)); };
+        set(0);
+        if ('IntersectionObserver' in window) {
+          cio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) set(items.indexOf(en.target)); }), { rootMargin: '-45% 0px -45% 0px' });
+          items.forEach((it) => cio.observe(it));
+        }
       }
-    }
+      try { history.replaceState(null, '', location.pathname + '?preim=' + v.toUpperCase() + location.hash); } catch (e) {}
+    };
+    pros.querySelectorAll('.pr__sw button').forEach((b) => b.addEventListener('click', () => apply(b.dataset.v)));
+    apply(((new URLSearchParams(location.search).get('preim') || 'A').toLowerCase().match(/^[abc]$/) || ['a'])[0]);
   }
 
   // Escape закрывает открытое окно

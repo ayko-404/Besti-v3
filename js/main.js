@@ -129,7 +129,9 @@
   const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   acc.innerHTML = (window.BESTI_PRICES || []).map((c) => {
     const from = Math.min(...c.rows.map((r) => num(r.p)));
-    return '<details class="acc__it"><summary class="acc__sum"><span class="acc__t">' + esc(c.title) + '</span>' +
+    return '<details class="acc__it" name="prajs"><summary class="acc__sum">' +
+      (c.img ? '<span class="acc__ph"><img src="' + c.img + '" width="176" height="220" alt="" loading="lazy"></span>' : '') +
+      '<span class="acc__t">' + esc(c.title) + '</span>' +
       '<span class="acc__from">от ' + fmt(from) + ' ₽</span><span class="acc__pl" aria-hidden="true"></span></summary>' +
       '<ul class="acc__list">' + c.rows.map((r) =>
         '<li class="acc__row"><span class="acc__n">' + esc(r.n) + '</span>' +
@@ -137,6 +139,17 @@
         '<span class="acc__p">' + esc(r.p) + '</span><span class="acc__time">' + esc(r.t) + '</span></li>').join('') +
       '</ul></details>';
   }).join('');
+  // открыт только один раздел прайса (04.11: «чтобы не растягивать страницу»). name="prajs" делает это в новых браузерах,
+  // код ниже — для остальных. Если раздел выше схлопнулся и заголовок открытого уехал за верх экрана — подкручиваем к нему
+  acc.addEventListener('toggle', (e) => {
+    const d = e.target;
+    if (!d.open) return;
+    acc.querySelectorAll('details[open]').forEach((x) => { if (x !== d) x.open = false; });
+    requestAnimationFrame(() => {
+      const top = d.getBoundingClientRect().top, hdH = document.querySelector('.hd').offsetHeight;
+      if (top < hdH + 8) scrollBy({ top: top - hdH - 16, behavior: 'smooth' });
+    });
+  }, true);
 
   // ленты: стрелки листают на одну карточку, на краях гаснут
   document.querySelectorAll('.arrows[data-for]').forEach((nav) => {

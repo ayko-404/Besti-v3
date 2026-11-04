@@ -236,6 +236,31 @@
     [...gl.children].forEach((x) => gio.observe(x));
   }
 
+  // «Почему бэсти»: три варианта (?preim=A | B | C, по умолчанию A) и их анимации при прокрутке
+  const pros = document.querySelector('.pros');
+  if (pros) {
+    const v = ((new URLSearchParams(location.search).get('preim') || 'A').toLowerCase().match(/^[abc]$/) || ['a'])[0];
+    pros.classList.add('pros--' + v);
+    const items = [...pros.querySelectorAll('.pr__i')];
+    items.forEach((it, i) => it.style.setProperty('--d', (i * 0.18) + 's'));
+    if ('IntersectionObserver' in window && !calm) {
+      const pio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-on'); pio.unobserve(en.target); } }), { rootMargin: '0px 0px -15% 0px' });
+      items.forEach((it) => pio.observe(it));
+    } else items.forEach((it) => it.classList.add('is-on'));
+    if (v === 'b') {
+      // одна большая цифра слева, прокручивается к пункту в центре экрана
+      const big = document.createElement('div'); big.className = 'pr__big'; big.setAttribute('aria-hidden', 'true');
+      big.innerHTML = items.map((_, i) => '<span>' + (i + 1) + '</span>').join('');
+      pros.querySelector('.pr').prepend(big);
+      const set = (i) => { items.forEach((it, k) => it.classList.toggle('is-cur', k === i)); big.style.setProperty('--i', i); big.querySelectorAll('span').forEach((s) => s.style.setProperty('--i', i)); };
+      set(0);
+      if ('IntersectionObserver' in window) {
+        const cio = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) set(items.indexOf(en.target)); }), { rootMargin: '-45% 0px -45% 0px' });
+        items.forEach((it) => cio.observe(it));
+      }
+    }
+  }
+
   // Escape закрывает открытое окно
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;

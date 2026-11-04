@@ -167,19 +167,19 @@
     addEventListener('resize', upd); upd();
   });
 
-  // работы (как у soyka): одно крупное фото, листается свайпом (scroll-snap) и точками; нажатие — на весь экран
+  // работы (как у soyka): одно крупное фото, листается свайпом (scroll-snap) и стрелками со счётчиком; нажатие — на весь экран
   const track = document.querySelector('.ws__track'), lb = document.querySelector('.lb');
-  const works = track ? [...track.querySelectorAll('.ws__sl')] : [], dots = [...document.querySelectorAll('.ws__dot')];
+  const works = track ? [...track.querySelectorAll('.ws__sl')] : [], wsN = document.querySelector('.ws__n b');
   if (track && works.length) {
     let cur = 0;
     const step = () => works[0].offsetWidth + (parseFloat(getComputedStyle(track).columnGap) || 0);
-    const mark = (i) => { cur = i; dots.forEach((d, k) => { d.classList.toggle('is-cur', k === i); d.setAttribute('aria-current', k === i ? 'true' : 'false'); }); };
-    const go = (i, smooth = true) => { i = (i + works.length) % works.length; track.scrollTo({ left: i * step(), behavior: smooth ? 'smooth' : 'auto' }); mark(i); };
+    const mark = (i) => { cur = i; if (wsN) wsN.textContent = i + 1; };
+    const go = (i, smooth = true) => { i = (i + works.length) % works.length; if (Math.abs(i - cur) > 1) smooth = false; /* с последнего на первое — сразу, без прокрутки через все фото */ track.scrollTo({ left: i * step(), behavior: smooth ? 'smooth' : 'auto' }); mark(i); };
     track.addEventListener('scroll', () => requestAnimationFrame(() => {
       const i = Math.min(works.length - 1, Math.round(track.scrollLeft / step()));
       if (i !== cur) mark(i);
     }), { passive: true });
-    dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
+    document.querySelectorAll('.ws__nav .arrow').forEach((b) => b.addEventListener('click', () => go(cur + +b.dataset.d)));
     mark(0);
 
     if (lb) {

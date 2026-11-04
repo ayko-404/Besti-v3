@@ -44,6 +44,16 @@ button { font: inherit; color: inherit; }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
 .sec { padding: clamp(84px, 9vw, 140px) 0; }
 .sec--paper { background: var(--paper); }
+/* тёмный блок (04.11, «Работы», как у soyka): фон почти чёрный тёплый, заголовок молочный с розовым курсивом — как логотип на тёмном */
+.sec--dark { background: #1C1614; color: var(--cream); }
+.sec--dark .label { color: rgba(255, 250, 246, .55); }
+.sec--dark .h2 { color: var(--cream); }
+.sec--dark .h2 em { color: var(--pink); }
+.sec--dark .wks__text, .sec--dark .ws__n { color: rgba(255, 250, 246, .68); }
+.sec--dark .ws__n b { color: var(--cream); }
+.sec--dark .arrow { border-color: rgba(255, 250, 246, .35); color: var(--cream); }
+.sec--dark .arrow:hover { background: var(--cream); border-color: var(--cream); color: var(--ink); }
+.sec--dark .ws__sl { background: #2A2220; }
 
 /* заголовок блока: маленькая метка + тонкая строка с курсивом, по центру */
 .sh { max-width: 900px; margin: 0 auto clamp(44px, 5vw, 72px); padding: 0 var(--pad); text-align: center; }
@@ -200,18 +210,17 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .st__media figure { aspect-ratio: 3 / 4; overflow: hidden; background: #E8DDD3; }
 .st__media img, .st__media video { width: 100%; height: 100%; object-fit: cover; }
 
-/* работы (04.11, как у soyka.beauty): слева текст, справа одно крупное фото-слайдер с точками */
+/* работы (04.11, как у soyka.beauty): слева текст, справа одно крупное фото-слайдер со стрелками и счётчиком */
 .wks { display: grid; grid-template-columns: minmax(0, 1fr) clamp(380px, 40vw, 580px); gap: clamp(40px, 6vw, 110px); align-items: start; }
 .wks__text { max-width: 30em; margin-top: 22px; color: var(--muted); }
 .ws { min-width: 0; }
-.ws__track { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.ws__track { display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .ws__track::-webkit-scrollbar { display: none; }
 .ws__sl { flex: 0 0 100%; aspect-ratio: 4 / 5; padding: 0; border: 0; border-radius: var(--r-card); overflow: hidden; background: #E2DDD6; scroll-snap-align: start; cursor: zoom-in; }
 .ws__sl img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.ws__dots { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-.ws__dot { position: relative; width: 9px; height: 9px; padding: 0; border: 1px solid var(--ink); border-radius: 50%; background: transparent; cursor: pointer; transition: background .2s; }
-.ws__dot::before { content: ""; position: absolute; inset: -8px -5px; } /* область нажатия больше самой точки */
-.ws__dot.is-cur { background: var(--ink); }
+.ws__nav { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 18px; } /* стрелки и счётчик вместо точек (04.11) */
+.ws__n { min-width: 64px; color: var(--muted); font-size: 15px; text-align: center; font-variant-numeric: tabular-nums; }
+.ws__n b { color: var(--ink); font-weight: 500; }
 
 /* отзывы */
 .rv { display: flex; flex-direction: column; width: clamp(300px, 32vw, 440px); padding: 28px; background: var(--paper); }
@@ -340,7 +349,7 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .tm { width: 76vw; }
   .wks { grid-template-columns: 1fr; gap: 32px; }
   .ws__track { margin-right: calc(-1 * var(--pad)); }
-  .ws__sl { flex-basis: calc(100% - var(--pad) - 16px); } /* справа выглядывает край следующего фото */
+  .ws__sl { flex-basis: calc(100% - var(--pad) - 12px); } /* справа выглядывает край следующего фото */
   .rv { width: 84vw; padding: 22px; }
   .ct { grid-template-columns: 1fr; }
   .ct__info { order: -1; }

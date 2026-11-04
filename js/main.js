@@ -216,6 +216,15 @@
     cv.addEventListener('playing', () => cv.classList.add('is-on'), { once: true });
   }
 
+  // ссылка на Instagram ещё не получена от клиентки — иконка пока никуда не ведёт [ждём: ссылка на аккаунт]
+  document.querySelectorAll('[data-wait="instagram"]').forEach((a) => a.addEventListener('click', (e) => e.preventDefault()));
+
+  // круглая кнопка записи: видна всегда, кроме первого экрана, где свои кнопки записи (и пока идёт заставка)
+  const fab = document.querySelector('.fab'), heroBtns = document.querySelector('.ha .btns');
+  if (fab && heroBtns && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([en]) => fab.classList.toggle('is-on', !en.isIntersecting && !root.classList.contains('is-intro')), { threshold: 0 }).observe(heroBtns);
+  } else if (fab) fab.classList.add('is-on');
+
   // видео: без звука, играют только рядом с экраном
   const vids = document.querySelectorAll('video');
   const play = (v) => { v.muted = true; const p = v.play(); if (p && p.catch) p.catch(() => {}); };

@@ -55,7 +55,7 @@
   const fitZag = () => {
     zh.style.fontSize = '';
     const ha = zh.closest('.ha'), btns = ha.querySelector('.btns');
-    const avail = getComputedStyle(ha).flexDirection === 'column' ? ha.clientWidth : ha.clientWidth - btns.offsetWidth - 40;
+    const avail = getComputedStyle(ha).flexDirection.startsWith('column') ? ha.clientWidth : ha.clientWidth - btns.offsetWidth - 40; // на телефоне кнопки над заголовком (column-reverse)
     const widest = Math.max(...[...zh.querySelectorAll('span')].map((s) => { const r = document.createRange(); r.selectNodeContents(s); return r.getBoundingClientRect().width; }));
     if (widest > avail) zh.style.fontSize = Math.floor(parseFloat(getComputedStyle(zh).fontSize) * avail / widest) + 'px';
   };

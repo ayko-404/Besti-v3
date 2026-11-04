@@ -8,8 +8,9 @@
   --bordo: #85231A;
   --bordo-d: #6F1D15;
   --pink: #FFACE4;
-  --cream: #FFFAF6;
-  --paper: #F3EBE3;
+  --cream: #FFFAF6;                             /* светлый текст и светлые кнопки на видео */
+  --bg: #F3F2EF;                                /* фон сайта — «чу-чуть серый» (04.11; был сливочный #FFFAF6) */
+  --paper: #E9E6E1;                             /* блоки через раз — на тон темнее фона */
   --ink: #1F1513;
   --muted: #6E5A55;
   --disp: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
@@ -31,7 +32,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 72px; }
-body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--text); font-weight: 400; font-size: var(--t-body); line-height: 1.6; -webkit-font-smoothing: antialiased; font-variant-numeric: lining-nums; font-feature-settings: 'lnum' 1; overflow-x: clip; } /* ровные цифры: у Cormorant по умолчанию «старинные» */
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--text); font-weight: 400; font-size: var(--t-body); line-height: 1.6; -webkit-font-smoothing: antialiased; font-variant-numeric: lining-nums; font-feature-settings: 'lnum' 1; overflow-x: clip; } /* ровные цифры: у Cormorant по умолчанию «старинные» */
 img, video { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 h1, h2, h3, p, figure, blockquote { margin: 0; }
@@ -74,7 +75,7 @@ button { font: inherit; color: inherit; }
 
 /* ── шапка поверх обложки; после обложки — светлая ── */
 .hd { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; padding: 26px var(--pad); color: var(--cream); transition: background .3s, color .3s, padding .3s, box-shadow .3s; }
-.hd.is-solid { padding-top: 10px; padding-bottom: 10px; background: var(--cream); color: var(--ink); box-shadow: 0 1px 0 rgba(31, 21, 19, .1); }
+.hd.is-solid { padding-top: 10px; padding-bottom: 10px; background: var(--bg); color: var(--ink); box-shadow: 0 1px 0 rgba(31, 21, 19, .1); }
 .hd__l { justify-self: start; }
 .hd__r { justify-self: end; }
 .hd__logo { display: flex; flex-direction: column; align-items: center; text-decoration: none; }
@@ -95,7 +96,7 @@ button { font: inherit; color: inherit; }
 .hd .btn > span { padding: 0 28px; }
 .hd .btn > i { width: 52px; }
 
-.menu { position: fixed; inset: 0; z-index: 49; display: flex; flex-direction: column; justify-content: center; padding: 120px var(--pad) 48px; background: var(--cream); color: var(--ink); overflow: auto; }
+.menu { position: fixed; inset: 0; z-index: 49; display: flex; flex-direction: column; justify-content: center; padding: 120px var(--pad) 48px; background: var(--bg); color: var(--ink); overflow: auto; }
 .menu[hidden] { display: none; }
 .menu nav { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .menu nav a { color: var(--bordo); font-family: var(--disp); font-weight: 300; font-size: clamp(38px, 5vw, 60px); line-height: 1.02; text-decoration: none; }
@@ -103,15 +104,17 @@ button { font: inherit; color: inherit; }
 .menu__foot { display: grid; justify-items: center; gap: 8px; margin-top: 40px; color: var(--muted); text-align: center; }
 .menu__foot a { text-decoration: none; }
 .menu__foot .btn { margin-top: 18px; }
-.menu-open .hd { background: var(--cream); color: var(--ink); }
+.menu-open .hd { background: var(--bg); color: var(--ink); }
 
 /* ── обложка (общая часть) ── */
-.hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; background: var(--cream); color: var(--cream); }
-.hero > .hero__media { position: absolute; top: var(--edge); left: var(--edge); width: calc(100% - var(--edge) * 2); height: calc(100% - var(--edge) * 2); object-fit: cover; background: #2B1D1A; }
+.hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; background: var(--bg); color: var(--cream); }
+/* видео, заставка и затемнение лежат в одной карточке — углы обрезает она (Safari на iPhone плохо скругляет само видео) */
+.hero__card { position: absolute; inset: var(--edge); overflow: hidden; background: #2B1D1A; }
+.hero__card > .hero__media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .hero video { opacity: 0; transition: opacity .8s; }
 .hero video.is-on { opacity: 1; }
-.hero::after { content: ""; position: absolute; inset: var(--edge); background: linear-gradient(to top, rgba(22, 9, 7, .72) 0%, rgba(22, 9, 7, .25) 50%, rgba(22, 9, 7, .25) 100%); pointer-events: none; }
+.hero__card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(22, 9, 7, .72) 0%, rgba(22, 9, 7, .25) 50%, rgba(22, 9, 7, .25) 100%); pointer-events: none; }
 
 /* обложка (вариант A, выбран 04.11) — как airfield: крупная тонкая фраза с курсивом и строка про метро и часы слева внизу, кнопки справа (правка 04.11).
    Главная кнопка сплошная светлая, вторая прозрачная в рамке — чтобы было видно, какая главная */
@@ -272,7 +275,7 @@ button { font: inherit; color: inherit; }
   .hd { --lg-max: 36px; --lg-min: 30px; }
   .hd .btn > i { display: none; }
   .ha { bottom: calc(var(--edge) + 22px); }
-  .hero::after { background: linear-gradient(to top, rgba(22, 9, 7, .82) 0%, rgba(22, 9, 7, .45) 55%, rgba(22, 9, 7, .3) 100%); }
+  .hero__card::after { background: linear-gradient(to top, rgba(22, 9, 7, .82) 0%, rgba(22, 9, 7, .45) 55%, rgba(22, 9, 7, .3) 100%); }
   .ha .btns { flex-direction: column; }
   .btns .btn { width: 100%; }
   .btns .btn > span { flex: 1; justify-content: center; }
@@ -305,8 +308,8 @@ button { font: inherit; color: inherit; }
   .hd { --lg-max: 28px; --lg-min: 26px; }
   .hd .btn > span { padding: 0 9px; }
 }
-/* небольшие скругления (решение Дмитрия 04.11: «прям небольшие»): 3 px у кнопок и элементов, 4 px у фото, карточек и окон */
-:root { --r: 3px; --r-card: 4px; }
+/* небольшие скругления (решение Дмитрия 04.11): 3 px у кнопок и элементов управления, 6 px у фото, карточек и окон */
+:root { --r: 3px; --r-card: 6px; } /* кнопки и элементы управления — 3 px («на кнопках верни как было»), фото и карточки — 6 px (04.11) */
 .btn { border-radius: var(--r); overflow: hidden; }
 .hd__menu, .arrow, .acc__pl, .lb__x, .wait { border-radius: var(--r); }
 .promo__box, .rv { border-radius: var(--r-card); overflow: hidden; }
@@ -315,11 +318,17 @@ button { font: inherit; color: inherit; }
 /* телефон: обложка карточкой, как у maandmi.ru (правка 04.11) — шапка на светлом фоне сверху, ниже видео в карточке
    со скруглёнными углами и полями по краям; заголовок и кнопки внутри карточки. На компьютере обложка во весь экран */
 @media (max-width: 900px) {
-  .hero { --ct: 80px; --cm: 12px; height: 100svh; min-height: 600px; }
-  .hero > .hero__media { top: var(--ct); left: var(--cm); width: calc(100% - var(--cm) * 2); height: calc(100% - var(--ct) - var(--cm)); border-radius: 16px; }
-  .hero::after { inset: var(--ct) var(--cm) var(--cm); border-radius: 16px; }
-  .ha { left: calc(var(--cm) + 16px); right: calc(var(--cm) + 16px); bottom: calc(var(--cm) + 18px); }
-  .hd { background: var(--cream); color: var(--ink); }
+  .hero { --ct: 88px; --cm: 16px; height: 100svh; min-height: 600px; } /* поля вокруг видео «чуть побольше» (04.11): было 12 px */
+  .hero__card { inset: var(--ct) var(--cm) var(--cm); border-radius: 16px; isolation: isolate; transform: translateZ(0); -webkit-mask-image: -webkit-radial-gradient(white, black); } /* маска и translateZ — чтобы Safari ровно обрезал видео по скруглению */
+  .ha { top: calc(var(--ct) + 24px); left: calc(var(--cm) + 18px); right: calc(var(--cm) + 18px); bottom: calc(var(--cm) + 24px); flex-direction: column-reverse; justify-content: flex-start; }
+  /* как у MECCA (правка 04.11): заголовок внизу карточки, над ним по центру карточки компактные кнопки */
+  .ha > * { flex-shrink: 0; } /* иначе заголовок сжимался по высоте */
+  .ha .btns { align-self: center; width: 256px; gap: 10px; margin: auto 0; }
+  .ha .btns .btn { height: 46px; font-size: 12px; }
+  .ha .btns .btn > span { padding: 0 14px; letter-spacing: .1em; }
+  .ha .btns .btn > i { width: 46px; }
+  .hero__card::after { background: linear-gradient(to top, rgba(22, 9, 7, .78) 0%, rgba(22, 9, 7, .3) 45%, rgba(22, 9, 7, .25) 100%); }
+  .hd { background: var(--bg); color: var(--ink); }
   .hd .lg { color: var(--bordo); }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -4,11 +4,33 @@
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const lockScroll = (on) => { document.documentElement.style.overflow = on ? 'hidden' : ''; };
 
-  // меню (телефон и узкие экраны)
+  // шапка поверх обложки прозрачная; когда обложка ушла вверх — светлая
+  const hd = document.querySelector('.hd'), hero = document.querySelector('.hero');
+  const solid = () => hd.classList.toggle('is-solid', scrollY > hero.offsetHeight - hd.offsetHeight - 10);
+  addEventListener('scroll', () => requestAnimationFrame(solid), { passive: true });
+  addEventListener('resize', solid); solid();
+
+  // меню — на весь экран, на компьютере и телефоне одинаково
   const mb = document.querySelector('.hd__menu'), menu = document.getElementById('menu');
-  const setMenu = (open) => { menu.hidden = !open; mb.setAttribute('aria-expanded', String(open)); mb.lastChild.textContent = open ? 'Закрыть' : 'Меню'; lockScroll(open); };
+  const setMenu = (open) => {
+    menu.hidden = !open; mb.setAttribute('aria-expanded', String(open)); mb.lastChild.textContent = open ? 'Закрыть' : 'Меню';
+    document.body.classList.toggle('menu-open', open); lockScroll(open);
+  };
   mb.addEventListener('click', () => setMenu(menu.hidden));
   menu.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+
+  // служебная панель: переключение обложки A/B, выбор остаётся в адресе (?oblozhka=b) — им можно поделиться
+  const vp = document.querySelector('.vpanel');
+  if (vp) {
+    const mark = () => vp.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.o === document.documentElement.dataset.oblozhka)));
+    vp.addEventListener('click', (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      document.documentElement.dataset.oblozhka = b.dataset.o;
+      const u = new URL(location.href); u.searchParams.set('oblozhka', b.dataset.o); history.replaceState(null, '', u);
+      mark();
+    });
+    mark();
+  }
 
   // акция первого визита: окно всплывает через 4 секунды, один раз за посещение сайта
   const promo = document.getElementById('promo');

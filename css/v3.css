@@ -73,13 +73,13 @@ button { font: inherit; color: inherit; }
 .wait { display: inline-block; padding: 1px 8px; border: 1px dashed currentColor; color: var(--bordo); font-family: var(--ui); font-size: 13px; line-height: 1.5; }
 
 /* ── шапка поверх обложки; после обложки — светлая ── */
-.hd { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 26px var(--pad); color: var(--cream); transition: background .3s, color .3s, padding .3s, box-shadow .3s; }
+.hd { position: fixed; top: 0; left: 0; right: 0; z-index: 50; display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; padding: 26px var(--pad); color: var(--cream); transition: background .3s, color .3s, padding .3s, box-shadow .3s; }
 .hd.is-solid { padding-top: 10px; padding-bottom: 10px; background: var(--cream); color: var(--ink); box-shadow: 0 1px 0 rgba(31, 21, 19, .1); }
 .hd__l { justify-self: start; }
 .hd__r { justify-self: end; }
 .hd__logo { display: flex; flex-direction: column; align-items: center; text-decoration: none; }
-.hd__logo img { width: auto; height: 72px; transition: height .3s; } /* логотип крупнее (правки 04.11): 34 → 56 → 72 px, в светлой шапке при прокрутке 52 px */
-.hd.is-solid .hd__logo img { height: 52px; }
+.hd { --lg-max: clamp(96px, 10.4vw, 150px); --lg-min: 52px; } /* логотип (правка 04.11): наверху большой и акцентный, по прокрутке плавно уменьшается */
+.hd__logo img { width: auto; height: calc(var(--lg-max) - (var(--lg-max) - var(--lg-min)) * var(--p, 0)); }
 .hd__logo .lg-dark, .hd.is-solid .hd__logo .lg-light { display: none; }
 .hd.is-solid .hd__logo .lg-dark { display: block; }
 .hd__logo span { margin-top: 4px; font-family: var(--ui); font-size: 13px; letter-spacing: .3em; text-transform: uppercase; }
@@ -259,7 +259,7 @@ button { font: inherit; color: inherit; }
 }
 @media (max-width: 900px) {
   :root { --t-body: 16px; --t-small: 15px; --pad: 24px; }
-  .hd { display: flex; align-items: center; gap: 8px; padding: 14px var(--pad); } /* телефон (правка 04.11): логотип слева, справа «Написать нам» и «Меню» с подписью */
+  .hd { display: flex; align-items: flex-start; gap: 8px; padding: 14px var(--pad); } /* телефон (правка 04.11): логотип слева, справа «Написать нам» и «Меню» с подписью */
   .hd__logo { order: 0; margin-right: auto; align-items: flex-start; }
   .hd__r { order: 1; }
   .hd__l { order: 2; }
@@ -268,11 +268,10 @@ button { font: inherit; color: inherit; }
   .hd.is-solid { padding-top: 8px; padding-bottom: 8px; }
   .hd__menu { height: 44px; padding: 0 12px; gap: 8px; font-size: 12px; letter-spacing: .08em; }
   .hd__menu i { width: 18px; }
-  .hd__logo img { height: 28px; }
   .hd__logo span { display: none; }
   .hd .btn { height: 44px; }
   .hd .btn > span { padding: 0 12px; letter-spacing: .04em; font-size: 12px; }
-  .hd__logo img, .hd.is-solid .hd__logo img { height: 36px; }
+  .hd { --lg-max: 36px; --lg-min: 30px; }
   .hd .btn > i { display: none; }
   .ha { bottom: calc(var(--edge) + 22px); }
   .hero::after { background: linear-gradient(to top, rgba(22, 9, 7, .82) 0%, rgba(22, 9, 7, .45) 55%, rgba(22, 9, 7, .3) 100%); }
@@ -301,11 +300,11 @@ button { font: inherit; color: inherit; }
   .promo__box { padding: 52px 24px 28px; }
   .lb .arrow { top: auto; bottom: 16px; margin: 0; }
 }
-@media (min-width: 410px) and (max-width: 900px) { .hd__logo img, .hd.is-solid .hd__logo img { height: 40px; } } /* где есть место — логотип крупнее */
-@media (min-width: 600px) and (max-width: 900px) { .hd__logo img, .hd.is-solid .hd__logo img { height: 48px; } }
+@media (min-width: 410px) and (max-width: 900px) { .hd { --lg-max: 44px; --lg-min: 34px; } } /* телефон: где есть место — логотип крупнее */
+@media (min-width: 600px) and (max-width: 900px) { .hd { --lg-max: 72px; --lg-min: 44px; } }
 @media (max-width: 380px) { /* узкий телефон: крупный логотип и «Записаться» не должны касаться; заголовок обложки чуть меньше, чтобы строки не переносились */
   .ha h1 { font-size: 50px; }
-  .hd__logo img, .hd.is-solid .hd__logo img { height: 28px; }
+  .hd { --lg-max: 28px; --lg-min: 26px; }
   .hd .btn > span { padding: 0 9px; }
 }
 /* вариант «небольшие скругления» (просьба Дмитрия 04.11: «прям небольшие») — включается кнопкой на панели или ?round=1 */
@@ -317,10 +316,10 @@ html.is-round .tm__ph, html.is-round .wk__ph, html.is-round .st__wide, html.is-r
 html.is-round .rv__ava { border-radius: 50%; }
 
 /* служебная панель выбора заголовка — без оформления сайта (решение Дмитрия 03.11); убрать после выбора */
-.vpanel { position: absolute; left: 50%; top: 168px; transform: translateX(-50%); z-index: 40; display: flex; align-items: center; gap: 4px; padding: 6px 8px; background: #EDEDED; color: #333; border: 1px solid #C8C8C8; font: 12px/1.2 system-ui, sans-serif; white-space: nowrap; }
+.vpanel { position: absolute; left: var(--pad); top: 96px; z-index: 40; display: flex; align-items: center; gap: 4px; padding: 6px 8px; background: #EDEDED; color: #333; border: 1px solid #C8C8C8; font: 12px/1.2 system-ui, sans-serif; white-space: nowrap; }
 .vpanel button { min-width: 28px; padding: 4px 8px; border: 1px solid #BBB; background: #FFF; font: inherit; cursor: pointer; }
 .vpanel button[aria-pressed="true"] { background: #555; border-color: #555; color: #FFF; }
-@media (max-width: 900px) { .vpanel { top: 80px; max-width: calc(100% - 24px); flex-wrap: wrap; justify-content: center; white-space: normal; } }
+@media (max-width: 900px) { .vpanel { left: 50%; transform: translateX(-50%); top: 80px; max-width: calc(100% - 24px); flex-wrap: wrap; justify-content: center; white-space: normal; } }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }

@@ -6,7 +6,12 @@
 
   // шапка поверх обложки прозрачная; когда обложка ушла вверх — светлая
   const hd = document.querySelector('.hd'), hero = document.querySelector('.hero');
-  const solid = () => hd.classList.toggle('is-solid', scrollY > hero.offsetHeight - hd.offsetHeight - 10);
+  // логотип наверху большой и по прокрутке плавно уменьшается: --p от 0 (верх страницы) до 1 (прокручено 320 px и больше)
+  const solid = () => {
+    // предел 0,999, а не 1: Chrome при ровно 1 считает calc() с clamp() внутри как 0 px и логотип пропадает (проверено 04.11)
+    hd.style.setProperty('--p', Math.min(0.999, Math.max(0, scrollY / 320)).toFixed(3));
+    hd.classList.toggle('is-solid', scrollY > hero.offsetHeight - hd.offsetHeight - 10);
+  };
   addEventListener('scroll', () => requestAnimationFrame(solid), { passive: true });
   addEventListener('resize', solid); solid();
 

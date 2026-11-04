@@ -4,29 +4,67 @@
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const lockScroll = (on) => { document.documentElement.style.overflow = on ? 'hidden' : ''; };
 
-  // логотип «пишется от руки» (правка 04.11): при загрузке штрихи прорисовываются по очереди слева направо,
-  // затем буквы заливаются цветом и проявляется подпись «студия маникюра». Без анимации — если в системе «уменьшить движение»
+  // логотип «пишется от руки» (правка 04.11): штрихи прорисовываются по очереди слева направо, затем буквы заливаются цветом.
+  // writeLogo возвращает Promise — заставка ждёт, пока логотип допишется. Без анимации — если в системе «уменьшить движение»
   const lgSvg = document.querySelector('.hd__logo .lg');
-  if (lgSvg && lgSvg.animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const lgLink = lgSvg.closest('.hd__logo');
-    const paths = [...lgSvg.querySelectorAll('path')].sort((a, b) => a.getBBox().x - b.getBBox().x);
+  const root = document.documentElement;
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const writeLogo = (svg, total, start) => new Promise((done) => {
+    const paths = [...svg.querySelectorAll('path')].sort((a, b) => a.getBBox().x - b.getBBox().x);
     const lens = paths.map((p) => p.getTotalLength());
     const sum = lens.reduce((a, b) => a + b, 0);
-    lgSvg.classList.add('is-writing'); lgLink.classList.add('is-writing');
-    let t = 200;
+    svg.classList.add('is-writing');
+    let t = start;
     paths.forEach((p, i) => {
-      const d = Math.max(260, 2300 * lens[i] / sum); // длинный штрих пишется дольше
+      const d = Math.max(240, total * lens[i] / sum); // длинный штрих пишется дольше
       p.style.strokeDasharray = lens[i]; p.style.strokeDashoffset = lens[i];
       p.animate([{ strokeDashoffset: lens[i] }, { strokeDashoffset: 0 }], { duration: d, delay: t, easing: 'ease-in-out', fill: 'forwards' });
       t += d * 0.82; // следующая буква начинается чуть раньше, чем закончилась предыдущая — как рука на бумаге
     });
-    const fillAt = t + 150;
-    paths.forEach((p) => p.animate([{ fillOpacity: 0, strokeOpacity: 1 }, { fillOpacity: 1, strokeOpacity: 0 }], { duration: 550, delay: fillAt, easing: 'ease-out', fill: 'forwards' }));
-    setTimeout(() => lgLink.classList.remove('is-writing'), fillAt);
+    const fillAt = t + 120;
+    paths.forEach((p) => p.animate([{ fillOpacity: 0, strokeOpacity: 1 }, { fillOpacity: 1, strokeOpacity: 0 }], { duration: 500, delay: fillAt, easing: 'ease-out', fill: 'forwards' }));
     setTimeout(() => {
-      lgSvg.classList.remove('is-writing');
+      svg.classList.remove('is-writing');
       paths.forEach((p) => { p.getAnimations().forEach((a) => a.cancel()); p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; });
-    }, fillAt + 600);
+      done();
+    }, fillAt + 520);
+  });
+
+  // заставка при загрузке (04.11): на бордовом экране по центру крупно пишется «бэсти», затем логотип плавно уменьшается
+  // и улетает на своё место в шапке, фон растворяется, проявляются кнопки шапки и подпись. Один раз за посещение (или ?intro=1)
+  const introOn = root.classList.contains('is-intro') && lgSvg && lgSvg.animate && !calm;
+  if (introOn) {
+    const ov = document.querySelector('.intro-ov'), link = lgSvg.closest('.hd__logo');
+    try { sessionStorage.setItem('besti-intro', '1'); } catch (e) {}
+    lockScroll(true);
+    link.classList.add('is-writing'); // подпись «студия маникюра» появится после приземления
+    const r = lgSvg.getBoundingClientRect(), lr = link.getBoundingClientRect();
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    const k = Math.min(innerWidth * 0.72, 640) / r.width; // крупно: до 72% ширины экрана
+    link.style.transformOrigin = (cx - lr.left) + 'px ' + (cy - lr.top) + 'px';
+    link.style.transform = 'translate(' + (innerWidth / 2 - cx) + 'px, ' + (innerHeight / 2 - cy) + 'px) scale(' + k.toFixed(3) + ')';
+    link.classList.add('is-placed');
+    writeLogo(lgSvg, 1800, 250).then(() => setTimeout(() => {
+      link.style.transition = 'transform 1.05s cubic-bezier(.7, 0, .2, 1)';
+      link.style.transform = '';
+      ov.classList.add('is-out');
+      setTimeout(() => {
+        root.classList.remove('is-intro');
+        link.classList.remove('is-writing');
+        link.style.transition = ''; link.style.transformOrigin = '';
+        lockScroll(false);
+        setTimeout(() => ov.remove(), 900);
+      }, 1050);
+    }, 200));
+  } else {
+    root.classList.remove('is-intro');
+    // без заставки (повторный заход в том же посещении) логотип дописывается прямо в шапке
+    if (lgSvg && lgSvg.animate && !calm) {
+      const link = lgSvg.closest('.hd__logo');
+      link.classList.add('is-writing');
+      writeLogo(lgSvg, 2300, 200);
+      setTimeout(() => link.classList.remove('is-writing'), 2600);
+    }
   }
 
   // шапка поверх обложки прозрачная; когда обложка ушла вверх — светлая
@@ -76,7 +114,8 @@
   };
   let seen = false;
   try { seen = sessionStorage.getItem('besti-promo') === '1'; } catch (e) { /* без хранилища просто покажем */ }
-  if (!seen) setTimeout(() => { openPromo(); try { sessionStorage.setItem('besti-promo', '1'); } catch (e) {} }, 4000);
+  const promoDelay = introOn ? 8000 : 4000; // с заставкой — после неё
+  if (!seen) setTimeout(() => { openPromo(); try { sessionStorage.setItem('besti-promo', '1'); } catch (e) {} }, promoDelay);
   promo.addEventListener('click', (e) => { if (e.target === promo || e.target.closest('.promo__x, a')) closePromo(); });
 
   // прайс: разделы раскрываются, в строке раздела — цена «от»

@@ -8,6 +8,8 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#85231A">
 <link rel="icon" href="assets/ui/logo-edinyj-bordo.svg" type="image/svg+xml">
+<!-- заставка при загрузке: один раз за посещение (или ?intro=1); не показываем при «уменьшить движение». Класс ставится до отрисовки, чтобы не мигало -->
+<script>(function(){try{var f=/[?&]intro=1/.test(location.search),s=sessionStorage.getItem('besti-intro')==='1',r=matchMedia('(prefers-reduced-motion: reduce)').matches;if((f||!s)&&!r)document.documentElement.classList.add('is-intro')}catch(e){}})();</script>
 <link rel="preload" href="fonts/cormorant-garamond-300-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/inter-400-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/video/video-interer-poster.webp" media="(max-width: 900px)" fetchpriority="high">
@@ -15,6 +17,7 @@
 <link rel="stylesheet" href="css/bundle.css"> <!-- стили одним файлом: собирает tools/css_bundle.py из fonts/fonts.css и css/v3.css -->
 </head>
 <body>
+<div class="intro-ov" aria-hidden="true"></div>
 <!-- Бэсти v3 (04.11.2026): минимализм по отзыву Зухры; шрифты, кнопки и элементы — по образцу airfieldlacaminera.com. Прежняя версия — ветка main -->
 
 <header class="hd">

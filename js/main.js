@@ -285,9 +285,6 @@
     cv.addEventListener('playing', () => cv.classList.add('is-on'), { once: true });
   }
 
-  // ссылка на Instagram ещё не получена от клиентки — иконка пока никуда не ведёт [ждём: ссылка на аккаунт]
-  document.querySelectorAll('[data-wait="instagram"]').forEach((a) => a.addEventListener('click', (e) => e.preventDefault()));
-
   // круглая кнопка записи: видна всегда, кроме первого экрана, где свои кнопки записи (и пока идёт заставка)
   const fab = document.querySelector('.fab'), heroBtns = document.querySelector('.ha .btns');
   if (fab && heroBtns && 'IntersectionObserver' in window) {

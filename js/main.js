@@ -108,7 +108,7 @@
   fitZag();
 
 
-  // акция первого визита (04.11, как у predubezhdai): окно всплывает спустя время — через 7 секунд на сайте (15 — «очень долго»), один раз за посещение.
+  // акция первого визита (04.11, как у predubezhdai): окно всплывает спустя время — через 10 секунд на сайте (05.11; было 7, до того 15 — «очень долго»), один раз за посещение.
   // Если в этот момент открыто меню или просмотр работы — ждём, пока закроют. ?promo=1 — показать сразу (для проверки)
   const promo = document.getElementById('promo');
   const closePromo = () => { promo.classList.remove('is-on'); setTimeout(() => { promo.hidden = true; lockScroll(false); }, 300); };
@@ -122,7 +122,7 @@
   const force = /[?&]promo=1/.test(location.search);
   let seen = false;
   try { seen = sessionStorage.getItem('besti-promo') === '1'; } catch (e) { /* без хранилища просто покажем */ }
-  if (force || !seen) setTimeout(openPromo, force ? 1500 : 7000);
+  if (force || !seen) setTimeout(openPromo, force ? 1500 : 10000);
   promo.addEventListener('click', (e) => { if (e.target === promo || e.target.closest('.promo__x, a')) closePromo(); });
 
   // прайс: разделы раскрываются, в строке раздела — цена «от»

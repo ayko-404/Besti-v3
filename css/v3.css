@@ -519,7 +519,8 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
 }
-.pros--t2 .pr__ph--menu { object-position: 50% 42%; } /* меню (06.11): вертикальный кадр, в карточке держим в центре сам листок */
+.pros--t2 .pr__ph--menu { object-position: 50% 50%; } /* меню (06.11): вертикальный кадр, в карточке держим в центре сам листок */
+@media (max-width: 900px) { .pros--t2 .pr__ph--menu { aspect-ratio: 1 / 1; object-position: 50% 54%; } } /* телефон: в рамке 4:3 вертикальное меню резалось сверху и снизу — для него квадрат, листок и рука целиком */
 /* просмотр на весь экран (06.11): видео — как фото; кадры «В гостях» открываются по нажатию */
 .lb video { display: block; width: auto; max-width: min(92vw, 860px); height: auto; max-height: 82vh; margin: 0 auto; border-radius: var(--r-card); background: #000; }
 .lb img[hidden], .lb video[hidden], .lb figcaption[hidden], .lb .arrow[hidden] { display: none; }

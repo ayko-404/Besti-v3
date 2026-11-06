@@ -452,7 +452,8 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 html { scroll-behavior: auto; }
 *, *::before, *::after { transition: none !important; }
 }
-.pros--t2 .pr__ph--menu { object-position: 50% 42%; }
+.pros--t2 .pr__ph--menu { object-position: 50% 50%; }
+@media (max-width: 900px) { .pros--t2 .pr__ph--menu { aspect-ratio: 1 / 1; object-position: 50% 54%; } }
 .lb video { display: block; width: auto; max-width: min(92vw, 860px); height: auto; max-height: 82vh; margin: 0 auto; border-radius: var(--r-card); background: #000; }
 .lb img[hidden], .lb video[hidden], .lb figcaption[hidden], .lb .arrow[hidden] { display: none; }
 #studio .gl__i, #studio .gs__i { cursor: zoom-in; }

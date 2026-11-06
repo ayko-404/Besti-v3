@@ -195,34 +195,74 @@
   };
   document.querySelectorAll('.ws').forEach((r) => { r._s = slider(r); });
 
-  // работы: нажатие на фото — просмотр на весь экран, синхронно со слайдером
-  const wsWorks = document.querySelector('#works .ws'), lb = document.querySelector('.lb');
+  // просмотр на весь экран (06.11 — общий): работы и все фото и видео «В гостях у бэсти»; листает внутри своего блока, стрелки, свайп, клавиши
+  const lb = document.querySelector('.lb');
+  const lbOpen = (() => {
+    if (!lb) return () => {};
+    const img = lb.querySelector('img'), vid = lb.querySelector('video'), cap = lb.querySelector('figcaption'), nav = lb.querySelectorAll('.arrow');
+    let set = [], cur = 0, from = null, sync = null;
+    const show = (i) => {
+      cur = (i + set.length) % set.length; const it = set[cur];
+      if (it.video) {
+        img.hidden = true; img.removeAttribute('src');
+        vid.hidden = false; vid.poster = it.poster || ''; vid.src = it.video; vid.muted = true;
+        const p = vid.play(); if (p && p.catch) p.catch(() => {});
+      } else {
+        vid.pause(); vid.hidden = true; vid.removeAttribute('src');
+        img.hidden = false; img.src = it.src; img.alt = it.alt || '';
+      }
+      cap.textContent = it.cap || ''; cap.hidden = !it.cap;
+      if (sync) sync(cur);
+    };
+    const close = () => {
+      lb.classList.remove('is-on'); vid.pause();
+      setTimeout(() => { lb.hidden = true; vid.removeAttribute('src'); lockScroll(false); if (from) from(cur)?.focus({ preventScroll: true }); }, 250);
+    };
+    lb.querySelector('.lb__prev').addEventListener('click', () => show(cur - 1));
+    lb.querySelector('.lb__next').addEventListener('click', () => show(cur + 1));
+    lb.addEventListener('click', (e) => { if (e.target === lb || e.target.closest('.lb__x')) close(); });
+    let sx = null;
+    lb.addEventListener('pointerdown', (e) => { sx = e.target.closest('video') ? null : e.clientX; });
+    lb.addEventListener('pointerup', (e) => { if (sx === null) return; const d = e.clientX - sx; sx = null; if (Math.abs(d) > 50) show(cur + (d < 0 ? 1 : -1)); });
+    document.addEventListener('keydown', (e) => {
+      if (lb.hidden) return;
+      if (e.key === 'ArrowRight') show(cur + 1);
+      if (e.key === 'ArrowLeft') show(cur - 1);
+    });
+    return (items, i, opts = {}) => {
+      set = items; from = opts.focus || null; sync = opts.sync || null;
+      nav.forEach((b) => { b.hidden = set.length < 2; });
+      show(i); lb.hidden = false; lockScroll(true);
+      requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add('is-on')));
+      lb.querySelector('.lb__x').focus({ preventScroll: true });
+    };
+  })();
+
+  // работы: нажатие на фото — просмотр, синхронно со слайдером
+  const wsWorks = document.querySelector('#works .ws');
   if (wsWorks) {
     const sl = wsWorks._s, works = sl.items;
-    if (lb) {
-      const img = lb.querySelector('img'), cap = lb.querySelector('figcaption');
-      let from = null;
-      const show = (i) => {
-        i = (i + works.length) % works.length;
-        const s = works[i].querySelector('img');
-        img.src = s.src; img.alt = s.alt; cap.textContent = works[i].dataset.cap;
-        sl.go(i, false); // фото на странице идёт следом за просмотром
-      };
-      const open = (i, btn) => { from = btn; show(i); lb.hidden = false; lockScroll(true); requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add('is-on'))); lb.querySelector('.lb__x').focus({ preventScroll: true }); };
-      const close = () => { lb.classList.remove('is-on'); setTimeout(() => { lb.hidden = true; lockScroll(false); if (from) works[sl.cur].focus({ preventScroll: true }); }, 250); };
-      works.forEach((w, i) => w.addEventListener('click', () => open(i, w)));
-      lb.querySelector('.lb__prev').addEventListener('click', () => show(sl.cur - 1));
-      lb.querySelector('.lb__next').addEventListener('click', () => show(sl.cur + 1));
-      lb.addEventListener('click', (e) => { if (e.target === lb || e.target.closest('.lb__x')) close(); });
-      let sx = null;
-      lb.addEventListener('pointerdown', (e) => { sx = e.clientX; });
-      lb.addEventListener('pointerup', (e) => { if (sx === null) return; const d = e.clientX - sx; sx = null; if (Math.abs(d) > 50) show(sl.cur + (d < 0 ? 1 : -1)); });
-      document.addEventListener('keydown', (e) => {
-        if (lb.hidden) return;
-        if (e.key === 'ArrowRight') show(sl.cur + 1);
-        if (e.key === 'ArrowLeft') show(sl.cur - 1);
-      });
-    }
+    const set = works.map((w) => { const im = w.querySelector('img'); return { src: im.currentSrc || im.src, alt: im.alt, cap: w.dataset.cap }; });
+    works.forEach((w, i) => w.addEventListener('click', () => lbOpen(set, i, { sync: (k) => sl.go(k, false), focus: (k) => works[k] })));
+  }
+
+  // «В гостях у бэсти»: галерея и лента — любой кадр открывается, листаются все кадры блока подряд
+  const studio = document.getElementById('studio');
+  if (studio) {
+    const tiles = [...studio.querySelectorAll('.gl__i, .gs__i')];
+    const set = tiles.map((t) => {
+      const v = t.querySelector('video');
+      if (v) return { video: v.getAttribute('src'), poster: v.getAttribute('poster') };
+      const im = t.querySelector('img:not(.gl__logo)'); return { src: im.getAttribute('src'), alt: im.alt };
+    });
+    tiles.forEach((t, i) => {
+      const v = t.querySelector('video'), im = t.querySelector('img:not(.gl__logo)');
+      t.tabIndex = 0; t.setAttribute('role', 'button');
+      t.setAttribute('aria-label', 'Открыть на весь экран: ' + (v ? (v.getAttribute('aria-label') || 'видео') : im.alt));
+      const go = () => lbOpen(set, i, { focus: (k) => tiles[k] });
+      t.addEventListener('click', go);
+      t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
   }
 
   // галерея «В гостях у бэсти»: кадры проявляются по очереди, когда доезжают до экрана (без JS и при «меньше движения» — сразу видны)

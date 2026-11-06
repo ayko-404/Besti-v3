@@ -14,7 +14,7 @@
 <link rel="preload" href="fonts/inter-400-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/video/video-interer-poster.webp" media="(max-width: 900px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/video/video-interer-shirokoe-poster.webp" media="(min-width: 901px)" fetchpriority="high">
-<link rel="stylesheet" href="css/bundle.css?v=202611060826"> <!-- стили одним файлом: собирает tools/css_bundle.py из fonts/fonts.css и css/v3.css -->
+<link rel="stylesheet" href="css/bundle.css?v=202611060837"> <!-- стили одним файлом: собирает tools/css_bundle.py из fonts/fonts.css и css/v3.css -->
 </head>
 <body>
 <!-- Бэсти v3 (04.11.2026): минимализм по отзыву Зухры; шрифты, кнопки и элементы — по образцу airfieldlacaminera.com. Прежняя версия — ветка main -->
@@ -82,7 +82,7 @@
   <ol class="pr">
     <li class="pr__i"><img class="pr__ph" width="900" height="598" src="assets/img/preim/kino-v-kresle.webp" alt="Педикюрное кресло с планшетом" loading="lazy"><span class="pr__n" data-n="1" aria-hidden="true">1</span><h3>Кино <em>в&nbsp;кресле</em></h3><p>У&nbsp;педикюрного кресла свой планшет с&nbsp;наушниками: включите фильм или сериал, пока мастер работает.</p></li>
     <li class="pr__i"><img class="pr__ph" width="1000" height="750" src="assets/img/preim/massazher-dlya-ruk.webp" alt="Руки в массажёре для рук" loading="lazy"><span class="pr__n" data-n="2" aria-hidden="true">2</span><h3>Массаж <em>для&nbsp;рук</em></h3><p>В&nbsp;конце процедуры предложим расслабить руки в&nbsp;массажёре. Бесплатно&nbsp;— гости пишут, что видят такое впервые.</p></li>
-    <li class="pr__i"><img class="pr__ph" width="1200" height="900" src="assets/img/gosti/kofe-na-podnose.webp" alt="Капучино на подносе" loading="lazy"><span class="pr__n" data-n="3" aria-hidden="true">3</span><h3>Меню <em>напитков</em></h3><p>Кофе на&nbsp;обычном или растительном молоке, гречишный чай, клубничный улун, матча, какао на&nbsp;банановом и&nbsp;мороженое.</p></li>
+    <li class="pr__i"><img class="pr__ph pr__ph--menu" width="960" height="1280" src="assets/img/preim/menyu-napitkov.webp" alt="Гостья держит меню «В гостях у бэсти»: кофе, чай, матча и какао" loading="lazy"><span class="pr__n" data-n="3" aria-hidden="true">3</span><h3>Меню <em>напитков</em></h3><p>Кофе на&nbsp;обычном или растительном молоке, гречишный чай, клубничный улун, матча, какао на&nbsp;банановом и&nbsp;мороженое.</p></li>
     <li class="pr__i"><img class="pr__ph" width="1200" height="900" src="assets/img/preim/uhod-zielinski.webp" alt="Средства Zielinski &amp; Rozen на полке студии" loading="lazy"><span class="pr__n" data-n="4" aria-hidden="true">4</span><h3>Уход <em>Zielinski &amp; Rozen</em></h3><p>Питательный уход входит почти во&nbsp;все виды маникюра и&nbsp;педикюра&nbsp;— доплачивать за&nbsp;него не&nbsp;нужно.</p></li>
   </ol>
 </div></section>
@@ -119,7 +119,6 @@
     <figure class="gs__i" style="--ar:675/1200"><img width="675" height="1200" src="assets/img/gosti/rabochee-mesto-okno.webp" alt="Рабочее место мастера у окна, кирпичная стена" loading="lazy"></figure>
     <figure class="gs__i" style="--ar:900/1200"><img width="900" height="1200" src="assets/img/gosti/gostya-kapuchino-stolik.webp" alt="Гостья за столиком с двумя чашками капучино" loading="lazy"></figure>
     <figure class="gs__i" style="--ar:540/960"><video src="assets/video/video-polki-luxio.mp4" poster="assets/video/video-polki-luxio-poster.webp" width="540" height="960" muted loop playsinline preload="none" aria-label="Видео: полки с лаками Luxio"></video></figure>
-    <figure class="gs__i" style="--ar:900/900"><img width="900" height="900" src="assets/img/gosti/ruka-kreslo-pedikyura.webp" alt="Рука с нюдовым маникюром в кресле педикюра" loading="lazy"></figure>
     <figure class="gs__i" style="--ar:900/1200"><img width="900" height="1200" src="assets/img/gosti/ruka-flakon-predubezhdai.webp" alt="Рука с нюдовым маникюром держит флакон Predubezhdai" loading="lazy"></figure>
   </div>
   <div class="arrows" data-for="gosti"><button class="arrow" type="button" data-d="-1" aria-label="Назад"></button><button class="arrow" type="button" data-d="1" aria-label="Вперёд"></button></div>
@@ -181,11 +180,11 @@
 <!-- круглая кнопка записи, как у soyka.beauty (04.11): всегда в правом нижнем углу, появляется, когда обложку с её кнопками прокрутили -->
 <a class="fab" href="https://n2379744.yclients.com/" target="_blank" rel="noopener" aria-label="Онлайн-запись"><span class="fab__t">Онлайн<span class="fab__h">-</span><br>запись<i class="fab__ic" aria-hidden="true"></i></span></a>
 
-<div class="lb" hidden><figure><img alt=""><figcaption></figcaption></figure><button class="lb__x" type="button" aria-label="Закрыть"></button><button class="arrow lb__prev" type="button" data-d="-1" aria-label="Предыдущая работа"></button><button class="arrow lb__next" type="button" data-d="1" aria-label="Следующая работа"></button></div>
+<div class="lb" hidden role="dialog" aria-modal="true" aria-label="Просмотр"><figure><img alt=""><video muted loop playsinline controls hidden></video><figcaption></figcaption></figure><button class="lb__x" type="button" aria-label="Закрыть"></button><button class="arrow lb__prev" type="button" data-d="-1" aria-label="Предыдущий кадр"></button><button class="arrow lb__next" type="button" data-d="1" aria-label="Следующий кадр"></button></div>
 
 
-<script src="js/prices.js?v=202611060826" defer></script>
-<script src="js/main.js?v=202611060826" defer></script>
-<script src="js/karta.js?v=202611060826" defer></script>
+<script src="js/prices.js?v=202611060837" defer></script>
+<script src="js/main.js?v=202611060837" defer></script>
+<script src="js/karta.js?v=202611060837" defer></script>
 </body>
 </html>

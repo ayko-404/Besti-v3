@@ -211,7 +211,7 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 /* студия */
 /* в гостях у бэсти (04.11): мозаика фото и видео разного размера по сетке 12 колонок; кадры проявляются при прокрутке */
 .gl__h { margin-bottom: clamp(36px, 4.5vw, 64px); }
-.gl { --u: min(clamp(40px, 4.45vw, 64px), calc((100vh - 420px) / 12)); /* заголовок и ряд видео целиком влезает в экран по высоте (04.11) */ display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: var(--u); gap: clamp(10px, 1vw, 14px); }
+.gl { display: grid; grid-template-columns: 5fr 3fr 4fr; gap: clamp(10px, 1vw, 14px); height: max(400px, min(clamp(440px, 48vw, 760px), calc(100vh - 230px))); } /* 06.11: три крупных кадра в ряд — неваляшка, видео, гостья; ряд целиком влезает в экран по высоте */
 .gl__i { margin: 0; overflow: hidden; border-radius: var(--r-card); background: #DDD6CE; }
 .gl__i img, .gl__i video { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2, .8, .2, 1); }
 .gl__i { position: relative; }
@@ -219,13 +219,14 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
 .gl__i:hover .gl__logo { transform: rotate(-6deg); }
 .gl__i:hover img, .gl__i:hover video { transform: scale(1.03); }
 /* раскладка (04.11): три видео 9:16 крупно в ряд, ниже широкое фото капучино и портрет гостьи */
-.gl__i--g2 { grid-column: 1 / 5; grid-row: 1 / 13; }
-.gl__i--g5 { grid-column: 5 / 9; grid-row: 1 / 13; }
-.gl__i--g6 { grid-column: 9 / 13; grid-row: 1 / 13; }
-.gl__i--g1 { grid-column: 1 / 9; grid-row: 13 / 22; }
-.gl__i--g3 { grid-column: 9 / 13; grid-row: 13 / 22; }
 .gl.is-wait .gl__i { opacity: 0; transform: translateY(28px) scale(.985); transition: opacity .8s ease, transform 1s cubic-bezier(.2, .8, .2, 1); }
 .gl.is-wait .gl__i.is-on { opacity: 1; transform: none; }
+/* лента под галереей (06.11): листается свайпом и стрелками, кадры одной высоты, ширина — по пропорциям кадра */
+.gs { display: flex; gap: clamp(10px, 1vw, 14px); height: clamp(320px, 30vw, 470px); margin-top: clamp(10px, 1vw, 14px); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.gs::-webkit-scrollbar { display: none; }
+.gs__i { flex: 0 0 auto; height: 100%; aspect-ratio: var(--ar, 3 / 4); margin: 0; overflow: hidden; border-radius: var(--r-card); background: #2A2220; scroll-snap-align: start; }
+.gs__i img, .gs__i video { display: block; width: 100%; height: 100%; object-fit: cover; }
+#studio .arrows { margin-top: 22px; }
 
 /* работы (04.11, как у soyka.beauty): слева текст, справа одно крупное фото-слайдер со стрелками и счётчиком */
 .wks { display: grid; grid-template-columns: minmax(0, 1fr) min(clamp(380px, 40vw, 580px), calc((100vh - 190px) * .8)); /* фото 4:5 целиком влезает в экран по высоте (04.11) */ gap: clamp(40px, 6vw, 110px); align-items: start; }
@@ -459,13 +460,10 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .ft__pills { width: 100%; }
   .pill { flex: 1 1 auto; justify-content: center; height: 56px; padding: 0 22px; font-size: 16px; }
   .ft__bot { flex-direction: column; align-items: flex-start; }
-  .gl { grid-template-columns: 1fr 1fr; grid-auto-rows: auto; gap: 8px; }
-  .gl__i { grid-column: auto !important; grid-row: auto !important; aspect-ratio: 3 / 4; }
-  .gl__i--g1 { grid-column: 1 / -1 !important; aspect-ratio: 4 / 3; }
-  .gl__i--g2 { grid-column: 1 / -1 !important; aspect-ratio: 4 / 5; } /* первое видео на телефоне на всю ширину */
-  .gl__i--g5, .gl__i--g6 { aspect-ratio: 9 / 16; }
-  .gl__i--g3 { grid-column: 1 / -1 !important; aspect-ratio: 4 / 5; }
-  .gl__i--g2 { order: 1; } .gl__i--g5 { order: 2; } .gl__i--g6 { order: 3; } .gl__i--g1 { order: 4; } .gl__i--g3 { order: 5; } /* телефон: видео первыми */
+  .gl { grid-template-columns: 1fr 1fr; height: auto; gap: 8px; }
+  .gl__i--a { grid-column: 1 / -1; aspect-ratio: 4 / 5; } /* телефон: неваляшка на всю ширину, под ней видео и гостья рядом */
+  .gl__i--b, .gl__i--c { aspect-ratio: 9 / 16; }
+  .gs { height: 340px; gap: 8px; margin: 8px calc(-1 * var(--pad)) 0 0; }
   .pc__cats { display: flex; gap: 12px; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 var(--pad); scrollbar-width: none; }
   .pc__cats::-webkit-scrollbar { display: none; }
   .pc__cat { flex: 0 0 58%; scroll-snap-align: start; }
@@ -481,11 +479,10 @@ html.is-intro .ha { opacity: 0; transform: translateY(16px); }
   .promo__box { padding: 52px 24px 28px; }
   .lb .arrow { top: auto; bottom: 16px; margin: 0; }
 }
-@media (min-width: 600px) and (max-width: 900px) { /* планшет (техаудит 04.11): три видео в ряд, ниже капучино и гостья — а не одно видео на весь экран */
-  .gl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .gl__i--g2, .gl__i--g5, .gl__i--g6 { grid-column: auto !important; aspect-ratio: 9 / 16; }
-  .gl__i--g1 { grid-column: span 2 !important; aspect-ratio: 4 / 3; }
-  .gl__i--g3 { grid-column: auto !important; aspect-ratio: 2 / 3; }
+@media (min-width: 600px) and (max-width: 900px) { /* планшет: три крупных кадра в ряд, как на компьютере */
+  .gl { grid-template-columns: 5fr 3fr 4fr; height: 62vw; }
+  .gl__i--a, .gl__i--b, .gl__i--c { grid-column: auto; aspect-ratio: auto; }
+  .gs { height: 380px; }
 }
 @media (min-width: 410px) and (max-width: 900px) { .hd { --lg-max: 48px; --lg-min: 34px; } } /* телефон: где есть место — логотип крупнее */
 @media (min-width: 600px) and (max-width: 900px) { .hd { --lg-max: 72px; --lg-min: 44px; } }

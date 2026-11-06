@@ -14,7 +14,7 @@
 <link rel="preload" href="fonts/inter-400-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/video/video-interer-poster.webp" media="(max-width: 900px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/video/video-interer-shirokoe-poster.webp" media="(min-width: 901px)" fetchpriority="high">
-<link rel="stylesheet" href="css/bundle.css?v=202611060818"> <!-- стили одним файлом: собирает tools/css_bundle.py из fonts/fonts.css и css/v3.css -->
+<link rel="stylesheet" href="css/bundle.css?v=202611060826"> <!-- стили одним файлом: собирает tools/css_bundle.py из fonts/fonts.css и css/v3.css -->
 </head>
 <body>
 <!-- Бэсти v3 (04.11.2026): минимализм по отзыву Зухры; шрифты, кнопки и элементы — по образцу airfieldlacaminera.com. Прежняя версия — ветка main -->
@@ -100,7 +100,7 @@
 </div></section>
 
 <!-- в гостях у бэсти (06.11, правка Зухры): первой — неваляшка, символ студии; сверху три крупных кадра (неваляшка, видео «утро в студии», гостья с розовым знаком),
-     ниже лента, листается свайпом и стрелками: фото из папки клиента «В гостях у бести блок», капучино и одно видео. Видео в блоке два, а не три, чтобы не перегружать.
+     ниже лента, листается свайпом и стрелками: фото из папки клиента «В гостях у бести блок» и с Диска, три видео (06.11: «ниже галереи покажи ещё пару видосов и фоток» — добавлены видео «осенний маникюр» и полки Luxio, флаконы и рука в кресле педикюра; широкий кадр с капучино заменён портретным кадром той же съёмки).
      Прежний вариант (три видео в ряд + капучино и гостья) — коммит ab9b8a0 -->
 <section id="studio" class="sec sec--dark"><div class="wrap">
   <h2 class="h2 gl__h">В&nbsp;гостях <em>у&nbsp;бэсти</em></h2>
@@ -114,9 +114,13 @@
     <figure class="gs__i" style="--ar:900/1200"><img width="900" height="1200" src="assets/img/gosti/gostya-temnyj-kolca.webp" alt="Гостья бэсти с тёмным маникюром и кольцами" loading="lazy"></figure>
     <figure class="gs__i" style="--ar:540/960"><video src="assets/video/video-gostya-kolca.mp4" poster="assets/video/video-gostya-kolca-poster.webp" width="540" height="960" muted loop playsinline preload="none" aria-label="Видео: гостья показывает красный маникюр и золотые кольца"></video></figure>
     <figure class="gs__i" style="--ar:675/1200"><img width="675" height="1200" src="assets/img/gosti/luxio-kofe-morozhenoe.webp" alt="Коробка Luxio, капучино и мороженое на подносе" loading="lazy"></figure>
+    <figure class="gs__i" style="--ar:900/1200"><img width="900" height="1200" src="assets/img/gosti/flakony-na-podnose.webp" alt="Флаконы Predubezhdai на подносе в студии" loading="lazy"></figure>
+    <figure class="gs__i" style="--ar:540/960"><video src="assets/video/video-osennij-manikyur.mp4" poster="assets/video/video-osennij-manikyur-poster.webp" width="540" height="960" muted loop playsinline preload="none" aria-label="Видео: осенний маникюр, руки с чашкой"></video></figure>
     <figure class="gs__i" style="--ar:675/1200"><img width="675" height="1200" src="assets/img/gosti/rabochee-mesto-okno.webp" alt="Рабочее место мастера у окна, кирпичная стена" loading="lazy"></figure>
+    <figure class="gs__i" style="--ar:900/1200"><img width="900" height="1200" src="assets/img/gosti/gostya-kapuchino-stolik.webp" alt="Гостья за столиком с двумя чашками капучино" loading="lazy"></figure>
+    <figure class="gs__i" style="--ar:540/960"><video src="assets/video/video-polki-luxio.mp4" poster="assets/video/video-polki-luxio-poster.webp" width="540" height="960" muted loop playsinline preload="none" aria-label="Видео: полки с лаками Luxio"></video></figure>
+    <figure class="gs__i" style="--ar:900/900"><img width="900" height="900" src="assets/img/gosti/ruka-kreslo-pedikyura.webp" alt="Рука с нюдовым маникюром в кресле педикюра" loading="lazy"></figure>
     <figure class="gs__i" style="--ar:900/1200"><img width="900" height="1200" src="assets/img/gosti/ruka-flakon-predubezhdai.webp" alt="Рука с нюдовым маникюром держит флакон Predubezhdai" loading="lazy"></figure>
-    <figure class="gs__i" style="--ar:1600/1141"><img width="1600" height="1141" src="assets/img/gosti/kapuchino-za-stolikom.webp" alt="Две чашки капучино и руки с маникюром за столиком" loading="lazy"></figure>
   </div>
   <div class="arrows" data-for="gosti"><button class="arrow" type="button" data-d="-1" aria-label="Назад"></button><button class="arrow" type="button" data-d="1" aria-label="Вперёд"></button></div>
 </div></section>
@@ -180,8 +184,8 @@
 <div class="lb" hidden><figure><img alt=""><figcaption></figcaption></figure><button class="lb__x" type="button" aria-label="Закрыть"></button><button class="arrow lb__prev" type="button" data-d="-1" aria-label="Предыдущая работа"></button><button class="arrow lb__next" type="button" data-d="1" aria-label="Следующая работа"></button></div>
 
 
-<script src="js/prices.js?v=202611060818" defer></script>
-<script src="js/main.js?v=202611060818" defer></script>
-<script src="js/karta.js?v=202611060818" defer></script>
+<script src="js/prices.js?v=202611060826" defer></script>
+<script src="js/main.js?v=202611060826" defer></script>
+<script src="js/karta.js?v=202611060826" defer></script>
 </body>
 </html>

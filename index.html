@@ -14,7 +14,7 @@
 <link rel="preload" href="fonts/inter-400-600-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/video/video-interer-poster.webp" media="(max-width: 900px)" fetchpriority="high">
 <link rel="preload" as="image" href="assets/video/video-interer-shirokoe-poster.webp" media="(min-width: 901px)" fetchpriority="high">
-<link rel="stylesheet" href="css/bundle.css?v=202611060918"> <!-- стили одним файлом: собирает tools/css_bundle.py из fonts/fonts.css и css/v3.css -->
+<link rel="stylesheet" href="css/bundle.css?v=202611090935"> <!-- стили одним файлом: собирает tools/css_bundle.py из fonts/fonts.css и css/v3.css -->
 </head>
 <body>
 <!-- Бэсти v3 (04.11.2026): минимализм по отзыву Зухры; шрифты, кнопки и элементы — по образцу airfieldlacaminera.com. Прежняя версия — ветка main -->
@@ -71,7 +71,7 @@
 <!-- преимущества (04.11, третья редакция — ближе к soyka.beauty: крупные жирные цифры и колонки, без фото). Вторая редакция (рейтинг-карточка + фото) — коммит 2a75d56. Пункты — только то, что есть именно у бэсти.
      Источники: рейтинг — страница отзывов Яндекс Карт, выгрузка 04.11.2026 (ratingValue 5.0, 157 оценок, 153 отзыва; последние 50 отзывов, 07.08–23.10, все на 5) — 00-bref/otzyvy-yandex_2026-11-04/;
      кино — сториз студии «персональный планшет с наушниками» + отзывы; массажёр — 10 из 50 отзывов («Услуга бесплатная», «вижу такое впервые»);
-     напитки — меню из сториз и отзыв Анастасии С. 20.10 (чай с шоколадкой и запиской); уход Zielinski&Rozen — прайс (входит во все виды маникюра и педикюра, кроме «Экспресс под покрытие»).
+     напитки — меню из сториз и отзыв Анастасии С. 20.10 (чай с шоколадкой и запиской); 09.11: мороженое и земляничный улун сейчас не подают, из текста убраны; уход Zielinski&Rozen — прайс (входит во все виды маникюра и педикюра, кроме «Экспресс под покрытие»).
      Рейтинг у заголовка был и убран (04.11: «не добавляй эту метку») -->
 <section id="pros" class="sec sec--paper pros pros--c pros--t2"><div class="wrap">
   <div class="pr__top">
@@ -82,7 +82,7 @@
   <ol class="pr">
     <li class="pr__i"><img class="pr__ph" width="900" height="598" src="assets/img/preim/kino-v-kresle.webp" alt="Педикюрное кресло с планшетом" loading="lazy"><span class="pr__n" data-n="1" aria-hidden="true">1</span><h3>Кино <em>в&nbsp;кресле</em></h3><p>У&nbsp;педикюрного кресла свой планшет с&nbsp;наушниками: включите фильм или сериал, пока мастер работает.</p></li>
     <li class="pr__i"><img class="pr__ph" width="1000" height="750" src="assets/img/preim/massazher-dlya-ruk.webp" alt="Руки в массажёре для рук" loading="lazy"><span class="pr__n" data-n="2" aria-hidden="true">2</span><h3>Массаж <em>для&nbsp;рук</em></h3><p>В&nbsp;конце процедуры предложим расслабить руки в&nbsp;массажёре. Бесплатно&nbsp;— гости пишут, что видят такое впервые.</p></li>
-    <li class="pr__i"><picture class="pr__pic"><source media="(max-width: 900px)" srcset="assets/img/preim/menyu-napitkov-kv.webp" width="960" height="960"><img class="pr__ph pr__ph--menu" width="960" height="1280" src="assets/img/preim/menyu-napitkov.webp" alt="Меню напитков бэсти на столике студии: кофе, чай, матча и какао" loading="lazy"></picture><span class="pr__n" data-n="3" aria-hidden="true">3</span><h3>Меню <em>напитков</em></h3><p>Кофе на&nbsp;обычном или растительном молоке, гречишный чай, клубничный улун, матча, какао на&nbsp;банановом и&nbsp;мороженое.</p></li>
+    <li class="pr__i"><picture class="pr__pic"><source media="(max-width: 900px)" srcset="assets/img/preim/menyu-napitkov-kv.webp" width="960" height="960"><img class="pr__ph pr__ph--menu" width="960" height="1280" src="assets/img/preim/menyu-napitkov.webp" alt="Меню напитков бэсти на столике студии: кофе, чай, матча и какао" loading="lazy"></picture><span class="pr__n" data-n="3" aria-hidden="true">3</span><h3>Меню <em>напитков</em></h3><p>Кофе на&nbsp;обычном или растительном молоке, гречишный чай, матча и&nbsp;какао на&nbsp;банановом молоке.</p></li>
     <li class="pr__i"><img class="pr__ph" width="1200" height="900" src="assets/img/preim/uhod-zielinski.webp" alt="Средства Zielinski &amp; Rozen на полке студии" loading="lazy"><span class="pr__n" data-n="4" aria-hidden="true">4</span><h3>Уход <em>Zielinski &amp; Rozen</em></h3><p>Питательный уход входит почти во&nbsp;все виды маникюра и&nbsp;педикюра&nbsp;— доплачивать за&nbsp;него не&nbsp;нужно.</p></li>
   </ol>
 </div></section>
@@ -184,8 +184,8 @@
 <div class="lb" hidden role="dialog" aria-modal="true" aria-label="Просмотр"><figure><img alt=""><video muted loop playsinline controls hidden></video><figcaption></figcaption></figure><button class="lb__x" type="button" aria-label="Закрыть"></button><button class="arrow lb__prev" type="button" data-d="-1" aria-label="Предыдущий кадр"></button><button class="arrow lb__next" type="button" data-d="1" aria-label="Следующий кадр"></button></div>
 
 
-<script src="js/prices.js?v=202611060918" defer></script>
-<script src="js/main.js?v=202611060918" defer></script>
-<script src="js/karta.js?v=202611060918" defer></script>
+<script src="js/prices.js?v=202611090935" defer></script>
+<script src="js/main.js?v=202611090935" defer></script>
+<script src="js/karta.js?v=202611090935" defer></script>
 </body>
 </html>
